@@ -45,11 +45,11 @@ session = open_google_docs_session
 puts "connected...".color(:green) if session
 
 
-spreadsheet = session.spreadsheet_by_title("Backlog F3")
+spreadsheet = session.spreadsheet_by_title("Backlog Futur3")
 backlog = spreadsheet.worksheet_by_title("iterazioni")
 
 team = Organization.find("futur3")
-iteration = Board.find("4fcc65eafb87c03a2152a67e")
+iteration = Board.find("4fd5acd0308f99fe3380e15b")
 iteration_steps = iteration.lists
 
 index = 3 # skip the headers

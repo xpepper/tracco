@@ -20,10 +20,12 @@ columns = {
 }
 
 def init_trello
-  developer_public_key = "6742c2a79a7b5f2a86669609b09c4698"
-  access_token_key = "d141b6bec9b827a55c58081926ddf33e7ad527b8b48db8eb54f5163212ac8b1f"
-  developer_secret = "e50da76784459f5d8d40363628182536ae5be7a11a8f21a24023adb44b843b77"
+  config = YAML.load_file("config.yaml")
 
+  developer_public_key = config["trello"]["developer_public_key"]
+  access_token_key = config["trello"]["access_token_key"]
+  developer_secret = config["trello"]["developer_secret"]
+  
   include Trello
   include Trello::Authorization
 

@@ -1,6 +1,7 @@
 # gem install google_drive
 # gem install highline
 
+require 'yaml'
 require 'trello'
 require "google_drive"
 require 'highline/import'
@@ -51,7 +52,7 @@ spreadsheet = session.spreadsheet_by_title("Backlog Futur3")
 backlog = spreadsheet.worksheet_by_title("iterazioni")
 
 team = Organization.find("futur3")
-iteration = Board.find("4fd5acd0308f99fe3380e15b")
+iteration = Board.find("4fdedc649b86ad81030e2e09")
 iteration_steps = iteration.lists
 
 index = 3 # skip the headers

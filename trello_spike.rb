@@ -1,28 +1,34 @@
 require 'trello'
 require 'yaml'
+require 'chronic'
+require 'rainbow'
 
-config = YAML.load_file("config.yml")
+def init_trello
+  config = YAML.load_file("config.yml")
 
-developer_public_key = config["trello"]["developer_public_key"]
-access_token_key = config["trello"]["access_token_key"]
-developer_secret = config["trello"]["developer_secret"]
+  developer_public_key = config["trello"]["developer_public_key"]
+  access_token_key = config["trello"]["access_token_key"]
+  developer_secret = config["trello"]["developer_secret"]
 
-include Trello
-include Trello::Authorization
+  include Trello
+  include Trello::Authorization
 
-Trello::Authorization.const_set :AuthPolicy, OAuthPolicy
+  Trello::Authorization.const_set :AuthPolicy, OAuthPolicy
 
-OAuthPolicy.consumer_credential = OAuthCredential.new developer_public_key, developer_secret
-OAuthPolicy.token = OAuthCredential.new access_token_key, nil
+  OAuthPolicy.consumer_credential = OAuthCredential.new developer_public_key, developer_secret
+  OAuthPolicy.token = OAuthCredential.new access_token_key, nil
+end
+
+init_trello
 
 team = Organization.find("futur3new")
 team.boards.each do |board|
   puts board.name
 end
-
+puts "connected...".color(:green)
 me = Member.find("trackinguser")
 me.notifications.each do |notification|
-  p "[#{notification.date}] From #{notification.member_creator.username} on card #{notification.card.name}: #{notification.data['text'].gsub("@trackinguser", "")}"
+  puts "[#{Chronic.parse(notification.date)}] From #{notification.member_creator.username.color(:green)} on card '#{notification.card.name.color(:yellow)}': #{notification.data['text'].gsub("@trackinguser", "")}"
 end
 
 # {"text"=>"@trackinguser stima: 1h", "card"=>{"name"=>"Cambio password  - spostare l'utente al bottom della page", "idShort"=>294, "id"=>"5087b32add671fb9770021fe"}, "board"=>{"name"=>"Iterazione settimanale", "id"=>"502514e6af0f584e241bf9ec"}}

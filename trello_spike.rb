@@ -21,9 +21,11 @@ team.boards.each do |board|
 end
 
 me = Member.find("trackinguser")
-me.notifications.each do |n|
-  p n
+me.notifications.each do |notification|
+  p "[#{notification.date}] From #{notification.member_creator.username} on card #{notification.card.name}: #{notification.data['text'].gsub("@trackinguser", "")}"
 end
+
+# {"text"=>"@trackinguser stima: 1h", "card"=>{"name"=>"Cambio password  - spostare l'utente al bottom della page", "idShort"=>294, "id"=>"5087b32add671fb9770021fe"}, "board"=>{"name"=>"Iterazione settimanale", "id"=>"502514e6af0f584e241bf9ec"}}
 # 
 # iteration = Board.find("502514e6af0f584e241bf9ec")
 # iteration_steps = iteration.lists

@@ -1,0 +1,4 @@
+trello:
+  developer_public_key: <here put the key taken from https://trello.com/1/appKey/generate>
+  access_token_key: <here put the token taken in the 'Reading Private Data' section from https://trello.com/1/appKey/generate>
+  developer_secret: <here put the Secret (for OAuth signing) taken from https://trello.com/1/appKey/generate>

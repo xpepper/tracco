@@ -11,9 +11,12 @@ spec/reports
 test/tmp
 test/version_tmp
 tmp
+.tmtags
 
 # YARD artifacts
 .yardoc
 _yardoc
 doc/
-config.yaml
+
+config.yml
+config.yml.piero

@@ -1,4 +1,5 @@
-trello_to_google_docs
+trello to google_docs
 =====================
+Some tools to play with Trello boards and sync them from and to Google Spreadsheets
 
-tools to sync Trello boards with Google Spreadsheets and viceversa
+    cp config.template.yaml config.yml

@@ -21,7 +21,7 @@ columns = {
 }
 
 def init_trello
-  config = YAML.load_file("config.yaml")
+  config = YAML.load_file("config.yml")
 
   developer_public_key = config["trello"]["developer_public_key"]
   access_token_key = config["trello"]["access_token_key"]

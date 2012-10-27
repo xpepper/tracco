@@ -3,10 +3,11 @@ require 'forwardable'
 
 class Tracking
   extend Forwardable
-  
+  include TrelloAuthorize
+
   def_delegator :@tracking_notification, :card
   def_delegator :@tracking_notification, :member_creator, :notifier
-  
+
   def initialize(tracking_notification)
     @tracking_notification = tracking_notification
   end
@@ -16,6 +17,6 @@ class Tracking
   end
 
   def raw_text
-    @tracking_notification.data['text'].gsub("@trackinguser", "")
+    @tracking_notification.data['text'].gsub("@#{tracking_username}", "")
   end
 end

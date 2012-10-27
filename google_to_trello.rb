@@ -20,7 +20,7 @@ columns = {
 }
 
 def init_trello
-  config = YAML.load_file("config.yml")
+  config = YAML.load_file("config/config.yml")
 
   developer_public_key = config["trello"]["developer_public_key"]
   access_token_key = config["trello"]["access_token_key"]
@@ -70,20 +70,20 @@ while backlog[index,columns[:iteration]] == iteration_number.to_s do
   if iteration.lists.map(&:name).include?(status)
     list = iteration.lists.detect {|l| l.name == status}
   else
-    list = List.new("idBoard" => iteration.id)  
+    list = List.new("idBoard" => iteration.id)
     list.name = status
     list.save
   end
 
   Card.create(:list_id => list.id, :name => backlog[index,columns[:user_story_name]])
-  
+
   index += 1
 end
 
 iteration.save
 
-# 
-# 
+#
+#
 # index = 3 # skip the headers
 # iteration_steps.each do |step|
 #   step.cards.each do |user_story|
@@ -94,6 +94,6 @@ iteration.save
 #     index += 1
 #   end
 # end
-# 
+#
 # backlog.save
 puts "[DONE]".color(:green)

@@ -11,7 +11,7 @@ Then run bundle to get all the required gems:
 
     bundle install
     
-To get a never-expiring auth to read Trello data of the tracking user you use (e.g. tracking@futur3.it) you need to follow this:
+To get a never-expiring auth to read Trello data of the tracking user you use (e.g. tracking@futur3.it), you need to log in with that user and than follow this:
     
     https://trello.com/1/authorize?response_type=token&key=<your_developer_public_key>&return_url=https%3A%2F%2Ftrello.com&callback_method=fragment&scope=read&expiration=never&name=Trello+Effort+Tracker+for+Futur3
 

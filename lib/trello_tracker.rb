@@ -1,8 +1,20 @@
 require 'trello'
 require 'rainbow'
+require 'set'
 
 require_relative 'trello_authorize'
 require_relative 'tracking'
+
+module Trello
+  class Card
+    def estimates
+      @estimates ||= []
+    end
+    def efforts
+      @estimates ||= []
+    end
+  end
+end
 
 class TrelloTracker
   include TrelloAuthorize
@@ -10,6 +22,7 @@ class TrelloTracker
 
   def initialize
     init_trello
+    @cards = Set.new
   end
 
   def track
@@ -17,6 +30,14 @@ class TrelloTracker
     tracker.notifications.each do |notification|
       tracking = Tracking.new(notification)
       begin
+        card = tracking.card      
+        if tracking.estimate?
+          card.estimates << tracking.estimate
+        elsif tracking.effort?
+          card.efforts << tracking.effort
+        end
+        @cards << card
+
         puts "[#{tracking.date}] From #{tracking.notifier.username.color(:green)} on card '#{tracking.card.name.color(:yellow)}': #{tracking.raw_text}"
       rescue => e
         puts "skipping tracking: #{e.message}".color(:red)

@@ -19,4 +19,21 @@ class Tracking
   def raw_text
     @tracking_notification.data['text'].gsub("@#{tracking_username}", "")
   end
+
+  def estimate?
+    raw_text =~ /\[(\d+\.?\d*[phdg])\]/
+  end
+  
+  def estimate
+
+  end
+
+  def effort?
+
+  end
+  
+  def effort
+
+  end
 end
+

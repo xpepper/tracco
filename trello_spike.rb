@@ -1,7 +1,30 @@
 require 'trello'
 require 'yaml'
-require 'chronic'
 require 'rainbow'
+
+require 'chronic'
+
+class Tracking
+  def initialize(tracking_notification)
+    @tracking_notification = tracking_notification
+  end
+
+  def date
+    Chronic.parse(@tracking_notification.date)
+  end
+
+  def notifier
+    @tracking_notification.member_creator
+  end
+
+  def card
+    @tracking_notification.card
+  end
+
+  def raw_text
+    @tracking_notification.data['text'].gsub("@trackinguser", "")
+  end
+end
 
 def init_trello
   config = YAML.load_file("config.yml")
@@ -21,23 +44,24 @@ end
 
 init_trello
 
-team = Organization.find("futur3new")
-team.boards.each do |board|
-  puts board.name
-end
 puts "connected...".color(:green)
-me = Member.find("trackinguser")
-me.notifications.each do |notification|
-  puts "[#{Chronic.parse(notification.date)}] From #{notification.member_creator.username.color(:green)} on card '#{notification.card.name.color(:yellow)}': #{notification.data['text'].gsub("@trackinguser", "")}"
+tracker = Member.find("trackinguser")
+tracker.notifications.each do |notification|
+  tracking = Tracking.new(notification)
+  begin
+    puts "[#{tracking.date}] From #{tracking.notifier.username.color(:green)} on card '#{tracking.card.name.color(:yellow)}': #{tracking.raw_text}"
+  rescue => e
+    puts "skipping tracking: #{e.message}".color(:red)
+  end
 end
 
 # {"text"=>"@trackinguser stima: 1h", "card"=>{"name"=>"Cambio password  - spostare l'utente al bottom della page", "idShort"=>294, "id"=>"5087b32add671fb9770021fe"}, "board"=>{"name"=>"Iterazione settimanale", "id"=>"502514e6af0f584e241bf9ec"}}
-# 
+#
 # iteration = Board.find("502514e6af0f584e241bf9ec")
 # iteration_steps = iteration.lists
 # iteration_steps.each do |step|
 #   puts step.name.upcase
-#   step.cards.each do |user_story| 
+#   step.cards.each do |user_story|
 #     puts "\t" + user_story.name
 #   end
 # end

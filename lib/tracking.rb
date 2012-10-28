@@ -1,6 +1,8 @@
 require 'chronic'
 require 'forwardable'
 
+require 'ostruct'
+
 class Tracking
   extend Forwardable
   include TrelloAuthorize
@@ -30,7 +32,8 @@ class Tracking
   end
 
   def estimate
-    convert_to_hours(raw_estimate)
+    estimate = convert_to_hours(raw_estimate)
+    OpenStruct.new(amount: estimate, date: date) if estimate
   end
 
   def effort?
@@ -38,7 +41,8 @@ class Tracking
   end
 
   def effort
-    convert_to_hours(raw_effort)
+    effort = convert_to_hours(raw_effort)
+    OpenStruct.new(amount: effort, date: date) if effort
   end
 
   private

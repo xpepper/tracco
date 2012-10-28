@@ -41,7 +41,7 @@ class TrelloTracker
         end
         cards << card
 
-        puts "[#{tracking.date}] From #{tracking.notifier.username.color(:green)}\t on card '#{tracking.card.name.color(:yellow)}': #{tracking.raw_text}"
+        puts "[#{tracking.date}] From #{tracking.notifier.username.color(:green)}\t on card '#{tracking.card.name.color(:yellow)}': #{tracking.send(:raw_tracking)}"
       rescue => e
         puts "skipping tracking: #{e.message}".color(:red)
       end

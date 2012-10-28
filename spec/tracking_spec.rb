@@ -35,9 +35,19 @@ describe Tracking do
       Tracking.new(unrecognized_notification).estimate.should be_nil
     end
 
-    it "is the effort expressed in hours when the notification contains an estimate in hours" do
+    it "is the hour-based effort when the notification contains an estimate in hours" do
       estimate_in_hours = stub(data: { 'text' => "@trackinguser [2h]" })
-      Tracking.new(estimate_in_hours).estimate.should == 2.hours
+      Tracking.new(estimate_in_hours).estimate.should == 2
+    end
+  
+    it "converts the effort in hours when the notification contains an estimate in days" do
+      Tracking.new(stub(data: { 'text' => "@trackinguser [1.5d]" })).estimate.should == 8+4
+      Tracking.new(stub(data: { 'text' => "@trackinguser [1.5g]" })).estimate.should == 8+4
+    end
+
+    it "converts the effort in hours when the notification contains an estimate in pomodori" do
+      estimate_in_hours = stub(data: { 'text' => "@trackinguser [10p]" })
+      Tracking.new(estimate_in_hours).estimate.should == 5
     end
 
   end

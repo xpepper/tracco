@@ -1,10 +1,16 @@
 require 'chronic'
 require 'forwardable'
-require 'active_support/all'
 
 class Tracking
   extend Forwardable
   include TrelloAuthorize
+
+  TIME_CONVERTERS = {
+    'h' => lambda { |estimate| estimate },
+    'd' => lambda { |estimate| estimate * 8 },
+    'g' => lambda { |estimate| estimate * 8 },
+    'p' => lambda { |estimate| estimate / 2  }
+  }
 
   def_delegator :@tracking_notification, :card
   def_delegator :@tracking_notification, :member_creator, :notifier
@@ -17,27 +23,40 @@ class Tracking
     Chronic.parse(@tracking_notification.date)
   end
 
-  def raw_text
-    @tracking_notification.data['text'].gsub("@#{tracking_username}", "")
+  def estimate?
+    !raw_estimate.nil?
   end
 
-  def estimate?
-    raw_text =~ /\[(\d+\.?\d*[phdg])\]/
-  end
-  
   def estimate
-    if estimate?
-      raw_text =~ /\[(\d+\.?\d*[phdg])\]/
-      $1.chop.to_i.hours
-    end
+    estimate_to_parse = raw_estimate
+    return if estimate_to_parse.nil?
+
+    time_scale = estimate_to_parse.slice!(-1)
+    converter = TIME_CONVERTERS[time_scale]
+    converter.call(Float(estimate_to_parse))
   end
 
   def effort?
 
   end
-  
+
   def effort
 
+  end
+
+  private
+
+  def raw_tracking
+    @tracking_notification.data['text'].gsub("@#{tracking_username}", "")
+  end
+
+  def raw_estimate
+    estimate_from_notification = nil
+    raw_tracking.scan(/\[(\d+\.?\d*[phdg])\]/) do |match|
+      estimate_from_notification = match.first
+    end
+    
+    estimate_from_notification
   end
 end
 

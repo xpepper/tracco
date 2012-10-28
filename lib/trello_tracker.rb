@@ -22,7 +22,10 @@ class TrelloTracker
 
   def initialize
     init_trello
-    @cards = Set.new
+  end
+  
+  def cards
+    @cards ||= Set.new
   end
 
   def track
@@ -36,9 +39,9 @@ class TrelloTracker
         elsif tracking.effort?
           card.efforts << tracking.effort
         end
-        @cards << card
+        cards << card
 
-        puts "[#{tracking.date}] From #{tracking.notifier.username.color(:green)} on card '#{tracking.card.name.color(:yellow)}': #{tracking.raw_text}"
+        puts "[#{tracking.date}] From #{tracking.notifier.username.color(:green)}\t on card '#{tracking.card.name.color(:yellow)}': #{tracking.raw_text}"
       rescue => e
         puts "skipping tracking: #{e.message}".color(:red)
       end

@@ -28,6 +28,20 @@ describe Tracking do
 
   end
 
+  describe "#estimate" do
+    let(:unrecognized_notification) { stub(data: { 'text' => '@trackinguser hi there!' }) }
+
+    it "is nil when the notification does not contain an estimate" do
+      Tracking.new(unrecognized_notification).estimate.should be_nil
+    end
+
+    it "is the effort expressed in hours when the notification contains an estimate in hours" do
+      estimate_in_hours = stub(data: { 'text' => "@trackinguser [2h]" })
+      Tracking.new(estimate_in_hours).estimate.should == 2.hours
+    end
+
+  end
+
   def create_estimate(time_measurement)
     stub(data: { 'text' => "@trackinguser [1.5#{TIME_MEASUREMENTS[time_measurement]}]" })
   end

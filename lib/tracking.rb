@@ -1,5 +1,6 @@
 require 'chronic'
 require 'forwardable'
+require 'active_support/all'
 
 class Tracking
   extend Forwardable
@@ -25,7 +26,10 @@ class Tracking
   end
   
   def estimate
-
+    if estimate?
+      raw_text =~ /\[(\d+\.?\d*[phdg])\]/
+      $1.chop.to_i.hours
+    end
   end
 
   def effort?

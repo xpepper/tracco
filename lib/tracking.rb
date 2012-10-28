@@ -12,6 +12,8 @@ class Tracking
     'p' => lambda { |estimate| estimate / 2  }
   }
 
+  DURATION_REGEXP = '(\d+\.?\d*[phdg])'
+
   def_delegator :@tracking_notification, :card
   def_delegator :@tracking_notification, :member_creator, :notifier
 
@@ -28,20 +30,15 @@ class Tracking
   end
 
   def estimate
-    estimate_to_parse = raw_estimate
-    return if estimate_to_parse.nil?
-
-    time_scale = estimate_to_parse.slice!(-1)
-    converter = TIME_CONVERTERS[time_scale]
-    converter.call(Float(estimate_to_parse))
+    convert_to_hours(raw_estimate)
   end
 
   def effort?
-
+    !raw_effort.nil?
   end
 
   def effort
-
+    convert_to_hours(raw_effort)
   end
 
   private
@@ -51,12 +48,29 @@ class Tracking
   end
 
   def raw_estimate
-    estimate_from_notification = nil
-    raw_tracking.scan(/\[(\d+\.?\d*[phdg])\]/) do |match|
-      estimate_from_notification = match.first
-    end
-    
-    estimate_from_notification
+    extract_match_from_raw_tracking(/\[#{DURATION_REGEXP}\]/)
   end
+
+  def raw_effort
+    extract_match_from_raw_tracking(/\+#{DURATION_REGEXP}/)
+  end
+
+  def convert_to_hours(duration_as_string)
+    return if duration_as_string.nil?
+
+    time_scale = duration_as_string.slice!(-1)
+    converter = TIME_CONVERTERS[time_scale]
+    converter.call(Float(duration_as_string))
+  end
+
+  def extract_match_from_raw_tracking(regexp)
+    extracted = nil
+    raw_tracking.scan(regexp) do |match|
+      extracted = match.first
+    end
+
+    extracted
+  end
+
 end
 

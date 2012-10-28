@@ -1,6 +1,7 @@
 source :rubygems
 source 'http://gems.github.com'
 
+gem "debugger"
 gem 'ruby-trello'
 gem 'rainbow'
 gem 'chronic'

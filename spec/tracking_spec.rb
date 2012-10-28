@@ -32,6 +32,14 @@ describe Tracking do
   end
 
   describe "#estimate" do
+    # example:
+    #<Trello::Notification:0x007fbb9bd24c00
+    # @attributes=
+    # { :id=>"508d9e46bd57cd254c004160", :unread=>false, :type=>"mentionedOnCard", :date=>"2012-10-28T21:06:14.801Z",
+    #   :data=>{"text"=>"@trackinguser [8h]", "card"=>{"name"=>"Portale - Aggiornare mappe", "idShort"=>321, "id"=>"508a6c7ea35182ae350046a6"}, "board"=>{"name"=>"Iterazione settimanale", "id"=>"502514e6af0f584e241bf9ec"}},
+    #   :member_creator_id=>"4e8dfc6ba3e58a2341198ded"
+    # }>
+
     let(:unrecognized_notification) { stub(data: { 'text' => '@trackinguser hi there!' }) }
 
     it "is nil when the notification does not contain an estimate" do
@@ -52,6 +60,7 @@ describe Tracking do
       estimate_in_hours = stub(data: { 'text' => "@trackinguser [10p]" })
       Tracking.new(estimate_in_hours).estimate.should == 5
     end
+
   end
 
   describe "#effort?" do

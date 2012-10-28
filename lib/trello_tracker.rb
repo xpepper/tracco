@@ -23,7 +23,7 @@ class TrelloTracker
   def initialize
     init_trello
   end
-  
+
   def cards
     @cards ||= Set.new
   end
@@ -33,14 +33,13 @@ class TrelloTracker
     tracker.notifications.each do |notification|
       tracking = Tracking.new(notification)
       begin
-        card = tracking.card      
+        card = tracking.card
         if tracking.estimate?
           card.estimates << tracking.estimate
         elsif tracking.effort?
           card.efforts << tracking.effort
         end
-        cards << card
-
+        cards << card unless cards.map(&:id).include?(card.id)
         puts "[#{tracking.date}] From #{tracking.notifier.username.color(:green)}\t on card '#{tracking.card.name.color(:yellow)}': #{tracking.send(:raw_tracking)}"
       rescue => e
         puts "skipping tracking: #{e.message}".color(:red)

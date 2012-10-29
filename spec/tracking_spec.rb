@@ -1,10 +1,6 @@
 require 'spec_helper'
 require 'date'
 
-require_relative '../lib/trello_authorize'
-require_relative '../lib/tracking'
-require_relative '../lib/trello_tracker'
-
 describe Tracking do
 
   TIME_MEASUREMENTS = {

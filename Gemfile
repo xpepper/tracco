@@ -1,17 +1,13 @@
 source :rubygems
-source 'http://gems.github.com'
 
-gem "debugger"
-gem 'ruby-trello'
+gem 'trello_effort_tracker', :path => '.'
+
+gem 'debugger'
+gem 'ruby-trello', :require => 'trello'
 gem 'rainbow'
 gem 'chronic'
 
 group :test do
   gem 'rspec'
   gem 'rspec-mocks'
-end
-
-group :google_docs do
-  gem "google_drive"
-  gem 'highline'
 end

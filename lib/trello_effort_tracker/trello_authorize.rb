@@ -1,4 +1,5 @@
 require 'yaml'
+require 'trello'
 
 module TrelloAuthorize
   include Trello::Authorization

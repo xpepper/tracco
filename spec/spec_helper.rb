@@ -1,4 +1,5 @@
 require 'rubygems'
+
 # Set up gems listed in the Gemfile.
 begin
   ENV['BUNDLE_GEMFILE'] = File.expand_path('../Gemfile', File.dirname(__FILE__))
@@ -10,9 +11,5 @@ rescue Bundler::GemNotFound => e
   exit!
 end
 
-Bundler.require(:spec)
-
-require 'trello'
-
-module Helpers
-end
+Bundler.require
+require 'trello_effort_tracker'

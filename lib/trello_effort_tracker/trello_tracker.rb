@@ -2,9 +2,6 @@ require 'trello'
 require 'rainbow'
 require 'set'
 
-require_relative 'trello_authorize'
-require_relative 'tracking'
-
 module Trello
   class Card
     def estimates

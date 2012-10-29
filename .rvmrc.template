@@ -1,0 +1,2 @@
+rvm 1.9.3-p194@spikes --create
+rvm wrapper 1.9.3-p194@spikes textmate

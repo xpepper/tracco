@@ -1,7 +1,5 @@
-## TrelloTracker
+## TrelloEffortTracker
 The purpose of this tool is to extract and track estimates and actual efforts on Trello cards.
-
-This project contains also some (very alpha) scripts to play with Trello boards and sync them from and to Google Spreadsheets.
 
 The Trello API is used in readonly mode in this code, so all you need to access is your developer key.
 TrelloTracker uses the [Trello API Ruby wrapper](https://github.com/jeremytregunna/ruby-trello) for this purpose.

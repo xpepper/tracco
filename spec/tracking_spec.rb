@@ -53,7 +53,7 @@ describe Tracking do
     end
 
     it "fetch the estimate from a complex estimate message" do
-      raw_data = stub(data: { 'text' => "@trackinguser ristimo ancora [3h] per mettere in produzione il fix" }).as_null_object
+      raw_data = stub(data: { 'text' => "@maxmazza Dobbiamo ancora lavorarci.\n@trackinguser ristimo ancora [3h] per il fix" }).as_null_object
       Tracking.new(raw_data).estimate.amount.should == 3.0
     end
 
@@ -86,7 +86,8 @@ describe Tracking do
     it "is the hour-based effort when the notification contains an effort in hours" do
       raw_data = stub(data: { 'text' => "@trackinguser +2h" }, date: "2012-10-28T21:06:14.801Z")
 
-      Tracking.new(raw_data).effort.should == Effort.new(2.0, Time.parse('2012-10-28 21:06:14.801 UTC'))
+      # TODO TEST FOR MEMBERS TOO!
+      Tracking.new(raw_data).effort.should == Effort.new(2.0, Time.parse('2012-10-28 21:06:14.801 UTC'), ["any"])
     end
 
     it "converts the effort in hours when the notification contains an effort in days" do
@@ -103,6 +104,17 @@ describe Tracking do
       raw_data = stub(data: { 'text' => "@trackinguser ho speso +2h e spero che stavolta possiamo rilasciarla" }).as_null_object
       Tracking.new(raw_data).effort.amount.should == 2.0
     end
+
+    it "computes the effort considering all the mentioned team mates in the message" do
+      raw_data = stub(data: { 'text' => "@trackinguser +2h assieme a @michelepangrazzi e @alessandrodescovi" }).as_null_object
+      Tracking.new(raw_data).effort.amount.should == 2.0 * 3
+    end
+
+    it "tracks all the team mates which spent that effort on the card" do
+      raw_data = stub(data: { 'text' => "@trackinguser +2h assieme a @michelepangrazzi e @alessandrodescovi" }).as_null_object
+      Tracking.new(raw_data).effort.members.should == ["@michelepangrazzi", "@alessandrodescovi"]
+    end
+
 
   end
 

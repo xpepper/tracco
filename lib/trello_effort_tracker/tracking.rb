@@ -40,7 +40,8 @@ class Tracking
 
   def effort
     effort = convert_to_hours(raw_effort)
-    Effort.new(effort, date) if effort
+    other_team_mates = raw_tracking.scan(/(@\w+)/).flatten
+    Effort.new(effort * (1 + other_team_mates.size), date, other_team_mates) if effort
   end
 
   private

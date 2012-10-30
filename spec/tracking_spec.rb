@@ -29,13 +29,6 @@ describe Tracking do
   end
 
   describe "#estimate" do
-    # example:
-    #<Trello::Notification:0x007fbb9bd24c00
-    # @attributes=
-    # { :id=>"508d9e46bd57cd254c004160", :unread=>false, :type=>"mentionedOnCard", :date=>"2012-10-28T21:06:14.801Z",
-    #   :data=>{"text"=>"@trackinguser [8h]", "card"=>{"name"=>"Portale - Aggiornare mappe", "idShort"=>321, "id"=>"508a6c7ea35182ae350046a6"}, "board"=>{"name"=>"Iterazione settimanale", "id"=>"502514e6af0f584e241bf9ec"}},
-    #   :member_creator_id=>"4e8dfc6ba3e58a2341198ded"
-    # }>
 
     let(:unrecognized_notification) { stub(data: { 'text' => '@trackinguser hi there!' }).as_null_object }
 
@@ -44,12 +37,9 @@ describe Tracking do
     end
 
     it "is the hour-based estimate when the notification contains an estimate in hours" do
-      estimate_in_hours = stub(data: { 'text' => "@trackinguser [2h]" }, date: "2012-10-28T21:06:14.801Z")
+      raw_data = stub(data: { 'text' => "@trackinguser [2h]" }, date: "2012-10-28T21:06:14.801Z")
 
-      Tracking.new(estimate_in_hours).estimate.amount.should == 2
-
-      #TODO extract in separate spec and extracting the Estimate class
-      Tracking.new(estimate_in_hours).estimate.date.to_s.should == "2012-10-28 21:06:14 UTC"
+      Tracking.new(raw_data).estimate.should == Estimate.new(2.0, Time.parse('2012-10-28 21:06:14.801 UTC'))
     end
 
     it "converts the estimate in hours when the notification contains an estimate in days" do
@@ -58,8 +48,13 @@ describe Tracking do
     end
 
     it "converts the estimate in hours when the notification contains an estimate in pomodori" do
-      estimate_in_hours = stub(data: { 'text' => "@trackinguser [10p]" }).as_null_object
-      Tracking.new(estimate_in_hours).estimate.amount.should == 5
+      raw_data = stub(data: { 'text' => "@trackinguser [10p]" }).as_null_object
+      Tracking.new(raw_data).estimate.amount.should == 5
+    end
+
+    it "fetch the estimate from a complex estimate message" do
+      raw_data = stub(data: { 'text' => "@trackinguser ristimo ancora [3h] per mettere in produzione il fix" }).as_null_object
+      Tracking.new(raw_data).estimate.amount.should == 3.0
     end
 
   end
@@ -89,8 +84,9 @@ describe Tracking do
     end
 
     it "is the hour-based effort when the notification contains an effort in hours" do
-      effort_in_hours = stub(data: { 'text' => "@trackinguser +2h" }).as_null_object
-      Tracking.new(effort_in_hours).effort.amount.should == 2
+      raw_data = stub(data: { 'text' => "@trackinguser +2h" }, date: "2012-10-28T21:06:14.801Z")
+
+      Tracking.new(raw_data).effort.should == Effort.new(2.0, Time.parse('2012-10-28 21:06:14.801 UTC'))
     end
 
     it "converts the effort in hours when the notification contains an effort in days" do
@@ -99,9 +95,15 @@ describe Tracking do
     end
 
     it "converts the effort in hours when the notification contains an effort in pomodori" do
-      effort_in_hours = stub(data: { 'text' => "@trackinguser +10p" }).as_null_object
-      Tracking.new(effort_in_hours).effort.amount.should == 5
+      raw_data = stub(data: { 'text' => "@trackinguser +10p" }).as_null_object
+      Tracking.new(raw_data).effort.amount.should == 5
     end
+
+    it "fetch the effort from a complex effort message" do
+      raw_data = stub(data: { 'text' => "@trackinguser ho speso +2h e spero che stavolta possiamo rilasciarla" }).as_null_object
+      Tracking.new(raw_data).effort.amount.should == 2.0
+    end
+
   end
 
 

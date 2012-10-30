@@ -84,10 +84,11 @@ describe Tracking do
     end
 
     it "is the hour-based effort when the notification contains an effort in hours" do
-      raw_data = stub(data: { 'text' => "@trackinguser +2h" }, date: "2012-10-28T21:06:14.801Z")
+      raw_data = stub(data: { 'text' => "@trackinguser +2h" }, 
+                      date: "2012-10-28T21:06:14.801Z", 
+                      member_creator: stub(username: "pietrodibello"))
 
-      # TODO TEST FOR MEMBERS TOO!
-      Tracking.new(raw_data).effort.should == Effort.new(2.0, Time.parse('2012-10-28 21:06:14.801 UTC'), ["any"])
+      Tracking.new(raw_data).effort.should == Effort.new(2.0, Time.parse('2012-10-28 21:06:14.801 UTC'), ["@pietrodibello"])
     end
 
     it "converts the effort in hours when the notification contains an effort in days" do
@@ -111,13 +112,12 @@ describe Tracking do
     end
 
     it "tracks all the team mates which spent that effort on the card" do
-      raw_data = stub(data: { 'text' => "@trackinguser +2h assieme a @michelepangrazzi e @alessandrodescovi" }).as_null_object
-      Tracking.new(raw_data).effort.members.should == ["@michelepangrazzi", "@alessandrodescovi"]
+      raw_data = stub(data: { 'text' => "@trackinguser +2h assieme a @michelepangrazzi e @alessandrodescovi" },
+                      member_creator: stub(username: "pietrodibello")).as_null_object
+      Tracking.new(raw_data).effort.members.should == ["@michelepangrazzi", "@alessandrodescovi", "@pietrodibello"]
     end
 
-
   end
-
 
 
   def create_estimate(time_measurement)

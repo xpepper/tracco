@@ -8,7 +8,7 @@ module Trello
       @estimates ||= []
     end
     def efforts
-      @estimates ||= []
+      @efforts ||= []
     end
   end
 end

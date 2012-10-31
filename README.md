@@ -15,7 +15,7 @@ Then run bundle to get all the required gems:
 
     bundle install
 
-### Where do I get an API key and API secret?
+## Where do I get an API key and API secret?
 Log in as a Trello user and visit [this URL](https://trello.com/1/appKey/generate) to get your developer\_public\_key and the developer\_public\_key.
 
 ## Where do I get an API Access Token Key?
@@ -25,7 +25,7 @@ You will need an access token to use ruby-trello, which trello tracker depends o
 
 At the end of this process, You'll be told to give some key to the app, this is what you want to put in the access\_token\_key yml prop file.
 
-## Estimate and Effort format convention
+### Estimate and Effort format convention
 To set an estimate on a card, a Trello user should send a notification from that card to the tracker username, e.g.
 
     @trackinguser [15p]
@@ -54,12 +54,15 @@ To set an effort just for other Trello users (excluding the current user), just 
 
     @trackinguser +3p only @alessandrodescovi @michelevincenzi
 
-## Roadmap
-* Need to downgrade dates: now we got the date with time, which is useless: a simple date is enough
-* Estimates and efforts: a date could be defined in the notification text, to bound the effort/estimate to a particular date, not simply the notification's date
-* Store tracking info somewhere
+### TODO and Roadmap
+* Tracking effort on behalf of other users (e.g. @trackinguser +3p only @alessandrodescovi @michelevincenzi)
+* Downgrade dates: now we got the date with time, which is useless: a simple date is enough
+* Estimates and efforts: a date could be defined in the notification text, to bound the effort/estimate to a particular date, not simply the notification's date (e.g. @trackinguser 23.10.2012 +6p)
+* Auth params could be passed in through constructor and env variables
 * CSV export
 * Google Docs export
+* Store tracking info somewhere
+* Computing key tracking metrics (e.g. estimate error)
 
 
 ## Pull Requests

@@ -40,11 +40,23 @@ class Tracking
 
   def effort
     effort = convert_to_hours(raw_effort)
-    other_team_mates = raw_tracking.scan(/(@\w+)/).flatten
-    Effort.new(effort * (1 + other_team_mates.size), date, other_team_mates << "@#{notifier.username}") if effort
+    Effort.new(effort * effort_members.size, date, effort_members) if effort
+  end
+
+  def effort_members
+    other_effort_members = raw_tracking.scan(/(@\w+)/).flatten
+    other_effort_members << notifier_username
+  end
+
+  def find_in(cards)
+    cards.detect { |each_card| each_card.id == self.card.id }
   end
 
   private
+
+  def notifier_username
+    "@#{notifier.username}"
+  end
 
   def raw_tracking
     @tracking_notification.data['text'].gsub("@#{tracking_username}", "")

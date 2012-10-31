@@ -50,16 +50,18 @@ To set an effort for more than a Trello user (e.g. pair programming), just add t
 
     @trackinguser +3p @alessandrodescovi
 
-To set an effort just for other Trello users (excluding the current user), just add the word 'only', e.g.
+To set an effort just for other Trello users (excluding the current user), just include the users in round brackets, e.g.
 
-    @trackinguser +3p only @alessandrodescovi @michelevincenzi
+    @trackinguser +3p (@alessandrodescovi @michelevincenzi)
 
 ### TODO and Roadmap
-* Tracking effort on behalf of other users (e.g. @trackinguser +3p only @alessandrodescovi @michelevincenzi)
+* Tracking effort on behalf of other users (e.g. @trackinguser +3p (@alessandrodescovi @michelevincenzi))
 * Downgrade dates: now we got the date with time, which is useless: a simple date is enough
 * Estimates and efforts: a date could be defined in the notification text, to bound the effort/estimate to a particular date, not simply the notification's date (e.g. @trackinguser 23.10.2012 +6p)
 * Auth params could be passed in through constructor and env variables
-* CSV export
+* Add logging (https://github.com/TwP/logging ?)
+* A card should be able to tell its total effort
+* CSV export (FasterCSV?)
 * Google Docs export
 * Store tracking info somewhere
 * Computing key tracking metrics (e.g. estimate error)

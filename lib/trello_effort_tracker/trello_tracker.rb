@@ -30,7 +30,7 @@ class TrelloTracker
     tracker.notifications.each do |notification|
       tracking = Tracking.new(notification)
       begin
-        card = tracking.card
+        card = cards.find {|c| c.id == tracking.card.id } || tracking.card
         if tracking.estimate?
           card.estimates << tracking.estimate
         elsif tracking.effort?
@@ -42,7 +42,10 @@ class TrelloTracker
         puts "skipping tracking: #{e.message}".color(:red)
       end
     end
-
+    puts "Tracked #{cards.size} cards."
+    cards.each do |c|
+      puts "* #{c.name}. Estimates #{c.estimates.inspect}. Efforts: #{c.efforts.inspect}"
+    end
   end
 
 end

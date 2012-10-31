@@ -54,18 +54,12 @@ To set an effort just for other Trello users (excluding the current user), just 
 
     @trackinguser +3p only @alessandrodescovi @michelevincenzi
 
-## Issues
-Need to define and implement conventions to parse notification text searching for estimates and efforts.
-
-* parse estimates
-  * need to handle ideal hours, ideal days and pomodori
-  * will take all the info in the context as default info for date and card
-  * will need to implement custom date (useful to define estimates in the past)
-* parse efforts
-  * need to handle ideal hours, ideal days and pomodori
-  * will take all the info in the context as default info for date and card
-  * will need to implement custom date (useful to define estimates in the past)
-* store tracking info somewhere
+## Roadmap
+* Need to downgrade dates: now we got the date with time, which is useless: a simple date is enough
+* Estimates and efforts: a date could be defined in the notification text, to bound the effort/estimate to a particular date, not simply the notification's date
+* Store tracking info somewhere
+* CSV export
+* Google Docs export
 
 
 ## Pull Requests

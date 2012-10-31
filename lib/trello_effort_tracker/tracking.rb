@@ -39,21 +39,26 @@ class Tracking
   end
 
   def effort
-    effort = convert_to_hours(raw_effort)
-    Effort.new(effort * effort_members.size, date, effort_members) if effort
+    effort_amount = convert_to_hours(raw_effort)
+    if effort_amount
+      total_effort = effort_amount * effort_members.size
+      Effort.new(total_effort, date, effort_members) 
+    end
   end
 
   def effort_members
-    other_effort_members = raw_tracking.scan(/(@\w+)/).flatten
-    other_effort_members << notifier_username
-  end
+    effort_members = raw_tracking.scan(/(@\w+)/).flatten
+    effort_members << notifier_username unless should_count_only_listed_members?
 
-  def find_in(cards)
-    cards.detect { |each_card| each_card.id == self.card.id }
+    effort_members
   end
 
   private
 
+  def should_count_only_listed_members?
+    raw_tracking =~ /\((@\w+\s*)+\)/
+  end
+  
   def notifier_username
     "@#{notifier.username}"
   end

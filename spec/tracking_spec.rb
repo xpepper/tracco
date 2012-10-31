@@ -117,7 +117,7 @@ describe Tracking do
       Tracking.new(raw_data).effort.members.should == ["@michelepangrazzi", "@alessandrodescovi", "@pietrodibello"]
     end
 
-    xit "tracks the effort only on the team members listed between round brackets" do
+    it "tracks the effort only on the team members listed between round brackets" do
       raw_data = stub(data: { 'text' => "@trackinguser +3p (@alessandrodescovi @michelevincenzi)" },
                       member_creator: stub(username: "pietrodibello")).as_null_object
       tracking = Tracking.new(raw_data)

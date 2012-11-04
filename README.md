@@ -55,7 +55,6 @@ To set an effort just for other Trello users (excluding the current user), just 
     @trackinguser +3p (@alessandrodescovi @michelevincenzi)
 
 ### TODO and Roadmap
-* Downgrade dates: now we got the date with time, which is useless: a simple date is enough
 * Estimates and efforts: a date could be defined in the notification text, to bound the effort/estimate to a particular date, not simply the notification's date (e.g. @trackinguser 23.10.2012 +6p)
 * Auth params could be passed in through constructor and env variables
 * Add logging (https://github.com/TwP/logging ?)

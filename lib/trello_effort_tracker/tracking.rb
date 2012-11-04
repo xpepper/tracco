@@ -13,6 +13,7 @@ class Tracking
   }
 
   DURATION_REGEXP = '(\d+\.?\d*[phdg])'
+  DATE_REGEXP = /(\d{2})\.(\d{2})\.(\d{4})/
 
   def_delegator :@tracking_notification, :card
   def_delegator :@tracking_notification, :member_creator, :notifier
@@ -22,7 +23,7 @@ class Tracking
   end
 
   def date
-    Chronic.parse(@tracking_notification.date).to_date
+    Chronic.parse(date_as_string).to_date
   end
 
   def estimate?
@@ -42,7 +43,7 @@ class Tracking
     effort_amount = convert_to_hours(raw_effort)
     if effort_amount
       total_effort = effort_amount * effort_members.size
-      Effort.new(total_effort, date, effort_members) 
+      Effort.new(total_effort, date, effort_members)
     end
   end
 
@@ -58,7 +59,7 @@ class Tracking
   def should_count_only_listed_members?
     raw_tracking =~ /\((@\w+\s*)+\)/
   end
-  
+
   def notifier_username
     "@#{notifier.username}"
   end
@@ -81,6 +82,21 @@ class Tracking
     time_scale = duration_as_string.slice!(-1)
     converter = TIME_CONVERTERS[time_scale]
     converter.call(Float(duration_as_string))
+  end
+
+  def date_as_string
+    date_from_raw_tracking || @tracking_notification.date
+  end
+
+  def raw_tracking_contains_date?
+    raw_tracking =~ /\d{2}\.\d{2}\.\d{4}/
+  end
+
+  def date_from_raw_tracking
+    return nil unless raw_tracking =~ DATE_REGEXP
+
+    day, month, year = raw_tracking.scan(DATE_REGEXP).flatten
+    "#{year}-#{month}-#{day}"
   end
 
   def extract_match_from_raw_tracking(regexp)

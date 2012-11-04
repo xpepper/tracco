@@ -22,7 +22,7 @@ class Tracking
   end
 
   def date
-    Chronic.parse(@tracking_notification.date)
+    Chronic.parse(@tracking_notification.date).to_date
   end
 
   def estimate?

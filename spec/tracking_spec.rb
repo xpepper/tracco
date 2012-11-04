@@ -56,6 +56,16 @@ describe Tracking do
       Tracking.new(raw_data).estimate.amount.should == 3.0
     end
 
+    it "tracks the effort with the date given in the notification text, not the actual notification date" do
+      raw_data = create_notification(
+                      data: { 'text' => "@trackinguser 22.11.2012 [6p]" },
+                      date: "2012-09-19T12:46:13.713Z")
+
+      tracking = Tracking.new(raw_data)
+
+      tracking.estimate.date.should == Date.parse('2012-11-22')
+    end
+
   end
 
   describe "#effort?" do

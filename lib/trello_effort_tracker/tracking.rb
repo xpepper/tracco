@@ -57,7 +57,7 @@ class Tracking
   private
 
   def should_count_only_listed_members?
-    raw_tracking =~ /\((@\w+\s*)+\)/
+    raw_tracking =~ /\((@\w+\W*\s*)+\)/
   end
 
   def notifier_username

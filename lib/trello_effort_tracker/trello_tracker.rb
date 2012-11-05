@@ -3,13 +3,15 @@ require 'rainbow'
 require 'set'
 
 class TrelloTracker
+  include TrelloConfiguration
   include TrelloAuthorize
   include Trello
 
   trap("SIGINT") { exit! }
 
-  def initialize
-    init_trello
+  def initialize(custom_auth_params = {})
+    auth_params = configuration["trello"].merge(custom_auth_params)
+    init_trello(auth_params)
   end
 
   def cards

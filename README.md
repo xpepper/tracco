@@ -25,6 +25,26 @@ You will need an access token to use ruby-trello, which trello tracker depends o
 
 At the end of this process, You'll be told to give some key to the app, this is what you want to put in the access\_token\_key yml prop file.
 
+### Usage
+Just create a TrelloTracker instance and execute its track method.
+
+    tracker = TrelloTracker.new
+    tracker.track
+
+You can set the Trello's auth params in three ways
+
+* setting the three auth params via environment variables (ENV object)
+* using the config.yml
+* passing into the constructor a hash containing the auth values, e.g.
+
+        tracker = TrelloTracker.new(
+         "developer_public_key" => "487635b55e6fe9021902fa763b4d101a",
+         "access_token_key" => "33bed56f2a12a49c9ba1c2d6ad3e2002e11a34358c3f3fe260d7fba746a06203",
+         "developer_secret" => "ab999c4396493dba4c04ade055eabfdfabdffd0ffd7c281a23234350a993524d")
+
+        tracker.track
+
+
 ### Estimate and Effort format convention
 To set an estimate on a card, a Trello user should send a notification from that card to the tracker username, e.g.
 
@@ -55,7 +75,6 @@ To set an effort just for other Trello users (excluding the current user), just 
     @trackinguser +3p (@alessandrodescovi @michelevincenzi)
 
 ### TODO and Roadmap
-* Auth params could be passed in through constructor and env variables
 * Add logging (https://github.com/TwP/logging ?)
 * A card should be able to tell its total effort
 * CSV export (FasterCSV?)

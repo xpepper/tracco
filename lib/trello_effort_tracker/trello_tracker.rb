@@ -14,12 +14,11 @@ class TrelloTracker
     init_trello(auth_params)
   end
 
-  def cards
-    @cards ||= Set.new
-  end
+  def track(from_date=Date.parse("2000-01-01"))
+    notifications = tracker.notifications.select &greater_than_or_equal_to(from_date)
+    puts "Processing #{notifications.size} tracking notifications..."
 
-  def track
-    tracker.notifications.each do |notification|
+    notifications.each do |notification|
       tracking = Tracking.new(notification)
       begin
         card = cards.find {|c| c.id == tracking.card.id } || tracking.card
@@ -40,7 +39,18 @@ class TrelloTracker
     end
   end
 
+  def cards
+    @cards ||= Set.new
+  end
+
   def tracker
     @tracker ||= Member.find(tracker_username)
   end
+
+  private
+
+  def greater_than_or_equal_to(from_date)
+    lambda { |each_notification| Chronic.parse(each_notification.date) >= from_date }
+  end
+
 end

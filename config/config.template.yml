@@ -3,4 +3,4 @@ trello:
   access_token_key: <here put the token taken in the 'Reading Private Data' section from https://trello.com/1/appKey/generate>
   developer_secret: <here put the Secret (for OAuth signing) taken from https://trello.com/1/appKey/generate>
 
-tracking_username: trackinguser
+tracker_username: trackinguser

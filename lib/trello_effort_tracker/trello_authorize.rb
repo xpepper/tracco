@@ -15,8 +15,8 @@ module TrelloAuthorize
     OAuthPolicy.token = OAuthCredential.new(access_token_key, nil)
   end
 
-  def tracking_username
-    @tracking_username ||= configuration["tracking_username"]
+  def tracker_username
+    @tracker_username ||= configuration["tracker_username"]
   end
 
   private

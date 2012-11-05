@@ -65,7 +65,7 @@ class Tracking
   end
 
   def raw_tracking
-    @tracking_notification.data['text'].gsub("@#{tracking_username}", "")
+    @tracking_notification.data['text'].gsub("@#{tracker_username}", "")
   end
 
   def raw_estimate

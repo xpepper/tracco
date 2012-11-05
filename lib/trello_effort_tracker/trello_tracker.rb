@@ -39,6 +39,6 @@ class TrelloTracker
   end
 
   def tracker
-    @tracker ||= Member.find(tracking_username)
+    @tracker ||= Member.find(tracker_username)
   end
 end

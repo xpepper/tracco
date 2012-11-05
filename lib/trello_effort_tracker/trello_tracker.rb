@@ -2,20 +2,11 @@ require 'trello'
 require 'rainbow'
 require 'set'
 
-module Trello
-  class Card
-    def estimates
-      @estimates ||= []
-    end
-    def efforts
-      @efforts ||= []
-    end
-  end
-end
-
 class TrelloTracker
   include TrelloAuthorize
   include Trello
+
+  trap("SIGINT") { exit! }
 
   def initialize
     init_trello
@@ -26,7 +17,6 @@ class TrelloTracker
   end
 
   def track
-    tracker = Member.find(tracking_username)
     tracker.notifications.each do |notification|
       tracking = Tracking.new(notification)
       begin
@@ -38,7 +28,7 @@ class TrelloTracker
         end
         cards << card unless cards.map(&:id).include?(card.id)
         puts "[#{tracking.date}] From #{tracking.notifier.username.color(:green)}\t on card '#{tracking.card.name.color(:yellow)}': #{tracking.send(:raw_tracking)}"
-      rescue => e
+      rescue StandardError => e
         puts "skipping tracking: #{e.message}".color(:red)
       end
     end
@@ -48,4 +38,7 @@ class TrelloTracker
     end
   end
 
+  def tracker
+    @tracker ||= Member.find(tracking_username)
+  end
 end

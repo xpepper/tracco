@@ -3,7 +3,7 @@ require 'forwardable'
 
 class Tracking
   extend Forwardable
-  include TrelloAuthorize
+  include TrelloConfiguration
 
   TIME_CONVERTERS = {
     'h' => lambda { |estimate| estimate },

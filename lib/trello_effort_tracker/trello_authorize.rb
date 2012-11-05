@@ -1,7 +1,7 @@
-require 'yaml'
 require 'trello'
 
 module TrelloAuthorize
+  include TrelloConfiguration
   include Trello::Authorization
 
   def init_trello
@@ -13,20 +13,6 @@ module TrelloAuthorize
 
     OAuthPolicy.consumer_credential = OAuthCredential.new(developer_public_key, developer_secret)
     OAuthPolicy.token = OAuthCredential.new(access_token_key, nil)
-  end
-
-  def tracker_username
-    @tracker_username ||= configuration["tracker_username"]
-  end
-
-  private
-
-  def configuration
-    @configuration ||= load_configuration
-  end
-
-  def load_configuration
-    YAML.load_file("config/config.yml")
   end
 
 end

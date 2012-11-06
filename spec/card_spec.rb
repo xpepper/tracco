@@ -24,6 +24,10 @@ describe Trello::Card do
   end
   
   describe "#total_effort" do
+    it "is zero when there's no effort" do
+      card.total_effort.should == 0
+    end    
+    
     it "computes the total effort on the card" do
       card.efforts << Effort.new(3, Date.today, %w{@piero @tommaso})
       card.efforts << Effort.new(5, Date.today, %w{@tommaso})

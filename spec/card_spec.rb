@@ -37,14 +37,18 @@ describe Trello::Card do
   end
   
   describe "#to_s" do
+    before(:each) do
+      Date.stub(:today).and_return(Date.parse("2012-11-05"))
+    end
+
     it "describes the card as a string" do
       card = Trello::Card.new('name' => "A Story Name")
       card.estimates << Estimate.new(5, Date.today)
       card.efforts << Effort.new(3, Date.today, %w{@piero @tommaso})
       card.efforts << Effort.new(6, Date.today, %w{@piero @tommaso})
       
-      card.to_s.should == "[A Story Name]. Total effort: 9h. Estimates [[2012-11-07] estimated 5 hours]. " \
-                          "Efforts: [[2012-11-07] spent 3 hours by @piero, @tommaso, [2012-11-07] spent 6 hours by @piero, @tommaso]"
+      card.to_s.should == "[A Story Name]. Total effort: 9h. Estimates [[2012-11-05] estimated 5 hours]. " \
+                          "Efforts: [[2012-11-05] spent 3 hours by @piero, @tommaso, [2012-11-05] spent 6 hours by @piero, @tommaso]"
       
     end    
   end

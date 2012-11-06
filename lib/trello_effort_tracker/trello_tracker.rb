@@ -21,7 +21,7 @@ class TrelloTracker
     notifications.each do |notification|
       tracking = Tracking.new(notification)
       begin
-        card = cards.find {|c| c.id == tracking.card.id } || tracking.card
+        card = cards.find &contains?(tracking.card) || tracking.card
         if tracking.estimate?
           card.estimates << tracking.estimate
         elsif tracking.effort?
@@ -35,7 +35,7 @@ class TrelloTracker
     end
     puts "Tracked #{cards.size} cards."
     cards.each do |c|
-      puts "* #{c.name}. Estimates #{c.estimates.inspect}. Efforts: #{c.efforts.inspect}"
+      puts c.to_s
     end
   end
 
@@ -53,4 +53,7 @@ class TrelloTracker
     lambda { |each_notification| Chronic.parse(each_notification.date) >= from_date }
   end
 
+  def contains?(card)
+    lambda { |each_card| each_card.id == card.id }
+  end
 end

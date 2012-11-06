@@ -34,7 +34,7 @@ Just create a TrelloTracker instance and execute its track method.
 You can set the Trello's auth params in three ways
 
 * setting the three auth params via environment variables (ENV object)
-* using the config.yml
+* using the config.yml (which remains the default mode)
 * passing into the constructor a hash containing the auth values, e.g.
 
         tracker = TrelloTracker.new(
@@ -80,8 +80,9 @@ To set an effort just for other Trello users (excluding the current user), just 
     @trackinguser +3p (@alessandrodescovi @michelevincenzi)
 
 ## TODO and Roadmap
+* Improving effort and estimate equality
+* Estimate should receive the actual effort considering all the members or just the unit effort?
 * Add logging (https://github.com/TwP/logging ?)
-* A card should be able to tell its total effort
 * CSV export (FasterCSV?)
 * Google Docs export
 * Store tracking info somewhere

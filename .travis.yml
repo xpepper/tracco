@@ -2,3 +2,9 @@ language: ruby
 rvm:
   - 1.9.3
   - 1.9.2
+  
+env:
+  developer_public_key: e/zPNGKOwapoxFWZs/CBTAhaoqrDTkqqz+InOmCUvGBcZBpUxH398nPLv8Hi\nNQSvWuspzqanyNbbQrTA/2XhsWF1gIFX+gNexYM7S+MxtRwUD3cpVT8DzVOS\nMuckdMTEAADVsm92vIX/bUs5igxD4+zfXlhzXUNDrzRlZnsUF2M=
+  access_token_key: GG1Q8oq7GkaXjP0lbMgvQLLEi+LXOZlwmELqjPk39Exfy8114QUs2ki8nr9n\ndGO+tgOSZsCd/bt9IHxS3WWWU0INSYOTgp/prfsDDgosg7/Elk/b6w1OW0At\nX3VAjMeI0yAGloT6XB58LCFyrj6S2b4vCQqyaHR3tlTHai/5bMQ=
+  developer_secret: jnWqZy2L5styLBGfgpZm9Unqog4KBlPTdtSHdFKG4I8PotrJEi6Kt2rSGljX\n8zFiRcnzelZSEEzGxa9z6pSMFuVz5Dkr3EK/Oa4+MpueMOXOoQA3zmty/865\n5Wokr1cEeJJOP/KXmnLgAkvPh9vOn7KEd8IlphsOkv5w+Rlmgb4=
+  

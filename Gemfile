@@ -1,5 +1,6 @@
 source :rubygems
 
+gem 'rake'
 gem 'trello_effort_tracker', :path => '.'
 
 gem 'debugger'

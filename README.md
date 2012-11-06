@@ -1,4 +1,7 @@
+[![Build Status](https://secure.travis-ci.org/xpepper/trello_effort_tracker.png)](http://travis-ci.org/xpepper/trello_effort_tracker)
+
 # TrelloEffortTracker
+
 The purpose of this tool is to extract and track estimates and actual efforts on Trello cards.
 
 The Trello API is used in readonly mode in this code, so all you need to access is your developer key.

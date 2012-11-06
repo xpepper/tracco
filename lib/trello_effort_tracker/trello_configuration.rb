@@ -3,7 +3,7 @@ require 'yaml'
 module TrelloConfiguration
 
   def tracker_username
-    @tracker_username ||= configuration["tracker_username"]
+    @tracker_username ||= ENV["tracker_username"] || configuration["tracker_username"]
   end
 
   def configuration

@@ -21,7 +21,7 @@ class TrelloTracker
     notifications.each do |notification|
       tracking = Tracking.new(notification)
       begin
-        card = cards.find &contains?(tracking.card) || tracking.card
+        card = cards.find { |each| each.id == tracking.card.id } || tracking.card
         if tracking.estimate?
           card.estimates << tracking.estimate
         elsif tracking.effort?
@@ -53,7 +53,4 @@ class TrelloTracker
     lambda { |each_notification| Chronic.parse(each_notification.date) >= from_date }
   end
 
-  def contains?(card)
-    lambda { |each_card| each_card.id == card.id }
-  end
 end

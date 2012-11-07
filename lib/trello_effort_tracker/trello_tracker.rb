@@ -12,7 +12,7 @@ class TrelloTracker
 
   def track(from_date=Date.parse("2000-01-01"))
     notifications = tracker.notifications.select &greater_than_or_equal_to(from_date)
-    puts "Processing #{notifications.size} tracking notifications..."
+    Trello.logger.info "Processing #{notifications.size} tracking notifications..."
 
     notifications.each do |notification|
       tracking = Tracking.new(notification)
@@ -24,14 +24,14 @@ class TrelloTracker
           card.efforts << tracking.effort
         end
         cards << card unless cards.map(&:id).include?(card.id)
-        puts "[#{tracking.date}] From #{tracking.notifier.username.color(:green)}\t on card '#{tracking.card.name.color(:yellow)}': #{tracking.send(:raw_tracking)}"
+        Trello.logger.info "[#{tracking.date}] From #{tracking.notifier.username.color(:green)}\t on card '#{tracking.card.name.color(:yellow)}': #{tracking.send(:raw_tracking)}"
       rescue StandardError => e
-        puts "skipping tracking: #{e.message}".color(:red)
+        Trello.logger.error "skipping tracking: #{e.message}".color(:red)
       end
     end
-    puts "Tracked #{cards.size} cards."
+    Trello.logger.info "Tracked #{cards.size} cards."
     cards.each do |c|
-      puts c.to_s
+      Trello.logger.info c.to_s
     end
   end
 

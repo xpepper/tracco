@@ -1,3 +1,10 @@
+require 'trello'
+require 'rainbow'
+require 'set'
+require 'yaml'
+require 'chronic'
+require 'forwardable'
+
 require 'trello_effort_tracker/trello_configuration'
 require 'trello_effort_tracker/trello_authorize'
 require 'trello_effort_tracker/estimate'

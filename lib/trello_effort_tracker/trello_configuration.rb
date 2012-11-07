@@ -1,5 +1,3 @@
-require 'yaml'
-
 module TrelloConfiguration
 
   def tracker_username

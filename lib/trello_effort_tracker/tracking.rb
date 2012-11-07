@@ -1,6 +1,3 @@
-require 'chronic'
-require 'forwardable'
-
 class Tracking
   extend Forwardable
   include TrelloConfiguration

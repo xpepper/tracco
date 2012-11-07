@@ -1,7 +1,3 @@
-require 'trello'
-require 'rainbow'
-require 'set'
-
 class TrelloTracker
   include TrelloConfiguration
   include TrelloAuthorize

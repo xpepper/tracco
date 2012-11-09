@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Trello::Card do
+describe TrackedCard do
 
-  subject(:card) { Trello::Card.new }
+  subject(:card) { TrackedCard.new }
 
   it "has no estimates not efforts initially" do
     card.estimates.should be_empty
@@ -42,7 +42,7 @@ describe Trello::Card do
     end
 
     it "describes the card as a string" do
-      card = Trello::Card.new('name' => "A Story Name")
+      card = TrackedCard.new(name: "A Story Name")
       card.estimates << Estimate.new(5, Date.today)
       card.efforts << Effort.new(3, Date.today, %w{@piero @tommaso})
       card.efforts << Effort.new(6, Date.today, %w{@piero @tommaso})

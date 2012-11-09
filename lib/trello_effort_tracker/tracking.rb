@@ -12,11 +12,17 @@ class Tracking
   DURATION_REGEXP = '(\d+\.?\d*[phdg])'
   DATE_REGEXP = /(\d{2})\.(\d{2})\.(\d{4})/
 
-  def_delegator :@tracking_notification, :card
   def_delegator :@tracking_notification, :member_creator, :notifier
 
   def initialize(tracking_notification)
     @tracking_notification = tracking_notification
+  end
+  
+  def card
+    c = @tracking_notification.card
+    tracked_card = TrackedCard.new(c.attributes)
+    tracked_card.set_card(@tracking_notification.card)
+    @card ||= tracked_card
   end
 
   def date

@@ -24,9 +24,11 @@ class TrelloTracker
           card.efforts << tracking.effort
         end
         cards << card unless cards.map(&:id).include?(card.id)
+        card.save!
         Trello.logger.info "[#{tracking.date}] From #{tracking.notifier.username.color(:green)}\t on card '#{tracking.card.name.color(:yellow)}': #{tracking.send(:raw_tracking)}"
       rescue StandardError => e
         Trello.logger.error "skipping tracking: #{e.message}".color(:red)
+        Trello.logger.error "#{e.backtrace}".color(:blue)
       end
     end
     Trello.logger.info "Tracked #{cards.size} cards."

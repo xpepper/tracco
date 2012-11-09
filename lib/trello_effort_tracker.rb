@@ -3,7 +3,7 @@ require 'rainbow'
 require 'set'
 require 'yaml'
 require 'chronic'
-require 'delegate'
+# require 'forwardable'
 require 'mongoid'
 
 require 'trello_effort_tracker/trello_configuration'

@@ -12,7 +12,7 @@ class TrelloTracker
 
   def track(from_date=Date.parse("2000-01-01"))
     notifications = tracker.notifications.select &greater_than_or_equal_to(from_date)
-    Trello.logger.info "Processing #{notifications.size} tracking notifications..."
+    Trello.logger.info "Processing #{notifications.size} tracking notifications starting from #{from_date}..."
 
     notifications.each do |notification|
       tracking = Tracking.new(notification)

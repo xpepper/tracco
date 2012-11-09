@@ -13,7 +13,6 @@ GEM
       i18n (~> 0.6)
       multi_json (~> 1.0)
     addressable (2.2.8)
-    bson (1.7.0)
     builder (3.0.4)
     chronic (0.8.0)
     columnize (0.3.6)
@@ -27,16 +26,11 @@ GEM
     diff-lcs (1.1.3)
     i18n (0.6.1)
     mime-types (1.19)
-    mongo (1.7.0)
-      bson (~> 1.7.0)
     mongoid (3.0.11)
       activemodel (~> 3.1)
       moped (~> 1.1)
       origin (~> 1.0)
       tzinfo (~> 0.3.22)
-    mongoid_colored_logger (0.2.2)
-      mongo (~> 1.6)
-      mongoid
     moped (1.2.8)
     multi_json (1.3.6)
     oauth (0.4.7)
@@ -67,7 +61,6 @@ DEPENDENCIES
   chronic
   debugger
   mongoid
-  mongoid_colored_logger
   rainbow
   rake
   rspec

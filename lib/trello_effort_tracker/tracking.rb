@@ -12,6 +12,7 @@ class Tracking
   DURATION_REGEXP = '(\d+\.?\d*[phdg])'
   DATE_REGEXP = /(\d{2})\.(\d{2})\.(\d{4})/
 
+  # delegate to the trello notification the member_creator method aliased as 'notifier'
   def_delegator :@tracking_notification, :member_creator, :notifier
 
   def initialize(tracking_notification)
@@ -19,8 +20,8 @@ class Tracking
   end
   
   def card
-    c = @tracking_notification.card
-    tracked_card = TrackedCard.new(c.attributes)
+    trello_card = @tracking_notification.card
+    tracked_card = TrackedCard.new(trello_card.attributes.merge(trello_id: c.id))
     tracked_card.set_card(@tracking_notification.card)
     @card ||= tracked_card
   end

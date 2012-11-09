@@ -23,6 +23,17 @@ describe TrackedCard do
     card.efforts.should have(2).efforts
   end
   
+  describe "equality" do
+    it "does something" do
+      card          = TrackedCard.new(name: "a name", trello_id: "123456789")
+      same_card     = TrackedCard.new(name: "a name", trello_id: "123456789")
+      another_card  = TrackedCard.new(name: "a name", trello_id: "987654321")
+      
+      card.should == same_card
+      card.should_not == another_card
+    end
+  end
+  
   describe "#total_effort" do
     it "is zero when there's no effort" do
       card.total_effort.should == 0

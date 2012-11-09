@@ -21,7 +21,7 @@ class Tracking
   
   def card
     trello_card = @tracking_notification.card
-    tracked_card = TrackedCard.new(trello_card.attributes.merge(trello_id: c.id))
+    tracked_card = TrackedCard.new(trello_card.attributes.merge(trello_id: trello_card.id))
     tracked_card.set_card(@tracking_notification.card)
     @card ||= tracked_card
   end

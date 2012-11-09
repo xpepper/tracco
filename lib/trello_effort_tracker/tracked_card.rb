@@ -35,4 +35,10 @@ class TrackedCard
     "[#{name}]. Total effort: #{total_effort}h. Estimates #{estimates.inspect}. Efforts: #{efforts.inspect}"
   end
 
+  def ==(other)
+    return true if other.equal?(self)
+    return false unless other.kind_of?(self.class)
+    trello_id == other.trello_id
+  end
+
 end

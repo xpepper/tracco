@@ -11,20 +11,21 @@ class TrackedCard
   field :url
   field :pos
 
+  embeds_many :estimates
+  embeds_many :efforts
+
+  # TODO
   # belongs_to :board
   # belongs_to :list
   # has_many :members
 
-  def set_card(trello_card)
-    @trello_card = trello_card
-  end
+  validates_presence_of :name, :short_id, :trello_id
+  validates_numericality_of :short_id
 
-  def estimates
-    @estimates ||= []
-  end
+  scope :with_trello_id, ->(a_trello_id){ where(trello_id: a_trello_id) }
 
-  def efforts
-    @efforts ||= []
+  def self.build_from(trello_card)
+    new(trello_card.attributes.merge(trello_id: trello_card.id))
   end
 
   def total_effort
@@ -32,7 +33,7 @@ class TrackedCard
   end
 
   def to_s
-    "[#{name}]. Total effort: #{total_effort}h. Estimates #{estimates.inspect}. Efforts: #{efforts.inspect}"
+    "[#{name}]. Total effort: #{total_effort}h. Estimates #{estimates.map(&:to_s)}. Efforts: #{efforts.map(&:to_s)}"
   end
 
   def ==(other)

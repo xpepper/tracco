@@ -38,7 +38,7 @@ describe Tracking do
     it "is the hour-based estimate when the notification contains an estimate in hours" do
       raw_data = create_notification(data: { 'text' => "@trackinguser [2h]" }, date: "2012-10-28T21:06:14.801Z")
 
-      Tracking.new(raw_data).estimate.should == Estimate.new(2.0, Date.parse('2012-10-28'))
+      Tracking.new(raw_data).estimate.should == Estimate.new(amount: 2.0, date: Date.parse('2012-10-28'))
     end
 
     it "converts the estimate in hours when the notification contains an estimate in days" do
@@ -58,8 +58,8 @@ describe Tracking do
 
     it "tracks the effort with the date given in the notification text, not the actual notification date" do
       raw_data = create_notification(
-                      data: { 'text' => "@trackinguser 22.11.2012 [6p]" },
-                      date: "2012-09-19T12:46:13.713Z")
+        data: { 'text' => "@trackinguser 22.11.2012 [6p]" },
+      date: "2012-09-19T12:46:13.713Z")
 
       tracking = Tracking.new(raw_data)
 
@@ -90,11 +90,11 @@ describe Tracking do
 
     it "is the hour-based effort when the notification contains an effort in hours" do
       raw_data = create_notification(
-                      data: { 'text' => "@trackinguser +2h" },
-                      date: "2012-10-28T21:06:14.801Z",
-                      member_creator: stub(username: "pietrodibello"))
+        data: { 'text' => "@trackinguser +2h" },
+        date: "2012-10-28T21:06:14.801Z",
+      member_creator: stub(username: "pietrodibello"))
 
-      Tracking.new(raw_data).effort.should == Effort.new(2.0, Date.parse('2012-10-28'), ["@pietrodibello"])
+      Tracking.new(raw_data).effort.should == Effort.new(amount: 2.0, date: Date.parse('2012-10-28'), members: ["@pietrodibello"])
     end
 
     it "converts the effort in hours when the notification contains an effort in days" do
@@ -132,10 +132,18 @@ describe Tracking do
       tracking.effort.amount.should == 1.5 * 2
     end
 
+    it "does not have an effort when is an estimate" do
+      raw_data = create_notification(data: { 'text' => "@trackinguser stimata [6h]" }, member_creator: stub(username: "pietrodibello"))
+
+      tracking = Tracking.new(raw_data)
+
+      tracking.effort.should be_nil
+    end
+
     it "tracks the effort with the date given in the notification text, not the actual notification date" do
       raw_data = create_notification(
-                      data: { 'text' => "@trackinguser 22.11.2012 +6p" },
-                      date: "2012-09-19T12:46:13.713Z")
+        data: { 'text' => "@trackinguser 22.11.2012 +6p" },
+      date: "2012-09-19T12:46:13.713Z")
 
       tracking = Tracking.new(raw_data)
 

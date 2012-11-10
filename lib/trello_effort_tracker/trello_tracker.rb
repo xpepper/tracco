@@ -17,28 +17,23 @@ class TrelloTracker
     notifications.each do |notification|
       tracking = Tracking.new(notification)
       begin
-        card = cards.find { |each| each.id == tracking.card.id } || tracking.card
+        existing_card = TrackedCard.with_trello_id(tracking.card.trello_id)
+        Trello.logger.debug "tracked card found: #{existing_card.first.name} with trello_id:#{existing_card.first.id}" if existing_card.first
+        card = existing_card.first || tracking.card
         if tracking.estimate?
           card.estimates << tracking.estimate
         elsif tracking.effort?
           card.efforts << tracking.effort
         end
-        cards << card unless cards.map(&:id).include?(card.id)
-        # card.save!
+        card.save
         Trello.logger.info "[#{tracking.date}] From #{tracking.notifier.username.color(:green)}\t on card '#{tracking.card.name.color(:yellow)}': #{tracking.send(:raw_tracking)}"
+
       rescue StandardError => e
         Trello.logger.error "skipping tracking: #{e.message}".color(:red)
-        Trello.logger.error "#{e.backtrace}".color(:blue)
+        Trello.logger.error "#{e.backtrace}".color(:red)
       end
     end
-    Trello.logger.info "Tracked #{cards.size} cards."
-    cards.each do |c|
-      Trello.logger.info c.to_s
-    end
-  end
-
-  def cards
-    @cards ||= Set.new
+    Trello.logger.info "Done tracking cards!".color(:green)
   end
 
   def tracker

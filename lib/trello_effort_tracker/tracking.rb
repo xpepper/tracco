@@ -18,12 +18,9 @@ class Tracking
   def initialize(tracking_notification)
     @tracking_notification = tracking_notification
   end
-  
+
   def card
-    trello_card = @tracking_notification.card
-    tracked_card = TrackedCard.new(trello_card.attributes.merge(trello_id: trello_card.id))
-    tracked_card.set_card(@tracking_notification.card)
-    @card ||= tracked_card
+    @card ||= TrackedCard.build_from(trello_card)
   end
 
   def date
@@ -36,7 +33,7 @@ class Tracking
 
   def estimate
     estimate = convert_to_hours(raw_estimate)
-    Estimate.new(estimate, date) if estimate
+    Estimate.new(amount: estimate, date: date) if estimate
   end
 
   def effort?
@@ -47,7 +44,7 @@ class Tracking
     effort_amount = convert_to_hours(raw_effort)
     if effort_amount
       total_effort = effort_amount * effort_members.size
-      Effort.new(total_effort, date, effort_members)
+      Effort.new(amount: total_effort, date: date, members: effort_members)
     end
   end
 
@@ -110,6 +107,10 @@ class Tracking
     end
 
     extracted
+  end
+
+  def trello_card
+    @trello_card ||= @tracking_notification.card
   end
 
 end

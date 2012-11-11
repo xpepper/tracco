@@ -15,3 +15,4 @@ services:
 
 before_script:
   - mongo trello_effort_tracker_test --eval 'db.addUser("travis", "test");'
+  "./script/ci/before_script.sh"

@@ -20,4 +20,5 @@ doc/
 
 config.yml
 config.yml.piero
+mongoid.yml
 .rvmrc

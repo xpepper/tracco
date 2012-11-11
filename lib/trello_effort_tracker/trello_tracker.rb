@@ -12,6 +12,7 @@ class TrelloTracker
 
   def track(from_date=Date.today)
     notifications = tracker.notifications_from(from_date)
+    Trello.logger.info "Connected with #{db_environment} db env."
     Trello.logger.info "Processing #{notifications.size} tracking notifications starting from #{from_date}..."
 
     notifications.each do |notification|
@@ -38,6 +39,12 @@ class TrelloTracker
 
   def tracker
     @tracker ||= Member.find(tracker_username)
+  end
+
+  private
+
+  def db_environment
+    ENV['MONGOID_ENV']
   end
 
 end

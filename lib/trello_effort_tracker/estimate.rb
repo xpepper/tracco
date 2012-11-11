@@ -7,10 +7,12 @@ class Estimate
 
   embedded_in :tracked_card
 
-  #TODO ha senso avere una uguaglianza tra stime?
+  validates_presence_of :amount, :date
+
   def ==(other)
     return true if other.equal?(self)
     return false unless other.kind_of?(self.class)
+
     amount == other.amount && date == other.date
   end
 

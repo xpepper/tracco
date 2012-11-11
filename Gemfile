@@ -13,4 +13,5 @@ gem 'mongoid'
 group :test do
   gem 'rspec'
   gem 'rspec-mocks'
+  gem 'mongoid-rspec'
 end

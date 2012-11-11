@@ -8,13 +8,13 @@ class Effort
 
   embedded_in :tracked_card
 
-  #TODO ha senso avere una uguaglianza tra effort?
+  validates_presence_of :amount, :date, :members
+
   def ==(other)
     return true if other.equal?(self)
     return false unless other.kind_of?(self.class)
 
-    # TODO includere members nella equals
-    amount == other.amount && date == other.date # && @members == other.members
+    amount == other.amount && date == other.date && Set.new(members) == Set.new(other.members)
   end
 
   def to_s

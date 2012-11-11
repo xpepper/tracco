@@ -31,6 +31,10 @@ GEM
       moped (~> 1.1)
       origin (~> 1.0)
       tzinfo (~> 0.3.22)
+    mongoid-rspec (1.5.4)
+      mongoid (>= 3.0.1)
+      rake
+      rspec (>= 2.9)
     moped (1.2.8)
     multi_json (1.3.6)
     oauth (0.4.7)
@@ -61,6 +65,7 @@ DEPENDENCIES
   chronic
   debugger
   mongoid
+  mongoid-rspec
   rainbow
   rake
   rspec

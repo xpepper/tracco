@@ -47,6 +47,9 @@ You can set the Trello's auth params in three ways
 
         tracker.track
 
+### Storage configuration
+Tracking data collected from Trello are stored in a MongoDB, as configured in config/mongoid.yml.
+To define which mongodb env is actually used, just set the MONGOID_ENV env variable. Development is the default mongo environment.
 
 ### Estimate format convention
 To set an estimate on a card, a Trello user should send a notification from that card to the tracker username, e.g.

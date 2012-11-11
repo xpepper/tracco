@@ -35,6 +35,7 @@ class TrelloTracker
       end
     end
     Trello.logger.info "Done tracking cards!".color(:green)
+    TrackedCard.all.each { |tracked_card| Trello.logger.info(tracked_card.to_s.color(:yellow)) }
   end
 
   def tracker

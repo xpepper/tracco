@@ -85,17 +85,12 @@ To set an effort just for other Trello users (excluding the current user), just 
 
     @trackinguser +3p (@alessandrodescovi @michelevincenzi)
 
-## TODO and Roadmap
-* Improving effort and estimate equality
-* Estimate should receive the actual effort considering all the members or just the unit effort?
-* Add logging (https://github.com/TwP/logging ?)
-* CSV export (FasterCSV?)
-* Google Docs export
-* Store tracking info somewhere
-* Computing key tracking metrics (e.g. estimate error)
+## Roadmap and improvements
+We develop Trello Effort Tracker using [Trello itself](https://trello.com/board/trello-effort-tracker-roadmap/509c3228dcb1ac3f1c018791).
 
+## Contributing
 
-## Pull Requests
+Several ways you can contribute. Documentation, code, tests, feature requests, bug reports.
 
 Pull requests are welcome :)
 

@@ -42,10 +42,4 @@ class TrelloTracker
     @tracker ||= Member.find(tracker_username)
   end
 
-  private
-
-  def db_environment
-    ENV['MONGOID_ENV']
-  end
-
 end

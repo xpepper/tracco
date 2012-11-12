@@ -3,9 +3,15 @@
 # TrelloEffortTracker
 
 The purpose of this tool is to extract and track estimates and actual efforts on Trello cards.
+You just have to notify all of your estimates and efforts tracked on your Trello cards using a conventional format.
+This tool will extract and store these estimates and actual efforts to let you extract useful key metrics (e.g. estimate errors, remaining efforts, pair programming frequencies, and so on).
 
 The Trello API is used in readonly mode in this code, so all you need to access is your developer key.
-TrelloTracker uses the [Trello API Ruby wrapper](https://github.com/jeremytregunna/ruby-trello) for this purpose.
+TrelloEffortTracker uses the [Trello API Ruby wrapper](https://github.com/jeremytregunna/ruby-trello) for this purpose.
+
+## Requirements
+* [rvm](https://rvm.io/rvm/install/)
+* [mongoDB](http://www.mongodb.org/) - mac users with homebrew will just run 'brew install mongodb' to have mongoDB installed on their machine.
 
 ## Setup
 Copy the config template
@@ -13,6 +19,12 @@ Copy the config template
     cp config/config.template.yaml config/config.yml
 
 and then fill the correct values in the placeholders in config.yml (see _"Where do I get an API key and API secret?"_ section).
+
+Then copy the mongoid config template
+
+    cp config/mongoid.template.yaml config/mongoid.yml
+
+and fill the correct values for the mongodb environments ([see here](http://mongoid.org/en/mongoid/docs/installation.html#configuration) to have more details).
 
 Then run bundle to get all the required gems:
 
@@ -29,7 +41,15 @@ You will need an access token to use ruby-trello, which trello tracker depends o
 At the end of this process, You'll be told to give some key to the app, this is what you want to put in the access\_token\_key yml prop file.
 
 ## Usage
-Just create a TrelloTracker instance and execute its track method.
+The best way is to use one of the rake task defined, e.g.
+
+    rake 'run:today[test]' # will extract today's tracked data and store on the test db
+
+    rake run:today  # will extract today's tracked data  and store on the default (that is development) db
+
+    rake 'run:from_day[2012-11-1, production]'  # will extract tracked data starting from November the 1st, 2012 and store them into the production db
+
+Or you may just create a TrelloTracker instance and execute its track method.
 
     tracker = TrelloTracker.new
     tracker.track

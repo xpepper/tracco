@@ -9,6 +9,7 @@ gem 'rainbow'
 gem 'chronic'
 
 gem 'mongoid'
+gem 'bson_ext'
 
 group :test do
   gem 'rspec'

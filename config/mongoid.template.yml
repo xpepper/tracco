@@ -14,6 +14,9 @@ test:
 
 
 production:
+  autocreate_indexes: true
+  persist_in_safe_mode: true
+
   sessions:
     default:
       database: trello_effort_tracker_production

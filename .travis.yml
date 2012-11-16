@@ -1,7 +1,6 @@
 language: ruby
 rvm:
   - 1.9.3
-  - 1.9.2
 
 env:
   developer_public_key: e/zPNGKOwapoxFWZs/CBTAhaoqrDTkqqz+InOmCUvGBcZBpUxH398nPLv8Hi\nNQSvWuspzqanyNbbQrTA/2XhsWF1gIFX+gNexYM7S+MxtRwUD3cpVT8DzVOS\nMuckdMTEAADVsm92vIX/bUs5igxD4+zfXlhzXUNDrzRlZnsUF2M=

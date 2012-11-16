@@ -14,11 +14,6 @@ class TrackedCard
   embeds_many :estimates
   embeds_many :efforts
 
-  # TODO
-  # belongs_to :board
-  # belongs_to :list
-  # has_many :members
-
   validates_presence_of :name, :short_id, :trello_id
   validates_numericality_of :short_id
 

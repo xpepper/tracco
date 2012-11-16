@@ -10,8 +10,10 @@ class TrelloTracker
 
   def track(from_date=Date.today)
     notifications = tracker.notifications_from(from_date)
+
+    oldest, latest = boundary_dates_in(notifications)
     Trello.logger.info "Connected with #{db_environment} db env."
-    Trello.logger.info "Processing #{notifications.size} tracking notifications starting from #{from_date}..."
+    Trello.logger.info "Processing #{notifications.size} tracking notifications (from #{oldest} to #{latest}) starting from #{from_date}..."
 
     notifications.each do |notification|
       tracking = Tracking.new(notification)
@@ -40,4 +42,10 @@ class TrelloTracker
     @tracker ||= Member.find(tracker_username)
   end
 
+  private
+
+  def boundary_dates_in(notifications)
+    dates = notifications.map {|n| Chronic.parse(n.date)}
+    [dates.min, dates.max]
+  end
 end

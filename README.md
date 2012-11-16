@@ -1,4 +1,5 @@
 [![Build Status](https://secure.travis-ci.org/xpepper/trello_effort_tracker.png)](http://travis-ci.org/xpepper/trello_effort_tracker)
+[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/xpepper/trello_effort_tracker)
 
 # TrelloEffortTracker
 

@@ -1,13 +1,11 @@
 class TrelloTracker
-  include TrelloConfiguration
   include TrelloAuthorize
   include Trello
 
   trap("SIGINT") { exit! }
 
   def initialize(custom_auth_params = {})
-    auth_params = configuration["trello"].merge(custom_auth_params)
-    init_trello(auth_params)
+    authorize_on_trello(custom_auth_params)
   end
 
   def track(from_date=Date.today)

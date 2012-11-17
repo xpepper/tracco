@@ -4,14 +4,14 @@ require 'trello'
 describe TrelloConfiguration do
   include TrelloConfiguration
 
-  describe "#default_authorization_params" do
+  describe "#authorization_params_from_config_file" do
     it "loads the default trello auth params from config yml" do
       config_hash = {"trello" => { "developer_public_key" => "any_dpk", "access_token_key" => "any_atk", "developer_secret" => "any_ds"} }
       YAML.should_receive(:load_file).with("config/config.yml").and_return(config_hash)
 
-      default_authorization_params["developer_public_key"].should == "any_dpk"
-      default_authorization_params["access_token_key"].should == "any_atk"
-      default_authorization_params["developer_secret"].should == "any_ds"
+      authorization_params_from_config_file["developer_public_key"].should == "any_dpk"
+      authorization_params_from_config_file["access_token_key"].should == "any_atk"
+      authorization_params_from_config_file["developer_secret"].should == "any_ds"
     end    
   end
   

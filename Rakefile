@@ -26,7 +26,7 @@ namespace :run do
 
   task :ensure_environment do
     %w{developer_public_key developer_secret access_token_key}.each do |each_name|
-      unless ENV[each_name] || default_authorization_params[each_name]
+      unless ENV[each_name] || authorization_params_from_config_file[each_name]
         puts "ERROR: Missing <#{each_name}> environment variable."
         exit 1
       end

@@ -10,16 +10,16 @@ module TrelloConfiguration
 
   private
 
+  def db_environment
+    ENV['MONGOID_ENV']
+  end
+
   def configuration
     @configuration ||= load_configuration
   end
 
   def load_configuration
     YAML.load_file("config/config.yml")
-  end
-
-  def db_environment
-    ENV['MONGOID_ENV']
   end
 
 end

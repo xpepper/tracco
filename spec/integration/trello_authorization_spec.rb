@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'trello'
 
-describe TrelloAuthorize do
+describe "TrelloAuthorization" do
   include TrelloAuthorize
 
   it "authorizes connection to Trello", :needs_valid_configuration => true do

@@ -4,6 +4,7 @@ class Estimate
 
   field :amount,  type: BigDecimal
   field :date,    type: Date
+  field :tracking_notification_id
 
   embedded_in :tracked_card
 

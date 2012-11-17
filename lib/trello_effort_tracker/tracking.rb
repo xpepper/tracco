@@ -33,7 +33,7 @@ class Tracking
 
   def estimate
     estimate = convert_to_hours(raw_estimate)
-    Estimate.new(amount: estimate, date: date) if estimate
+    Estimate.new(amount: estimate, date: date, tracking_notification_id: @tracking_notification.id) if estimate
   end
 
   def effort?
@@ -44,7 +44,7 @@ class Tracking
     effort_amount = convert_to_hours(raw_effort)
     if effort_amount
       total_effort = effort_amount * effort_members.size
-      Effort.new(amount: total_effort, date: date, members: effort_members)
+      Effort.new(amount: total_effort, date: date, members: effort_members, tracking_notification_id: @tracking_notification.id)
     end
   end
 

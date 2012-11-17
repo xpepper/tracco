@@ -21,9 +21,10 @@ class TrelloTracker
         existing_card = TrackedCard.with_trello_id(tracking.card.trello_id)
         Trello.logger.debug "tracked card found: #{existing_card.first.name} with trello_id:#{existing_card.first.id}" if existing_card.first
         card = existing_card.first || tracking.card
-        if tracking.estimate?
+
+        if tracking.estimate? && card.estimates.none? {|e| e.tracking_notification_id == tracking.estimate.tracking_notification_id}
           card.estimates << tracking.estimate
-        elsif tracking.effort?
+        elsif tracking.effort? && card.efforts.none? {|e| e.tracking_notification_id == tracking.effort.tracking_notification_id}
           card.efforts << tracking.effort
         end
         card.save

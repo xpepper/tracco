@@ -13,12 +13,9 @@ end
 
 Bundler.require
 
-# force test env for the mongodb configuration
-ENV['MONGOID_ENV'] = "test"
-
-require 'trello_effort_tracker'
-
-require 'mongoid-rspec'
 RSpec.configure do |configuration|
   configuration.include Mongoid::Matchers
 end
+
+# force test env for the mongodb configuration
+TrelloConfiguration::Database.load_env("test")

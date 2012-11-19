@@ -15,5 +15,4 @@ require 'trello_effort_tracker/trello_tracker'
 
 require 'patches/trello/member'
 
-ENV['MONGOID_ENV'] ||= "development"
-Mongoid.load!("config/mongoid.yml", ENV['MONGOID_ENV'])
+TrelloConfiguration::Database.load_env(ENV['MONGOID_ENV'] || "development")

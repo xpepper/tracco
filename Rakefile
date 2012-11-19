@@ -12,7 +12,7 @@ namespace :run do
   desc "Run on the cards tracked starting from a given day, e.g. rake 'run:from_day[2012-11-1]'"
   task :from_day, [:starting_date, :db_env] => [:ensure_environment] do |t, args|
     args.with_defaults(starting_date: Date.today.to_s, db_env: "development")
-    ENV['MONGOID_ENV'] = args.db_env
+    TrelloConfiguration::Database.load_env(args.db_env)
 
     tracker = TrelloTracker.new
     tracker.track(Date.parse(args.starting_date))

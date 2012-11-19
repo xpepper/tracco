@@ -8,6 +8,13 @@ module TrelloConfiguration
     configuration["trello"]
   end
 
+  class Database
+    def self.load_env(db_env)
+      ENV['MONGOID_ENV'] = db_env
+      Mongoid.load!("config/mongoid.yml", db_env)
+    end
+  end
+
   private
 
   def db_environment

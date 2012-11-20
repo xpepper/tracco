@@ -1,6 +1,5 @@
 source :rubygems
 
-gem 'rake'
 gem 'trello_effort_tracker', :path => '.'
 
 gem 'ruby-trello', :require => 'trello'
@@ -12,6 +11,7 @@ gem 'mongoid'
 gem 'bson_ext'
 
 group :test do
+  gem 'rake'
   gem 'rspec'
   gem 'rspec-mocks'
   gem 'mongoid-rspec'

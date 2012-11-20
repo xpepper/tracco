@@ -12,6 +12,9 @@ env:
 services:
   - mongodb
 
+script: ./script/ci/run_build.sh
+
 before_script:
   - mongo trello_effort_tracker_test --eval 'db.addUser("travis", "test");'
   - "./script/ci/before_script.sh"
+

@@ -56,9 +56,7 @@ describe Tracking do
     end
 
     it "tracks the effort with the date given in the notification text, not the actual notification date" do
-      raw_data = create_notification(
-        data: { 'text' => "@trackinguser 22.11.2012 [6p]" },
-      date: "2012-09-19T12:46:13.713Z")
+      raw_data = create_notification( data: { 'text' => "@trackinguser 22.11.2012 [6p]" }, date: "2012-09-19T12:46:13.713Z")
 
       tracking = Tracking.new(raw_data)
 
@@ -84,55 +82,64 @@ describe Tracking do
 
   describe "#effort" do
     it "is nil when the notification does not contain an estimate" do
-      Tracking.new(unrecognized_notification).effort.should be_nil
+      with(unrecognized_notification) { |tracking| tracking.effort.should be_nil }
     end
 
     it "is the hour-based effort when the notification contains an effort in hours" do
-      raw_data = create_notification(
-        data: { 'text' => "@trackinguser +2h" },
-        date: "2012-10-28T21:06:14.801Z",
-      member_creator: stub(username: "pietrodibello"))
+      raw_data = create_notification(data: { 'text' => "@trackinguser +2h" },
+                                     date: "2012-10-28T21:06:14.801Z",
+                                     member_creator: stub(username: "pietrodibello"))
 
       Tracking.new(raw_data).effort.should == Effort.new(amount: 2.0, date: Date.parse('2012-10-28'), members: ["@pietrodibello"])
     end
 
     it "converts the effort in hours when the notification contains an effort in days" do
-      Tracking.new(create_notification(data: { 'text' => "@trackinguser +1.5d" })).effort.amount.should == 8+4
-      Tracking.new(create_notification(data: { 'text' => "@trackinguser +1.5g" })).effort.amount.should == 8+4
+      with_message("@trackinguser +1.5d") { |t| t.effort.amount.should == 8+4 }
+      with_message("@trackinguser +1.5g") { |t| t.effort.amount.should == 8+4 }
     end
 
     it "converts the effort in hours when the notification contains an effort in pomodori" do
-      raw_data = create_notification(data: { 'text' => "@trackinguser +10p" })
-      Tracking.new(raw_data).effort.amount.should == 5
+      with_message("@trackinguser +10p") { |t| t.effort.amount.should == 5}
     end
 
     it "fetch the effort from a complex effort message" do
-      raw_data = create_notification(data: { 'text' => "@trackinguser ho speso +2h e spero che stavolta possiamo rilasciarla" })
-      Tracking.new(raw_data).effort.amount.should == 2.0
+      with_message "@trackinguser ho speso +2h e spero che stavolta possiamo rilasciarla" do |tracking|
+        tracking.effort.amount.should == 2.0
+      end
+    end
+
+    it "fetch the effort even when beween square brackets" do
+      with_message "@trackinguser [+0.5h]" do |tracking|
+        tracking.effort.amount.should == 0.5
+      end
     end
 
     it "computes the effort considering all the mentioned team mates in the message" do
-      raw_data = create_notification(data: { 'text' => "@trackinguser +2h assieme a @michelepangrazzi e @alessandrodescovi" })
-      Tracking.new(raw_data).effort.amount.should == 2.0 * 3
+      with_message "@trackinguser +2h assieme a @michelepangrazzi e @alessandrodescovi" do |tracking|
+        tracking.effort.amount.should == 2.0 * 3
+      end
     end
 
     it "tracks all the team mates which spent that effort on the card" do
-      raw_data = create_notification(data: { 'text' => "@trackinguser +2h assieme a @michelepangrazzi e @alessandrodescovi" },
-                                     member_creator: stub(username: "pietrodibello"))
-      Tracking.new(raw_data).effort.members.should == ["@michelepangrazzi", "@alessandrodescovi", "@pietrodibello"]
+      notification = create_notification(data: { 'text' => "@trackinguser +2h assieme a @michelepangrazzi e @alessandrodescovi" },
+                                         member_creator: stub(username: "pietrodibello"))
+      with notification do |tracking|
+        tracking.effort.members.should == ["@michelepangrazzi", "@alessandrodescovi", "@pietrodibello"]
+      end
     end
 
     it "tracks the effort only on the team members listed between round brackets" do
-      raw_data = create_notification(data: { 'text' => "@trackinguser +3p (@alessandrodescovi @michelevincenzi)" },
+      notification = create_notification(data: { 'text' => "@trackinguser +3p (@alessandrodescovi @michelevincenzi)" },
                                      member_creator: stub(username: "pietrodibello"))
-      tracking = Tracking.new(raw_data)
 
-      tracking.effort.members.should == ["@alessandrodescovi", "@michelevincenzi"]
-      tracking.effort.amount.should == 1.5 * 2
+      with notification do |tracking|
+        tracking.effort.members.should == ["@alessandrodescovi", "@michelevincenzi"]
+        tracking.effort.amount.should == 1.5 * 2
+      end
     end
 
     it "does not have an effort when is an estimate" do
-      raw_data = create_notification(data: { 'text' => "@trackinguser stimata [6h]" }, member_creator: stub(username: "pietrodibello"))
+      raw_data = create_notification(data: { 'text' => "@trackinguser stimata [6h]" })
 
       tracking = Tracking.new(raw_data)
 
@@ -157,6 +164,12 @@ describe Tracking do
 
   end
 
+  private
+
+  def notification_with_message(message)
+    create_notification(data: { 'text' => message })
+  end
+
   def create_notification(custom_params)
     params = { data: { 'text' => "@trackinguser +2h" }, date: "2012-10-28T21:06:14.801Z", member_creator: stub(username: "pietrodibello") }
     params.merge!(custom_params)
@@ -170,6 +183,15 @@ describe Tracking do
 
   def create_effort(time_measurement)
     create_notification(data: { 'text' => "@trackinguser +4.5#{TIME_MEASUREMENTS[time_measurement]}]" })
+  end
+
+  def with(notification)
+    tracking = Tracking.new(notification)
+    yield(tracking)
+  end
+
+  def with_message(notification_message, &block)
+    with(notification_with_message(notification_message), &block)
   end
 
 end

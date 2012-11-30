@@ -90,7 +90,7 @@ class Tracking
     when DATE_REGEXP
       day, month, year = raw_tracking.scan(DATE_REGEXP).flatten
       "#{year}-#{month}-#{day}"
-    when /yesterday\s+\+#{DURATION_REGEXP}/
+    when /yesterday\s+\+#{DURATION_REGEXP}/, /\+#{DURATION_REGEXP}\s+yesterday/
       (notification_date - 1).to_s
     else
       @tracking_notification.date

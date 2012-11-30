@@ -167,6 +167,14 @@ describe Tracking do
       tracking.effort.date.should == Date.parse('2012-09-18')
     end
 
+    it "tracks the effort to yesterday when the keyword 'yesterday' is present before the effort amount" do
+      raw_data = create_notification(data: { 'text' => "@trackinguser +6p yesterday" }, date: "2012-09-19T12:46:13.713Z")
+
+      tracking = Tracking.new(raw_data)
+
+      tracking.effort.date.should == Date.parse('2012-09-18')
+    end
+
   end
 
   private

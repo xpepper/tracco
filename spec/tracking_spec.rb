@@ -81,8 +81,13 @@ describe Tracking do
   end
 
   describe "#effort" do
+
     it "is nil when the notification does not contain an estimate" do
       with(unrecognized_notification) { |tracking| tracking.effort.should be_nil }
+    end
+
+    it "does not parse effort in minutes (e.g. +30m)" do
+      with_message("@trackinguser +30m") { |tracking| tracking.effort.should be_nil }
     end
 
     it "is the hour-based effort when the notification contains an effort in hours" do

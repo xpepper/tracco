@@ -106,6 +106,16 @@ To set an effort just for other Trello users (excluding the current user), just 
 
     @trackinguser +3p (@alessandrodescovi @michelevincenzi)
 
+## Database import/export
+To export the db you can execute something like:
+
+    mongoexport --db trello_effort_tracker_production --collection tracked_cards --out trello_effort_tracker_production.json
+
+To reimport that db:
+
+    mongoimport  --db trello_effort_tracker_production --collection tracked_cards --file trello_effort_tracker_production.json
+
+
 ## Roadmap and improvements
 We develop Trello Effort Tracker using [Trello itself](https://trello.com/board/trello-effort-tracker-roadmap/509c3228dcb1ac3f1c018791).
 

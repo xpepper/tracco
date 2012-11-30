@@ -2,7 +2,7 @@ module Trello
 
   class Member
     def notifications_from(from_date)
-      notifications.select &greater_than_or_equal_to(from_date)
+      notifications(limit:1000).select &greater_than_or_equal_to(from_date)
     end
     
     private

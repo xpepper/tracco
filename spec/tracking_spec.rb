@@ -11,8 +11,16 @@ describe Tracking do
 
   let(:unrecognized_notification) { create_notification(data: { 'text' => '@trackinguser hi there!' }) }
 
-  describe "#estimate?" do
+  describe "#unknown_format?" do
+    it "tells when a notification cannot be interpreted as a tracking info" do
+      Tracking.new(unrecognized_notification).unknown_format?.should be_true
 
+      with_message("@trackinguser +30m") { |tracking| tracking.unknown_format?.should be_true }
+    end
+
+  end
+
+  describe "#estimate?" do
     it "is false when the notification does not contain an estimate" do
       Tracking.new(unrecognized_notification).estimate?.should be_false
     end

@@ -19,16 +19,13 @@ class TrelloTracker
       tracking = Tracking.new(notification)
       begin
         existing_card = TrackedCard.with_trello_id(tracking.card.trello_id)
-        Trello.logger.debug "Tracked card found: #{existing_card.first.name} with trello_id: #{existing_card.first.id}" if existing_card
-        card = existing_card || tracking.card
+        Trello.logger.debug "Tracked card found: #{existing_card.name} with trello_id: #{existing_card.id}" if existing_card
 
-        if tracking.estimate? && card.estimates.none? {|e| e.tracking_notification_id == tracking.estimate.tracking_notification_id}
-          card.estimates << tracking.estimate
-        elsif tracking.effort? && card.efforts.none? {|e| e.tracking_notification_id == tracking.effort.tracking_notification_id}
-          card.efforts << tracking.effort
-        end
+        card = existing_card || tracking.card
+        card.add(tracking)
         card.save
-        Trello.logger.info "[#{tracking.date}] From #{tracking.notifier.username.color(:green)}\t on card '#{tracking.card.name.color(:yellow)}': #{tracking.send(:raw_tracking)}"
+
+        Trello.logger.info tracking
 
       rescue StandardError => e
         Trello.logger.error "skipping tracking: #{e.message}".color(:magenta)
@@ -36,7 +33,7 @@ class TrelloTracker
       end
     end
     Trello.logger.info "Done tracking cards!".color(:green)
-    TrackedCard.all.each { |tracked_card| Trello.logger.info(tracked_card.to_s.color(:yellow)) }
+    print_all_cards
   end
 
   def tracker
@@ -49,4 +46,9 @@ class TrelloTracker
     dates = notifications.map { |each_notification| Chronic.parse(each_notification.date) }
     [dates.min, dates.max]
   end
+
+  def print_all_cards
+    TrackedCard.all.each { |tracked_card| Trello.logger.info(tracked_card.to_s.color(:yellow)) }
+  end
+
 end

@@ -55,6 +55,14 @@ class Tracking
     effort_members
   end
 
+  def unknown_format?
+    !estimate? && !effort?
+  end
+
+  def to_s
+    "[#{date}] From #{notifier.username.color(:green)}\t on card '#{card.name.color(:yellow)}': #{raw_text}"
+  end
+
   private
 
   def should_count_only_listed_members?
@@ -66,7 +74,11 @@ class Tracking
   end
 
   def raw_tracking
-    @tracking_notification.data['text'].gsub("@#{tracker_username}", "")
+    raw_text.gsub("@#{tracker_username}", "")
+  end
+
+  def raw_text
+    @tracking_notification.data['text']
   end
 
   def raw_estimate

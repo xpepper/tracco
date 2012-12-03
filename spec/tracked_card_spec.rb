@@ -20,10 +20,26 @@ describe TrackedCard do
     it "is valid when has a name, a short id and a trello id" do
       TrackedCard.new(name: "any", trello_id: "123456789", short_id: 1234).should be_valid
     end
-
   end
 
-  it "has no estimates not efforts initially" do
+  describe ".with_trello_id" do
+    before(:each) do
+      TrackedCard.delete_all
+    end
+    after(:each) do
+      TrackedCard.delete_all
+    end
+
+    it "find a card given its Trello id" do
+      card = TrackedCard.create(name: "any card", short_id: 1234, trello_id: "1")
+      another_card = TrackedCard.create(name: "another card", short_id: 3456, trello_id: "2")
+
+      TrackedCard.with_trello_id("1").should == card
+      TrackedCard.with_trello_id("3").should == nil
+    end
+  end
+
+  it "has no estimates and efforts initially" do
     card.estimates.should be_empty
     card.efforts.should be_empty
   end

@@ -12,15 +12,15 @@ class TrelloTracker
     notifications = tracker.notifications_from(from_date)
 
     oldest, latest = boundary_dates_in(notifications)
-    Trello.logger.info "Connected with #{db_environment.color(:green)} db env."
+    Trello.logger.info "Connected to #{db_environment.color(:green)} db env."
     Trello.logger.info "Processing #{notifications.size} tracking notifications (from #{oldest} to #{latest}) starting from #{from_date}..."
 
     notifications.each do |notification|
       tracking = Tracking.new(notification)
       begin
         existing_card = TrackedCard.with_trello_id(tracking.card.trello_id)
-        Trello.logger.debug "Tracked card found: #{existing_card.first.name} with trello_id: #{existing_card.first.id}" if existing_card.first
-        card = existing_card.first || tracking.card
+        Trello.logger.debug "Tracked card found: #{existing_card.first.name} with trello_id: #{existing_card.first.id}" if existing_card
+        card = existing_card || tracking.card
 
         if tracking.estimate? && card.estimates.none? {|e| e.tracking_notification_id == tracking.estimate.tracking_notification_id}
           card.estimates << tracking.estimate
@@ -46,7 +46,7 @@ class TrelloTracker
   private
 
   def boundary_dates_in(notifications)
-    dates = notifications.map {|n| Chronic.parse(n.date)}
+    dates = notifications.map { |each_notification| Chronic.parse(each_notification.date) }
     [dates.min, dates.max]
   end
 end

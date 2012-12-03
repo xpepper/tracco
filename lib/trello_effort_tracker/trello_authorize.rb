@@ -13,9 +13,20 @@ module TrelloAuthorize
   private
 
   def init_trello(auth_params)
-    Trello::Authorization.const_set(:AuthPolicy, OAuthPolicy)
+    ignoring_warnings do
+      Trello::Authorization.const_set(:AuthPolicy, OAuthPolicy)
+    end
 
     OAuthPolicy.consumer_credential = OAuthCredential.new(auth_params["developer_public_key"], auth_params["developer_secret"])
     OAuthPolicy.token = OAuthCredential.new(auth_params["access_token_key"], nil)
+  end
+
+  def ignoring_warnings(&block)
+    begin
+      v, $VERBOSE = $VERBOSE, nil
+      block.call if block
+    ensure
+      $VERBOSE = v
+    end
   end
 end

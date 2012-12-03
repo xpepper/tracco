@@ -17,7 +17,11 @@ class TrackedCard
   validates_presence_of :name, :short_id, :trello_id
   validates_numericality_of :short_id
 
-  scope :with_trello_id, ->(a_trello_id){ where(trello_id: a_trello_id) }
+  scope :all_by_trello_id, ->(a_trello_id) { where(trello_id: a_trello_id) }
+
+  def self.with_trello_id(trello_id)
+    all_by_trello_id(trello_id).first
+  end
 
   def self.build_from(trello_card)
     new(trello_card.attributes.merge(trello_id: trello_card.id))

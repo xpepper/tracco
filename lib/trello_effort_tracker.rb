@@ -16,3 +16,5 @@ require 'trello_effort_tracker/trello_tracker'
 require 'patches/trello/member'
 
 TrelloConfiguration::Database.load_env(ENV['MONGOID_ENV'] || "development")
+
+Trello.logger.level = Logger::DEBUG

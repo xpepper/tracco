@@ -18,6 +18,14 @@ namespace :spec do
   end
 end
 
+
+desc "Open an irb session preloaded with this library"
+task :console do
+  include TrelloConfiguration
+
+  sh "irb -rubygems -I lib -r trello_effort_tracker.rb"
+end
+
 namespace :run do
   include TrelloConfiguration
 

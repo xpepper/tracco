@@ -4,7 +4,13 @@ require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec)
 
 task :default => :spec
-task :specs => :spec
+task :specs   => :spec
+task :c       => :console
+
+desc "Open an irb session preloaded with this library"
+task :console do
+  sh "irb -rubygems -I lib -r trello_effort_tracker.rb -r startup_trello.rb"
+end
 
 namespace :spec do
   desc "Run fast specs"
@@ -16,14 +22,6 @@ namespace :spec do
   RSpec::Core::RakeTask.new(:slow) do |t|
     t.rspec_opts = '--tag needs_valid_configuration'
   end
-end
-
-
-desc "Open an irb session preloaded with this library"
-task :console do
-  include TrelloConfiguration
-
-  sh "irb -rubygems -I lib -r trello_effort_tracker.rb -r startup_trello.rb"
 end
 
 namespace :run do

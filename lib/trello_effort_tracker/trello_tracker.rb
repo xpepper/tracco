@@ -12,7 +12,6 @@ class TrelloTracker
     notifications = tracker.notifications_from(from_date)
 
     oldest, latest = boundary_dates_in(notifications)
-    Trello.logger.info "Connected to #{db_environment.color(:green)} db env."
     Trello.logger.info "Processing #{notifications.size} tracking notifications (from #{oldest} to #{latest}) starting from #{from_date}..."
 
     notifications.each do |notification|

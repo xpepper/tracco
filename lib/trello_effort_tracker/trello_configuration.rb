@@ -12,6 +12,7 @@ module TrelloConfiguration
     def self.load_env(db_env)
       ENV['MONGOID_ENV'] = db_env
       Mongoid.load!("config/mongoid.yml", db_env)
+      Trello.logger.info "Mongo db env: #{db_env.color(:green)}."
     end
   end
 

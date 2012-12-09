@@ -8,11 +8,11 @@ class TrelloTracker
     authorize_on_trello(custom_auth_params)
   end
 
-  def track(from_date=Date.today)
-    notifications = tracker.notifications_from(from_date)
+  def track(starting_date=Date.today)
+    notifications = tracker.notifications_from(starting_date)
 
     oldest, latest = boundary_dates_in(notifications)
-    Trello.logger.info "Processing #{notifications.size} tracking notifications (from #{oldest} to #{latest}) starting from #{from_date}..."
+    Trello.logger.info "Processing #{notifications.size} tracking notifications (from #{oldest} to #{latest}) starting from #{starting_date}..."
 
     notifications.each do |notification|
       tracking = Tracking.new(notification)

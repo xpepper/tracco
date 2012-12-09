@@ -68,6 +68,12 @@ You can set the Trello's auth params in three ways
 
         tracker.track
 
+### Console
+You can open a irb console with the ruby-trello gem and this gem loaded, so that you can query the db or the Trello API and play with them
+
+    rake console
+
+
 ### Storage configuration
 Tracking data collected from Trello are stored in a MongoDB, as configured in config/mongoid.yml.
 To define which mongodb env is actually used, just set the MONGOID_ENV env variable. Development is the default mongo environment.

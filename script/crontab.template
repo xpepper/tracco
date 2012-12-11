@@ -1,0 +1,6 @@
+SHELL=/Users/pierodibello/.rvm/bin/rvm-shell
+GEMSET="ruby-1.9.3-p194@spikes"
+PROJECT_PATH="/Users/pierodibello/Documents/workspace/trello_effort_tracker"
+
+# m h  dom mon dow   command
+*/10 * * * *  rvm-shell $GEMSET -c "cd $PROJECT_PATH;  bundle exec rake run:today[production]" >> /tmp/crontab.out 2>&1

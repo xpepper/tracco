@@ -35,11 +35,11 @@ class TrelloTracker
     print_all_cards
   end
 
+  private
+
   def tracker
     @tracker ||= Member.find(tracker_username)
   end
-
-  private
 
   def boundary_dates_in(notifications)
     dates = notifications.map { |each_notification| Chronic.parse(each_notification.date) }

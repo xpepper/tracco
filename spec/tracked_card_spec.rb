@@ -4,7 +4,7 @@ describe TrackedCard do
 
   subject(:card) { TrackedCard.new(name: "any", short_id: 1234, trello_id: "123123") }
 
-  %w{piero tommaso}.each do |username|
+  %w{piero tommaso michele}.each do |username|
     let(username.to_sym) { Member.new(username: username) }
   end
 
@@ -85,7 +85,17 @@ describe TrackedCard do
       card.total_effort.should == 3+5
     end
   end
+  
+  describe "#members" do
+    it "lists all the members which spent some effort on the card" do
+      card.efforts << Effort.new(amount: 3, date: Date.today, members: [piero, tommaso])
+      card.efforts << Effort.new(amount: 5, date: Date.today, members: [tommaso])
+      card.efforts << Effort.new(amount: 5, date: Date.today, members: [tommaso, michele])
 
+      card.members.should == [piero, tommaso, michele]
+    end
+  end
+  
   describe ".build_from" do
     it "builds a TrackedCard from a Trello Card" do
       tracked_card = TrackedCard.build_from(Trello::Card.new("name" => "a name", "desc" => "any description"))

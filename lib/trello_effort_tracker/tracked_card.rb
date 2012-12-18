@@ -43,6 +43,10 @@ class TrackedCard
     efforts.map(&:amount).inject(0, &:+)
   end
 
+  def members
+    efforts.map(&:members).flatten.uniq
+  end
+
   def to_s
     "[#{name}]. Total effort: #{total_effort}h. Estimates #{estimates.map(&:to_s)}. Efforts: #{efforts.map(&:to_s)}"
   end

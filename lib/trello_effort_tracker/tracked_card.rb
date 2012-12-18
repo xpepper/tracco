@@ -24,7 +24,9 @@ class TrackedCard
   end
 
   def self.build_from(trello_card)
-    new(trello_card.attributes.merge(trello_id: trello_card.id))
+    trello_card_id = trello_card.id
+    trello_card.attributes.delete(:id)
+    new(trello_card.attributes.merge(trello_id: trello_card_id))
   end
 
   def add(tracking)

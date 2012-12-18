@@ -27,5 +27,12 @@ describe Member do
 
       member.username.should == "piero"
     end
+
+    it "takes the Trello Member id and set it as trello_id" do
+      member = Member.build_from(Trello::Member.new("username" => "piero", "id" => "1234567abc"))
+
+      member.id.should_not    == "1234567abc"
+      member.trello_id.should == "1234567abc"
+    end
   end
 end

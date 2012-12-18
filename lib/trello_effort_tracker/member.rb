@@ -14,8 +14,9 @@ class Member
   validates_presence_of :username  
 
   def self.build_from(trello_member)
+    trello_member_id = trello_member.id
     trello_member.attributes.delete(:id)
-    new(trello_member.attributes.merge(trello_id: trello_member.id))
+    new(trello_member.attributes.merge(trello_id: trello_member_id))
   end
 
   def at_username

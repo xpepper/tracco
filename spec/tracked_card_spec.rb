@@ -4,6 +4,10 @@ describe TrackedCard do
 
   subject(:card) { TrackedCard.new(name: "any", short_id: 1234, trello_id: "123123") }
 
+  %w{piero tommaso}.each do |username|
+    let(username.to_sym) { Member.new(username: username) }
+  end
+
   describe "validations" do
     it "is not valid when a name is not given" do
       TrackedCard.new(trello_id: "123456789", short_id: 1234).should_not be_valid
@@ -52,8 +56,8 @@ describe TrackedCard do
   end
 
   it "is possible to add efforts" do
-    card.efforts << Effort.new(amount: 3, date: Date.today, members: [Member.new(username: "piero"),   Member.new(username: "tommaso")])
-    card.efforts << Effort.new(amount: 5, date: Date.today, members: [Member.new(username: "tommaso")])
+    card.efforts << Effort.new(amount: 3, date: Date.today, members: [piero, tommaso])
+    card.efforts << Effort.new(amount: 5, date: Date.today, members: [tommaso])
 
     card.efforts.should have(2).efforts
   end
@@ -75,8 +79,8 @@ describe TrackedCard do
     end
 
     it "computes the total effort on the card" do
-      card.efforts << Effort.new(amount: 3, date: Date.today, members: [Member.new(username: "piero"),   Member.new(username: "tommaso")])
-      card.efforts << Effort.new(amount: 5, date: Date.today, members: [Member.new(username: "tommaso")])
+      card.efforts << Effort.new(amount: 3, date: Date.today, members: [piero, tommaso])
+      card.efforts << Effort.new(amount: 5, date: Date.today, members: [tommaso])
 
       card.total_effort.should == 3+5
     end
@@ -89,6 +93,14 @@ describe TrackedCard do
       tracked_card.name.should == "a name"
       tracked_card.description.should == "any description"
     end
+
+    it "takes the Trello Card id and set it as trello_id" do
+      tracked_card = TrackedCard.build_from(Trello::Card.new("id" => "abc123", "name" => "a name", "desc" => "any description"))
+
+      tracked_card.id.should_not    == "abc123"
+      tracked_card.trello_id.should == "abc123"
+    end
+
   end
 
   describe "#to_s" do

@@ -48,13 +48,6 @@ class Tracking
     end
   end
 
-  def effort_members
-    effort_members = raw_tracking.scan(/(@\w+)/).flatten
-    effort_members << notifier_username unless should_count_only_listed_members?
-
-    effort_members
-  end
-
   def unknown_format?
     !estimate? && !effort?
   end
@@ -65,12 +58,23 @@ class Tracking
 
   private
 
-  def should_count_only_listed_members?
-    raw_tracking =~ /\((@\w+\W*\s*)+\)/
+  def effort_members
+    @effort_members ||= users_involved_in_the_effort.map do |username|
+      Member.build_from(Trello::Member.find(username))
+    end
+
+    @effort_members
   end
 
-  def notifier_username
-    "@#{notifier.username}"
+  def users_involved_in_the_effort
+    users_involved_in_the_effort = raw_tracking.scan(/@(\w+)/).flatten
+    users_involved_in_the_effort << notifier.username unless should_count_only_listed_members?
+
+    users_involved_in_the_effort
+  end
+
+  def should_count_only_listed_members?
+    raw_tracking =~ /\((@\w+\W*\s*)+\)/
   end
 
   def raw_tracking

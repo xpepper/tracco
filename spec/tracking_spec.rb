@@ -90,6 +90,14 @@ describe Tracking do
 
   describe "#effort" do
 
+    %w{pietrodibello michelepangrazzi alessandrodescovi michelevincenzi}.each do |username|
+      let(username.to_sym) { Member.new(username: username) }
+    end
+
+    before(:each) do
+      Trello::Member.stub(:find).and_return(Member.new(username: "any"))
+    end
+
     it "is nil when the notification does not contain an estimate" do
       with(unrecognized_notification) { |tracking| tracking.effort.should be_nil }
     end
@@ -99,11 +107,13 @@ describe Tracking do
     end
 
     it "is the hour-based effort when the notification contains an effort in hours" do
+      Trello::Member.should_receive(:find).with("michelepangrazzi").and_return(michelepangrazzi)
+
       raw_data = create_notification(data: { 'text' => "@trackinguser +2h" },
                                      date: "2012-10-28T21:06:14.801Z",
-                                     member_creator: stub(username: "pietrodibello"))
+                                     member_creator: stub(username: "michelepangrazzi"))
 
-      Tracking.new(raw_data).effort.should == Effort.new(amount: 2.0, date: Date.parse('2012-10-28'), members: ["@pietrodibello"])
+      Tracking.new(raw_data).effort.should == Effort.new(amount: 2.0, date: Date.parse('2012-10-28'), members: [michelepangrazzi])
     end
 
     it "converts the effort in hours when the notification contains an effort in days" do
@@ -134,19 +144,27 @@ describe Tracking do
     end
 
     it "tracks all the team mates which spent that effort on the card" do
+      %w{pietrodibello michelepangrazzi alessandrodescovi}.each do |username|
+        Trello::Member.should_receive(:find).with(username).and_return(self.send(username))
+      end
+
       notification = create_notification(data: { 'text' => "@trackinguser +2h assieme a @michelepangrazzi e @alessandrodescovi" },
                                          member_creator: stub(username: "pietrodibello"))
       with notification do |tracking|
-        tracking.effort.members.should == ["@michelepangrazzi", "@alessandrodescovi", "@pietrodibello"]
+        tracking.effort.members.should == [michelepangrazzi, alessandrodescovi, pietrodibello]
       end
     end
 
     it "tracks the effort only on the team members listed between round brackets" do
+      %w{michelevincenzi alessandrodescovi}.each do |username|
+        Trello::Member.should_receive(:find).with(username).and_return(self.send(username))
+      end
+
       notification = create_notification(data: { 'text' => "@trackinguser +3p (@alessandrodescovi @michelevincenzi)" },
                                      member_creator: stub(username: "pietrodibello"))
 
       with notification do |tracking|
-        tracking.effort.members.should == ["@alessandrodescovi", "@michelevincenzi"]
+        tracking.effort.members.should == [alessandrodescovi, michelevincenzi]
         tracking.effort.amount.should == 1.5 * 2
       end
     end

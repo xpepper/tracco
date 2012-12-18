@@ -52,8 +52,8 @@ describe TrackedCard do
   end
 
   it "is possible to add efforts" do
-    card.efforts << Effort.new(amount: 3, date: Date.today, members: %w{@piero @tommaso})
-    card.efforts << Effort.new(amount: 5, date: Date.today, members: %w{@tommaso})
+    card.efforts << Effort.new(amount: 3, date: Date.today, members: [Member.new(username: "piero"),   Member.new(username: "tommaso")])
+    card.efforts << Effort.new(amount: 5, date: Date.today, members: [Member.new(username: "tommaso")])
 
     card.efforts.should have(2).efforts
   end
@@ -75,8 +75,8 @@ describe TrackedCard do
     end
 
     it "computes the total effort on the card" do
-      card.efforts << Effort.new(amount: 3, date: Date.today, members: %w{@piero @tommaso})
-      card.efforts << Effort.new(amount: 5, date: Date.today, members: %w{@tommaso})
+      card.efforts << Effort.new(amount: 3, date: Date.today, members: [Member.new(username: "piero"),   Member.new(username: "tommaso")])
+      card.efforts << Effort.new(amount: 5, date: Date.today, members: [Member.new(username: "tommaso")])
 
       card.total_effort.should == 3+5
     end
@@ -99,8 +99,8 @@ describe TrackedCard do
     it "describes the card as a string" do
       card = TrackedCard.new(name: "A Story Name")
       card.estimates << Estimate.new(amount: 5, date: Date.today)
-      card.efforts << Effort.new(amount: 3, date: Date.today, members: %w{@piero @tommaso})
-      card.efforts << Effort.new(amount: 6, date: Date.today, members: %w{@piero @tommaso})
+      card.efforts << Effort.new(amount: 3, date: Date.today, members: [Member.new(username: "piero"),   Member.new(username: "tommaso")])
+      card.efforts << Effort.new(amount: 6, date: Date.today, members: [Member.new(username: "piero"),   Member.new(username: "tommaso")])
 
       card.to_s.should == %Q{[A Story Name]. Total effort: 9.0h. Estimates ["[2012-11-05] estimated 5.0 hours"]. Efforts: ["[2012-11-05] spent 3.0 hours by @piero, @tommaso", "[2012-11-05] spent 6.0 hours by @piero, @tommaso"]}
 

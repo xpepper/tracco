@@ -4,9 +4,9 @@ class Effort
 
   field :amount,  type: BigDecimal
   field :date,    type: Date
-  field :members, type: Array
   field :tracking_notification_id
 
+  embeds_many :members
   embedded_in :tracked_card
 
   validates_presence_of :amount, :date, :members
@@ -19,7 +19,7 @@ class Effort
   end
 
   def to_s
-    "[#{date}] spent #{amount} hours by #{members.join(", ")}"
+    "[#{date}] spent #{amount} hours by #{members.map(&:at_username).join(", ")}"
   end
 
 end

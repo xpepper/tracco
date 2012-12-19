@@ -10,8 +10,8 @@ class Member
   field :url
 
   embedded_in :effort
-  
-  validates_presence_of :username  
+
+  validates_presence_of :username
 
   def self.build_from(trello_member)
     trello_member_id = trello_member.id
@@ -21,6 +21,10 @@ class Member
 
   def at_username
     "@#{username}"
+  end
+
+  def avatar_url
+    "http://trello-avatars.s3.amazonaws.com/#{avatar_id}/30.png"
   end
 
   def ==(other)

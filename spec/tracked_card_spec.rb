@@ -144,6 +144,15 @@ describe TrackedCard do
     end
   end
 
+  describe "#no_tracking?" do
+    it "is false when there's no effort or estimate tracked on the card" do
+      card.no_tracking?.should be_true
+      
+      card.estimates << Estimate.new(amount: 5, date: Date.yesterday)
+      card.no_tracking?.should be_false
+    end
+  end
+
   describe ".build_from" do
     it "builds a TrackedCard from a Trello Card" do
       tracked_card = TrackedCard.build_from(Trello::Card.new("name" => "a name", "desc" => "any description"))

@@ -39,6 +39,10 @@ class TrackedCard
     end
   end
 
+  def no_tracking?
+    first_activity_date.nil?
+  end
+  
   def first_activity_date
     [working_start_date, first_estimate_date].compact.min
   end

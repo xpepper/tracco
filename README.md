@@ -37,7 +37,7 @@ Log in as a Trello user and visit [this URL](https://trello.com/1/appKey/generat
 ### Where do I get an API Access Token Key?
 You will need an access token to use ruby-trello, which trello tracker depends on. To get it, you'll need to go to this URL:
 
-    https://trello.com/1/connect?key=<YOUR_DEVELOPER_PUBLIC_KEY>&name=name=Trello+Effort+Tracker&response_type=token&scope=read,write&expiration=never
+    https://trello.com/1/connect?key=<YOUR_DEVELOPER_PUBLIC_KEY>&name=Trello+Effort+Tracker&response_type=token&scope=read,write&expiration=never
 
 At the end of this process, You'll be told to give some key to the app, this is what you want to put in the access\_token\_key yml prop file.
 

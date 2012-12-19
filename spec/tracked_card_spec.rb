@@ -47,13 +47,30 @@ describe TrackedCard do
     end
   end
 
+  describe ".build_from" do
+    it "builds a TrackedCard from a Trello Card" do
+      tracked_card = TrackedCard.build_from(Trello::Card.new("name" => "a name", "desc" => "any description"))
+
+      tracked_card.name.should == "a name"
+      tracked_card.description.should == "any description"
+    end
+
+    it "takes the Trello Card id and set it as trello_id" do
+      tracked_card = TrackedCard.build_from(Trello::Card.new("id" => "abc123", "name" => "a name", "desc" => "any description"))
+
+      tracked_card.id.should_not    == "abc123"
+      tracked_card.trello_id.should == "abc123"
+    end
+
+  end
+
   it "has no estimates and efforts initially" do
     card.estimates.should be_empty
     card.efforts.should be_empty
   end
 
   it "is possible to add estimates" do
-    card.estimates << Estimate.new(amount: 5, date: Date.today.prev_day)
+    card.estimates << Estimate.new(amount: 5, date: Date.yesterday)
     card.estimates << Estimate.new(amount: 12, date: Date.today)
 
     card.estimates.should have(2).estimates
@@ -90,6 +107,62 @@ describe TrackedCard do
     end
   end
 
+  describe "#last_estimate_error" do
+    it "is nil when the card has no estimate" do
+      card.efforts << Effort.new(amount: 5, date: Date.today, members: [tommaso])
+
+      card.last_estimate_error.should be_nil
+    end
+
+    it "is nil when the card has no effort" do
+      card.efforts << Estimate.new(amount: 5, date: Date.today)
+
+      card.last_estimate_error.should be_nil
+    end
+
+    it "is zero when actual effort is equal to estimate" do
+      card.estimates << Estimate.new(amount: 5, date: Date.today)
+      card.efforts << Effort.new(amount: 5, date: Date.today, members: [tommaso])
+
+      card.last_estimate_error.should == 0.0
+    end
+
+    it "is 100 when the actual effort is twice the given estimate" do
+      card.estimates << Estimate.new(amount: 5, date: Date.today)
+      card.efforts << Effort.new(amount: 10, date: Date.today, members: [tommaso])
+
+      card.last_estimate_error.should == 100.0
+    end
+
+    it "is -50 when the actual effort is half of the given estimate" do
+      card.estimates << Estimate.new(amount: 10, date: Date.today)
+      card.efforts << Effort.new(amount: 5, date: Date.today, members: [tommaso])
+
+      card.last_estimate_error.should == -50.0
+    end
+
+    it "is rounded with two decimal digits" do
+      card.estimates << Estimate.new(amount: 3, date: Date.today)
+      card.efforts << Effort.new(amount: 5, date: Date.today, members: [tommaso])
+
+      card.last_estimate_error.should == 66.67
+    end
+
+    describe "#estimate_errors" do
+
+      it "collects all the estimate errors against the actual effort" do
+        card.estimates << Estimate.new(amount: 5, date: Date.yesterday)
+        card.efforts << Effort.new(amount: 10, date: Date.yesterday, members: [tommaso])
+
+        card.estimates << Estimate.new(amount: 10, date: Date.today)
+        card.efforts << Effort.new(amount: 5, date: Date.today, members: [tommaso])
+
+        card.estimate_errors.should == [200.0, 50.0]
+      end
+    end
+
+  end
+
   describe "#members" do
     it "lists all the members which spent some effort on the card" do
       card.efforts << Effort.new(amount: 3, date: Date.today, members: [piero, tommaso])
@@ -113,12 +186,12 @@ describe TrackedCard do
 
   describe "#first_activity_date" do
     it "is the date of the first effort or estimate given on the card" do
-      card.efforts << Effort.new(amount: 3, date: Date.yesterday, members: [tommaso])
-      card.efforts << Effort.new(amount: 5, date: Date.today, members: [tommaso])
-
       card.estimates << Estimate.new(amount: 5, date: Date.yesterday)
       card.estimates << Estimate.new(amount: 12, date: Date.yesterday.prev_day)
       card.estimates << Estimate.new(amount: 12, date: Date.tomorrow)
+
+      card.efforts << Effort.new(amount: 3, date: Date.yesterday, members: [tommaso])
+      card.efforts << Effort.new(amount: 5, date: Date.today, members: [tommaso])
 
       card.first_activity_date.should == Date.yesterday.prev_day
     end
@@ -147,27 +220,10 @@ describe TrackedCard do
   describe "#no_tracking?" do
     it "is false when there's no effort or estimate tracked on the card" do
       card.no_tracking?.should be_true
-      
+
       card.estimates << Estimate.new(amount: 5, date: Date.yesterday)
       card.no_tracking?.should be_false
     end
-  end
-
-  describe ".build_from" do
-    it "builds a TrackedCard from a Trello Card" do
-      tracked_card = TrackedCard.build_from(Trello::Card.new("name" => "a name", "desc" => "any description"))
-
-      tracked_card.name.should == "a name"
-      tracked_card.description.should == "any description"
-    end
-
-    it "takes the Trello Card id and set it as trello_id" do
-      tracked_card = TrackedCard.build_from(Trello::Card.new("id" => "abc123", "name" => "a name", "desc" => "any description"))
-
-      tracked_card.id.should_not    == "abc123"
-      tracked_card.trello_id.should == "abc123"
-    end
-
   end
 
   describe "#to_s" do

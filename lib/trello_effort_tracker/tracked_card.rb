@@ -42,7 +42,7 @@ class TrackedCard
   def no_tracking?
     first_activity_date.nil?
   end
-  
+
   def first_activity_date
     [working_start_date, first_estimate_date].compact.min
   end
@@ -65,6 +65,21 @@ class TrackedCard
 
   def members
     efforts.map(&:members).flatten.uniq
+  end
+
+  def last_estimate_error
+    estimate_errors.last
+  end
+
+  def estimate_errors
+    return [] if estimates.empty? || efforts.empty?
+
+    estimate_errors = []
+    estimates.each do |each|
+      estimate_errors << (100 * ((total_effort - each.amount) / each.amount * 1.0)).round(2)
+    end
+
+    estimate_errors
   end
 
   def to_s

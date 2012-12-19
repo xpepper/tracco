@@ -40,19 +40,19 @@ class TrackedCard
   end
 
   def first_activity_date
-    [working_start_date, first_estimate_date].min
+    [working_start_date, first_estimate_date].compact.min
   end
 
   def working_start_date
-    efforts.present? && efforts.sort_by(&:date).first.date
+    efforts.sort_by(&:date).first.date if efforts.present?
   end
 
   def first_estimate_date
-    estimates.present? && estimates.sort_by(&:date).first.date
+    estimates.sort_by(&:date).first.date if estimates.present?
   end
 
   def last_estimate_date
-    estimates.present? && estimates.sort_by(&:date).last.date
+    estimates.sort_by(&:date).last.date if estimates.present?
   end
 
   def total_effort

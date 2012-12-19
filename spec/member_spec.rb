@@ -39,7 +39,7 @@ describe Member do
   describe "#avatar_url" do
     it "points to the avatar thumbnail image" do
       member = Member.new(avatar_id: "123xyz")
-      member.avatar_url.should == "http://trello-avatars.s3.amazonaws.com/123xyz/30.png"
+      member.avatar_url.should == "https://trello-avatars.s3.amazonaws.com/123xyz/30.png"
     end
   end
 end

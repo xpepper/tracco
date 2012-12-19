@@ -24,7 +24,7 @@ class Member
   end
 
   def avatar_url
-    "http://trello-avatars.s3.amazonaws.com/#{avatar_id}/30.png"
+    "https://trello-avatars.s3.amazonaws.com/#{avatar_id}/30.png"
   end
 
   def ==(other)

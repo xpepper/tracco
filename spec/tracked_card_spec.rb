@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe TrackedCard do
 
+  before(:each) do
+    Date.stub(:today).and_return(Date.parse("2012-11-05"))
+  end
+
   subject(:card) { TrackedCard.new(name: "any", short_id: 1234, trello_id: "123123") }
 
   %w{piero tommaso michele}.each do |username|
@@ -85,7 +89,7 @@ describe TrackedCard do
       card.total_effort.should == 3+5
     end
   end
-  
+
   describe "#members" do
     it "lists all the members which spent some effort on the card" do
       card.efforts << Effort.new(amount: 3, date: Date.today, members: [piero, tommaso])
@@ -95,7 +99,51 @@ describe TrackedCard do
       card.members.should == [piero, tommaso, michele]
     end
   end
-  
+
+  describe "#working_start_date" do
+
+    it "is the date of the first effort spent on the card" do
+      card.efforts << Effort.new(amount: 5, date: Date.today, members: [tommaso])
+      card.efforts << Effort.new(amount: 3, date: Date.yesterday, members: [tommaso])
+      card.efforts << Effort.new(amount: 5, date: Date.tomorrow, members: [tommaso])
+
+      card.working_start_date.should == Date.yesterday
+    end
+  end
+
+  describe "#first_activity_date" do
+    it "is the date of the first effort or estimate given on the card" do
+      card.efforts << Effort.new(amount: 3, date: Date.yesterday, members: [tommaso])
+      card.efforts << Effort.new(amount: 5, date: Date.today, members: [tommaso])
+
+      card.estimates << Estimate.new(amount: 5, date: Date.yesterday)
+      card.estimates << Estimate.new(amount: 12, date: Date.yesterday.prev_day)
+      card.estimates << Estimate.new(amount: 12, date: Date.tomorrow)
+
+      card.first_activity_date.should == Date.yesterday.prev_day
+    end
+  end
+
+  describe "#first_estimate_date" do
+    it "is the date of the first estimate given on the card" do
+      card.estimates << Estimate.new(amount: 5, date: Date.tomorrow)
+      card.estimates << Estimate.new(amount: 12, date: Date.yesterday.prev_day)
+      card.estimates << Estimate.new(amount: 12, date: Date.today)
+
+      card.first_estimate_date.should == Date.yesterday.prev_day
+    end
+  end
+
+  describe "#last_estimate_date" do
+    it "is the date of the last estimate given on the card" do
+      card.estimates << Estimate.new(amount: 5, date: Date.yesterday)
+      card.estimates << Estimate.new(amount: 12, date: Date.tomorrow)
+      card.estimates << Estimate.new(amount: 12, date: Date.today)
+
+      card.last_estimate_date.should == Date.tomorrow
+    end
+  end
+
   describe ".build_from" do
     it "builds a TrackedCard from a Trello Card" do
       tracked_card = TrackedCard.build_from(Trello::Card.new("name" => "a name", "desc" => "any description"))
@@ -114,10 +162,6 @@ describe TrackedCard do
   end
 
   describe "#to_s" do
-    before(:each) do
-      Date.stub(:today).and_return(Date.parse("2012-11-05"))
-    end
-
     it "describes the card as a string" do
       card = TrackedCard.new(name: "A Story Name")
       card.estimates << Estimate.new(amount: 5, date: Date.today)
@@ -125,7 +169,6 @@ describe TrackedCard do
       card.efforts << Effort.new(amount: 6, date: Date.today, members: [Member.new(username: "piero"),   Member.new(username: "tommaso")])
 
       card.to_s.should == %Q{[A Story Name]. Total effort: 9.0h. Estimates ["[2012-11-05] estimated 5.0 hours"]. Efforts: ["[2012-11-05] spent 3.0 hours by @piero, @tommaso", "[2012-11-05] spent 6.0 hours by @piero, @tommaso"]}
-
     end
   end
 

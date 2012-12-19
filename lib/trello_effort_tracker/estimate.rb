@@ -8,6 +8,8 @@ class Estimate
 
   embedded_in :tracked_card
 
+  default_scope asc(:date)
+
   validates_presence_of :amount, :date
 
   def ==(other)

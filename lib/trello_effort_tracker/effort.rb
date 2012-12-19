@@ -9,6 +9,8 @@ class Effort
   embeds_many :members
   embedded_in :tracked_card
 
+  default_scope asc(:date)
+
   validates_presence_of :amount, :date, :members
 
   def ==(other)

@@ -87,6 +87,10 @@ To set an estimate on a card, a Trello user should send a notification from that
 
 estimates can be given in hours (h), days (d/g) or pomodori (p).
 
+    @trackinguser 22.11.2012 [4h]
+
+will add the estimate (4 hours) in date 22.11.2012.
+
 ### Effort format convention
 To set an effort in the current day on a card, a Trello user should send a notification from that card to the tracker username, e.g.
 
@@ -100,6 +104,11 @@ efforts can be given in hours (h), days (d/g) or pomodori (p).
 To set an effort in a date different from the notification date, just add a date in the message
 
     @trackinguser 23.10.2012 +6p
+
+There's even a shortcut for efforts spent yesterday:
+
+    @trackinguser yesterday +6p
+    @trackinguser +6p yesterday
 
 ### Tracking an effort on more members
 By default, the effort is tracked on the member which sends the tracking notification.

@@ -14,6 +14,7 @@ require 'trello_effort_tracker/estimate'
 require 'trello_effort_tracker/effort'
 require 'trello_effort_tracker/tracking'
 require 'trello_effort_tracker/trello_tracker'
+require 'trello_effort_tracker/google_docs_exporter'
 
 require 'patches/trello/member'
 

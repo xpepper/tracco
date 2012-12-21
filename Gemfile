@@ -10,6 +10,10 @@ gem 'chronic'
 gem 'mongoid'
 gem 'bson_ext'
 
+# google docs exporter
+gem 'google_drive'
+gem 'highline'
+
 group :test do
   gem 'rake'
   gem 'rspec'

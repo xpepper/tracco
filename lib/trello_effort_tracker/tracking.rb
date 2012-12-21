@@ -19,10 +19,6 @@ class Tracking
     @tracking_notification = tracking_notification
   end
 
-  def card
-    @card ||= TrackedCard.build_from(trello_card)
-  end
-
   def date
     Chronic.parse(date_as_string).to_date
   end
@@ -53,7 +49,7 @@ class Tracking
   end
 
   def to_s
-    "[#{date}] From #{notifier.username.color(:green)}\t on card '#{card.name.color(:yellow)}': #{raw_text}"
+    "[#{date}] From #{notifier.username.color(:green)}\t on card '#{trello_card.name.color(:yellow)}': #{raw_text}"
   end
 
   private

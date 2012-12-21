@@ -4,6 +4,11 @@ describe TrackedCard do
 
   before(:each) do
     Date.stub(:today).and_return(Date.parse("2012-11-05"))
+    TrackedCard.delete_all
+  end
+
+  after(:each) do
+    TrackedCard.delete_all
   end
 
   subject(:card) { TrackedCard.new(name: "any", short_id: 1234, trello_id: "123123") }
@@ -30,21 +35,43 @@ describe TrackedCard do
     end
   end
 
-  describe ".with_trello_id" do
-    before(:each) do
-      TrackedCard.delete_all
-    end
-    after(:each) do
-      TrackedCard.delete_all
-    end
-
+  describe ".find_by_trello_id" do
     it "find a card given its Trello id" do
       card = TrackedCard.create(name: "any card", short_id: 1234, trello_id: "1")
       another_card = TrackedCard.create(name: "another card", short_id: 3456, trello_id: "2")
 
-      TrackedCard.with_trello_id("1").should == card
-      TrackedCard.with_trello_id("3").should == nil
+      TrackedCard.find_by_trello_id("1").should == card
+      TrackedCard.find_by_trello_id("3").should == nil
     end
+  end
+
+  describe ".update_or_create_with" do
+    let(:trello_card) { Trello::Card.new("id" => "ABC123", "name" => "a name", "idShort" => 1, "desc" => "any description") }
+
+    it "creates a tracked card on a given trello card" do
+      tracked_card = TrackedCard.update_or_create_with(trello_card)
+
+      tracked_card.name.should == "a name"
+      tracked_card.trello_id == "ABC123"
+      tracked_card.short_id == 1
+    end
+
+    it "updates an existing tracked card on a given trello card" do
+      existing_card = TrackedCard.create(name: "an old name", short_id: 1234, trello_id: trello_card.id)
+
+      updated_card = TrackedCard.update_or_create_with(trello_card)
+
+      updated_card.should == existing_card
+      updated_card.name.should == "a name"
+    end
+
+    it "is nil when the trello card is not valid" do
+      invalid_trello_card = Trello::Card.new("id" => nil, "name" => nil)
+
+      TrackedCard.update_or_create_with(invalid_trello_card).should be_nil
+      TrackedCard.all.should be_empty
+    end
+
   end
 
   describe ".build_from" do

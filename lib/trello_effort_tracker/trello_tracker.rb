@@ -17,13 +17,8 @@ class TrelloTracker
     notifications.each do |notification|
       tracking = Tracking.new(notification)
       begin
-        existing_card = TrackedCard.with_trello_id(tracking.card.trello_id)
-        Trello.logger.debug "Tracked card found: #{existing_card.name} with trello_id: #{existing_card.id}" if existing_card
-
-        card = existing_card || tracking.card
+        card = TrackedCard.update_or_create_with(notification.card)
         card.add(tracking)
-        card.save
-
         Trello.logger.info tracking
 
       rescue StandardError => e

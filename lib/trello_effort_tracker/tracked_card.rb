@@ -1,6 +1,7 @@
 class TrackedCard
   include Mongoid::Document
   include Mongoid::Timestamps
+  extend MongoidHelper
 
   field :name
   field :description
@@ -17,10 +18,17 @@ class TrackedCard
   validates_presence_of :name, :short_id, :trello_id
   validates_numericality_of :short_id
 
-  scope :all_by_trello_id, ->(a_trello_id) { where(trello_id: a_trello_id) }
+  def self.find_by_trello_id(trello_id)
+    without_mongo_raising_errors do
+      find_by(trello_id: trello_id)
+    end
+  end
 
-  def self.with_trello_id(trello_id)
-    all_by_trello_id(trello_id).first
+  def self.update_or_create_with(trello_card)
+    card = TrackedCard.find_or_create_by(trello_id: trello_card.id)
+    trello_card.attributes.delete(:id)
+    success = card.update_attributes(trello_card.attributes)
+    return card if success
   end
 
   def self.build_from(trello_card)

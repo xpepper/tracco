@@ -5,6 +5,7 @@ require 'yaml'
 require 'chronic'
 require 'mongoid'
 
+require 'trello_effort_tracker/mongoid_helper'
 require 'trello_effort_tracker/trello_configuration'
 require 'trello_effort_tracker/trello_authorize'
 require 'trello_effort_tracker/tracked_card'

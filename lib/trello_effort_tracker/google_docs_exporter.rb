@@ -11,8 +11,9 @@ class GoogleDocsExporter
   def export
     columns = {
       user_story_name:  1,
-      estimate:         2,
-      total_effort:     3
+      start_date:       2,
+      total_effort:     3,
+      estimate:         4,
     }
 
     spreadsheet = google_docs_session.spreadsheet_by_title(@spreadsheet)
@@ -24,8 +25,11 @@ class GoogleDocsExporter
     cards.each do |card|
       print ".".color(:green)
       backlog[index, columns[:user_story_name]] = card.name
-      backlog[index, columns[:estimate]] = card.estimates.map(&:amount).last
+      backlog[index, columns[:start_date]] = card.working_start_date
       backlog[index, columns[:total_effort]] = card.total_effort
+      card.estimates.each_with_index do |estimate, i|
+        backlog[index, columns[:estimate]+i] = estimate.amount
+      end
       index += 1
     end
 

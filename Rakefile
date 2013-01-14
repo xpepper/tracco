@@ -42,18 +42,28 @@ namespace :run do
     args.with_defaults(db_env: "development")
     Rake.application.invoke_task("run:from_day[#{Date.today.to_s}, #{args.db_env}]")
   end
+end
 
-  task :ensure_environment do
-    %w{developer_public_key developer_secret access_token_key}.each do |each_name|
-      unless ENV[each_name] || authorization_params_from_config_file[each_name]
-        puts "ERROR: Missing <#{each_name}> environment variable."
-        exit 1
-      end
-    end
-    unless tracker_username
-      puts "ERROR: Missing <tracker_username> environment variable."
+namespace :export do
+  desc "Export all the db to google docs r.g. rake \"export:google_docs['test export from trello', 'tracking']\""
+  task :google_docs, [:spreadsheet, :worksheet, :db_env] => [:ensure_environment] do |t, args|
+    args.with_defaults(db_env: "development")
+
+    puts "Running google docs exporter from db env '#{args.db_env}' to google docs '#{args.spreadsheet}##{args.worksheet}'."
+    exporter = GoogleDocsExporter.new(args.spreadsheet, args.worksheet)
+    exporter.export
+  end
+end
+
+task :ensure_environment do
+  %w{developer_public_key developer_secret access_token_key}.each do |each_name|
+    unless ENV[each_name] || authorization_params_from_config_file[each_name]
+      puts "ERROR: Missing <#{each_name}> environment variable."
       exit 1
     end
-
+  end
+  unless tracker_username
+    puts "ERROR: Missing <tracker_username> environment variable."
+    exit 1
   end
 end

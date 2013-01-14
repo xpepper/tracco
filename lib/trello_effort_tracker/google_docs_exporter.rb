@@ -2,6 +2,7 @@ require "google_drive"
 require 'highline/import'
 
 class GoogleDocsExporter
+  include TrelloConfiguration
 
   def initialize(spreadsheet, worksheet)
     @spreadsheet = spreadsheet
@@ -9,18 +10,10 @@ class GoogleDocsExporter
   end
 
   def export
-    columns = {
-      user_story_id:        1,
-      user_story_name:      2,
-      start_date:           3,
-      total_effort:         4,
-      last_estimate_error:  5,
-      estimate:             6,
-    }
+    spreadsheet = google_docs_session.spreadsheet_by_title(@spreadsheet) || google_docs_session.create_spreadsheet(@spreadsheet)
+    backlog = spreadsheet.worksheet_by_title(@worksheet) || spreadsheet.add_worksheet(@worksheet)
 
-    spreadsheet = google_docs_session.spreadsheet_by_title(@spreadsheet)
-    backlog = spreadsheet.worksheet_by_title(@worksheet)
-
+    create_header(backlog)
     index = 2 # skip the header
 
     cards = TrackedCard.all.reject(&:no_tracking?).sort_by(&:first_activity_date).reverse
@@ -39,19 +32,35 @@ class GoogleDocsExporter
 
     backlog.save
     puts "[DONE]".color(:green)
+    puts "Go to #{spreadsheet.human_url}"
   end
 
   private
 
-  def google_docs_session(email="pietro.dibello@xpeppers.com")
+  def google_docs_session(email=configuration["google_docs_username"])
     @session ||= login(email)
   end
 
   def login(email)
-    username = ask("Enter google docs username: ") { |q| q.default = email }
-    password = ask("Enter google docs password: ") { |q| q.echo = false }
+    username = ask("Enter your google docs username: ") { |q| q.default = email }
+    password = ask("Enter your google docs password: ") { |q| q.echo = false }
 
     GoogleDrive.login(username, password)
+  end
+
+  def columns
+    @columns ||= {
+      user_story_id:        1,
+      user_story_name:      2,
+      start_date:           3,
+      total_effort:         4,
+      last_estimate_error:  5,
+      estimate:             6,
+    }
+  end
+
+  def create_header(worksheet)
+    worksheet.update_cells(1,1, [["ID", "Story Name", "Start Date", "Total Effort (hours)", "Last estimate error (%)", "First Estimate", "2nd estimate", "3rd estimate"]])
   end
 
 end

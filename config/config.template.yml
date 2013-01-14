@@ -4,3 +4,4 @@ trello:
   developer_secret: <here put the Secret (for OAuth signing) taken from https://trello.com/1/appKey/generate>
 
 tracker_username: <here put the Trello member used as recipient of the tracking notifications>
+google_docs_username: <here put your Google Docs username>

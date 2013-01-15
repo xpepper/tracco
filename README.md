@@ -143,9 +143,19 @@ If the spreadsheet name you provide does not exists, it will be created in you g
 So, running simply
 
     rake export:google_docs
-    
+
 will create (or update) a spreadsheet named "trello effort tracking" using the development db env.
 
+## Keeping your tracking database up to date
+You may install a crontab entry to run the trello tracker periodically, for example
+
+    SHELL=/Users/futur3/.rvm/bin/rvm-shell
+    GEMSET="ruby-1.9.3-p194@spikes"
+    PROJECT_PATH="/Users/$USER/Documents/workspace/trello_effort_tracker"
+    LC_ALL=en_US.UTF-8
+
+    # m h  dom mon dow   command
+    */10 * * * *  rvm-shell $GEMSET -c "cd $PROJECT_PATH;  bundle exec rake run:today[production]" >> /tmp/crontab.out 2>&1
 
 ## Roadmap and improvements
 We develop Trello Effort Tracker using [Trello itself](https://trello.com/board/trello-effort-tracker-roadmap/509c3228dcb1ac3f1c018791).

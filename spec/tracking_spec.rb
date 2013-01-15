@@ -209,13 +209,6 @@ describe Tracking do
     create_notification(data: { 'text' => message })
   end
 
-  def create_notification(custom_params)
-    params = { data: { 'text' => "@trackinguser +2h" }, date: "2012-10-28T21:06:14.801Z", member_creator: stub(username: "pietrodibello") }
-    params.merge!(custom_params)
-
-    stub(data: params[:data], date: params[:date], member_creator: params[:member_creator]).as_null_object
-  end
-
   def create_estimate(time_measurement)
     create_notification(data: { 'text' => "@trackinguser [1.5#{TIME_MEASUREMENTS[time_measurement]}]" })
   end

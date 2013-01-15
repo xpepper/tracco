@@ -4,35 +4,36 @@ require 'highline/import'
 class GoogleDocsExporter
   include TrelloConfiguration
 
-  def initialize(spreadsheet, worksheet)
-    @spreadsheet = spreadsheet
-    @worksheet = worksheet
+  def initialize(spreadsheet_name, worksheet_name)
+    @spreadsheet_name = spreadsheet_name || "trello effort tracking"
+    @worksheet_name   = worksheet_name || "tracking"
   end
 
   def export
-    spreadsheet = google_docs_session.spreadsheet_by_title(@spreadsheet) || google_docs_session.create_spreadsheet(@spreadsheet)
-    backlog = spreadsheet.worksheet_by_title(@worksheet) || spreadsheet.add_worksheet(@worksheet)
+    Trello.logger.info "Running exporter from db env '#{db_environment}' to google docs '#{@spreadsheet_name.color(:green)}##{@worksheet_name.color(:green)}'..."
 
-    create_header(backlog)
+    spreadsheet = google_docs_session.spreadsheet_by_title(@spreadsheet_name) || google_docs_session.create_spreadsheet(@spreadsheet_name)
+    worksheet = spreadsheet.worksheet_by_title(@worksheet_name) || spreadsheet.add_worksheet(@worksheet_name)
+
+    create_header(worksheet)
     index = 2 # skip the header
 
     cards = TrackedCard.all.reject(&:no_tracking?).sort_by(&:first_activity_date).reverse
     cards.each do |card|
       print ".".color(:green)
-      backlog[index, columns[:user_story_id]] = card.short_id
-      backlog[index, columns[:user_story_name]] = card.name
-      backlog[index, columns[:start_date]] = card.working_start_date
-      backlog[index, columns[:total_effort]] = card.total_effort
-      backlog[index, columns[:last_estimate_error]] = card.last_estimate_error
+      worksheet[index, columns[:user_story_id]] = card.short_id
+      worksheet[index, columns[:user_story_name]] = card.name
+      worksheet[index, columns[:start_date]] = card.working_start_date
+      worksheet[index, columns[:total_effort]] = card.total_effort
+      worksheet[index, columns[:last_estimate_error]] = card.last_estimate_error
       card.estimates.each_with_index do |estimate, i|
-        backlog[index, columns[:estimate]+i] = estimate.amount
+        worksheet[index, columns[:estimate]+i] = estimate.amount
       end
       index += 1
     end
 
-    backlog.save
-    puts "[DONE]".color(:green)
-    puts "Go to #{spreadsheet.human_url}"
+    saved = worksheet.save
+    spreadsheet.human_url if saved
   end
 
   private

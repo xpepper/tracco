@@ -45,13 +45,15 @@ namespace :run do
 end
 
 namespace :export do
-  desc "Export all the db to google docs r.g. rake \"export:google_docs['test export from trello', 'tracking']\""
+  desc "Export all cards to a google docs spreadsheet, e.g. rake \"export:google_docs[my_sheet,tracking,production]\""
   task :google_docs, [:spreadsheet, :worksheet, :db_env] => [:ensure_environment] do |t, args|
     args.with_defaults(db_env: "development")
 
-    puts "Running google docs exporter from db env '#{args.db_env}' to google docs '#{args.spreadsheet}##{args.worksheet}'."
     exporter = GoogleDocsExporter.new(args.spreadsheet, args.worksheet)
-    exporter.export
+    spreadsheet_url = exporter.export
+
+    puts "[DONE]".color(:green)
+    puts "Go to #{spreadsheet_url}"
   end
 end
 

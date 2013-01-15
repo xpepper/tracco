@@ -48,6 +48,7 @@ namespace :export do
   desc "Export all cards to a google docs spreadsheet, e.g. rake \"export:google_docs[my_sheet,tracking,production]\""
   task :google_docs, [:spreadsheet, :worksheet, :db_env] => [:ensure_environment] do |t, args|
     args.with_defaults(db_env: "development")
+    TrelloConfiguration::Database.load_env(args.db_env)
 
     exporter = GoogleDocsExporter.new(args.spreadsheet, args.worksheet)
     spreadsheet_url = exporter.export

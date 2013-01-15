@@ -130,6 +130,22 @@ To reimport that db:
 
     mongoimport  --db trello_effort_tracker_production --collection tracked_cards --file trello_effort_tracker_production.json
 
+## Google Docs exporter
+To export all your tracked cards on a google docs named 'my_sheet' in the 'tracking' worksheet, run
+
+    rake "export:google_docs[my_sheet, tracking, production]"
+
+The default env is development.
+
+If you provide no name for the spreadsheet, a default name will be used.
+If the spreadsheet name you provide does not exists, it will be created in you google drive account.
+
+So, running simply
+
+    rake export:google_docs
+    
+will create (or update) a spreadsheet named "trello effort tracking" using the development db env.
+
 
 ## Roadmap and improvements
 We develop Trello Effort Tracker using [Trello itself](https://trello.com/board/trello-effort-tracker-roadmap/509c3228dcb1ac3f1c018791).

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    trello_effort_tracker (0.0.2)
+    trello_effort_tracker (0.0.3)
 
 GEM
   remote: http://rubygems.org/

@@ -27,7 +27,6 @@ class TrelloTracker
       end
     end
     Trello.logger.info "Done tracking cards!".color(:green)
-    print_all_cards
   end
 
   private
@@ -39,10 +38,6 @@ class TrelloTracker
   def boundary_dates_in(notifications)
     dates = notifications.map { |each_notification| Chronic.parse(each_notification.date) }
     [dates.min, dates.max]
-  end
-
-  def print_all_cards
-    TrackedCard.all.each { |tracked_card| Trello.logger.info(tracked_card.to_s.color(:yellow)) }
   end
 
 end

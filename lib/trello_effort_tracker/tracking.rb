@@ -23,6 +23,10 @@ class Tracking
     Chronic.parse(date_as_string).to_date
   end
 
+  def card_done?
+    raw_tracking =~ /DONE/
+  end
+
   def estimate?
     !raw_estimate.nil?
   end

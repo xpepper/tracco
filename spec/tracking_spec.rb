@@ -73,6 +73,19 @@ describe Tracking do
 
   end
 
+  describe "#card_done?" do
+    it "is true when the notification text is DONE" do
+      t = Tracking.new(notification_with_message("DONE"))
+      t.card_done?.should be_true
+    end
+
+    it "is false when the notification text is not DONE" do
+      t = Tracking.new(notification_with_message("anything"))
+      t.card_done?.should be_false
+    end
+
+  end
+
   describe "#effort?" do
     it "is false when the notification does not contain an estimate" do
       Tracking.new(unrecognized_notification).effort?.should be_false

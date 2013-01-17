@@ -120,7 +120,7 @@ describe TrackedCard do
       card.should_not == another_card
     end
   end
-  
+
   describe "#add" do
     let(:card) { TrackedCard.new(name: "a name", trello_id: "123456789") }
     let(:estimate_tracking) { Tracking.new(create_notification(data: { 'text' => "@trackinguser [1h]" })) }
@@ -129,14 +129,23 @@ describe TrackedCard do
       card.add(estimate_tracking)
       card.estimates.should have(1).estimate
     end
-    
+
     it "adds an estimate only once" do
       card.add(estimate_tracking)
       card.add(estimate_tracking)
-      
+
       card.estimates.should have(1).estimate
     end
-    
+
+    it "is done when has a DONE notification" do
+      card_done_notification = create_notification(data: { 'text' => "@trackinguser DONE" })
+
+      card.should_not be_done
+
+      card.add(Tracking.new(card_done_notification))
+      card.should be_done
+    end
+
   end
 
   describe "#total_effort" do

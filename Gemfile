@@ -3,6 +3,7 @@ source :rubygems
 gem 'trello_effort_tracker', :path => '.'
 
 gem 'ruby-trello', :require => 'trello'
+# gem 'ruby-trello', :require => 'trello', :path => '../ruby-trello' # to hack on the ruby-trello gem itself
 gem 'debugger'
 gem 'rainbow'
 gem 'chronic'

@@ -7,6 +7,7 @@ class TrackedCard
   field :description
   field :short_id,    type: Integer
   field :trello_id
+  field :done,        type: Boolean
   field :due,         type: Date
   field :closed,      type: Boolean
   field :url
@@ -42,6 +43,8 @@ class TrackedCard
       estimates << tracking.estimate
     elsif tracking.effort? && efforts.none? {|e| e.tracking_notification_id == tracking.effort.tracking_notification_id}
       efforts << tracking.effort
+    elsif tracking.card_done?
+      self.done = true
     else
       Trello.logger.warn "Ignoring tracking notification: #{tracking}" if tracking.unknown_format?
     end

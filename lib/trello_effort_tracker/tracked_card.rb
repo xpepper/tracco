@@ -26,7 +26,7 @@ class TrackedCard
   end
 
   def self.update_or_create_with(trello_card)
-    tracked_card = TrackedCard.find_or_create_by(trello_id: trello_card.id)
+    tracked_card = find_or_create_by(trello_id: trello_card.id)
     trello_card.attributes.delete(:id)
     updated_successfully = tracked_card.update_attributes(trello_card.attributes)
     return tracked_card if updated_successfully
@@ -48,6 +48,10 @@ class TrackedCard
     else
       Trello.logger.warn "Ignoring tracking notification: #{tracking}" if tracking.unknown_format?
     end
+  end
+
+  def add!(tracking)
+    add(tracking) && save!
   end
 
   def no_tracking?

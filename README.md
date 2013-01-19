@@ -121,6 +121,13 @@ To set an effort just for other Trello users (excluding the current user), just 
 
     @trackinguser +3p (@alessandrodescovi @michelevincenzi)
 
+### Tracking a card as finished (aka DONE)
+Sending a tracking notification with the word DONE
+
+    @trackinguser DONE
+
+will mark the card as closed.
+
 ## Database import/export
 To export the db you can execute something like:
 

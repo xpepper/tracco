@@ -148,6 +148,17 @@ describe TrackedCard do
 
   end
 
+  describe "#add!" do
+    let(:card) { TrackedCard.new(name: "a name", trello_id: "123456789", short_id: "123") }
+
+    it "saves the tracked card after adding the tracking" do
+      any_tracking = Tracking.new(create_notification(data: { 'text' => "@trackinguser [1h]" }))
+
+      card.add!(any_tracking)
+      card.reload.should_not be_nil
+    end
+  end
+
   describe "#total_effort" do
     it "is zero when there's no effort" do
       card.total_effort.should == 0

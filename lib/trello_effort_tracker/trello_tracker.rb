@@ -18,7 +18,7 @@ class TrelloTracker
       tracking = Tracking.new(notification)
       begin
         tracked_card = TrackedCard.update_or_create_with(notification.card)
-        tracked_card.add(tracking)
+        tracked_card.add!(tracking)
         Trello.logger.info tracking
 
       rescue StandardError => e

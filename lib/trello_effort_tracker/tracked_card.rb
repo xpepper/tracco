@@ -26,10 +26,10 @@ class TrackedCard
   end
 
   def self.update_or_create_with(trello_card)
-    card = TrackedCard.find_or_create_by(trello_id: trello_card.id)
+    tracked_card = TrackedCard.find_or_create_by(trello_id: trello_card.id)
     trello_card.attributes.delete(:id)
-    success = card.update_attributes(trello_card.attributes)
-    return card if success
+    updated_successfully = tracked_card.update_attributes(trello_card.attributes)
+    return tracked_card if updated_successfully
   end
 
   def self.build_from(trello_card)

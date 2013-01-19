@@ -1,14 +1,14 @@
 module Trello
   class Member
     # Reopening the Trello::Member class to add a notifications helper method
-    def notifications_from(from_date)
-      notifications(limit:1000).select(&greater_than_or_equal_to(from_date)).select(&tracking_notification?)
+    def notifications_from(starting_date)
+      notifications(limit:1000).select(&greater_than_or_equal_to(starting_date)).select(&tracking_notification?)
     end
     
     private
 
-    def greater_than_or_equal_to(from_date)
-      lambda { |notification| Chronic.parse(notification.date) >= from_date }
+    def greater_than_or_equal_to(starting_date)
+      lambda { |notification| Chronic.parse(notification.date) >= starting_date }
     end
 
     def tracking_notification?

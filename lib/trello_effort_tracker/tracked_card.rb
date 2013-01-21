@@ -38,8 +38,20 @@ class TrackedCard
     new(trello_card.attributes.merge(trello_id: trello_card_id))
   end
 
+  def add(tracking)
+    tracking.add_to(self)
+  end
+
   def add!(tracking)
-    tracking.add_to(self) && save!
+    add(tracking) && save!
+  end
+
+  def contains_effort?(effort)
+    efforts.any? { |e| e.tracking_notification_id == effort.tracking_notification_id }
+  end
+
+  def contains_estimate?(estimate)
+    estimates.any? { |e| e.tracking_notification_id == estimate.tracking_notification_id }
   end
 
   def no_tracking?

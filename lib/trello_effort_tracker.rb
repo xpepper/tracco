@@ -17,6 +17,7 @@ require 'trello_effort_tracker/tracking_factory'
 require 'trello_effort_tracker/estimate_tracking'
 require 'trello_effort_tracker/effort_tracking'
 require 'trello_effort_tracker/card_done_tracking'
+require 'trello_effort_tracker/invalid_tracking'
 require 'trello_effort_tracker/trello_tracker'
 require 'trello_effort_tracker/google_docs_exporter'
 

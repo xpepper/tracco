@@ -4,14 +4,16 @@ class TrackingFactory
   def self.build_from(tracking_notification)
     case tracking_notification.data['text']
     when /\[#{DURATION_REGEXP}\]/
-      EstimateTracking.new(tracking_notification)
+      tracking_class = EstimateTracking
     when /\+#{DURATION_REGEXP}/
-      EffortTracking.new(tracking_notification)
+      tracking_class = EffortTracking
     when /DONE/
-      CardDoneTracking.new(tracking_notification)
+      tracking_class = CardDoneTracking
     else
-      Trello.logger.warn "Ignoring tracking notification: #{tracking_notification}"
+      tracking_class = InvalidTracking
     end
+
+    tracking_class.new(tracking_notification)
   end
 
 end

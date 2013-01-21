@@ -23,58 +23,22 @@ module Tracking
     Chronic.parse(date_as_string).to_date
   end
 
-  def card_done?
-    raw_tracking =~ /DONE/
-  end
-
-  def estimate?
-    !raw_estimate.nil?
-  end
-
-  def estimate
-    estimate = convert_to_hours(raw_estimate)
-    Estimate.new(amount: estimate, date: date, tracking_notification_id: @tracking_notification.id) if estimate
-  end
-
-  def effort?
-    !raw_effort.nil?
-  end
-
-  def effort
-    effort_amount = convert_to_hours(raw_effort)
-    if effort_amount
-      total_effort = effort_amount * effort_members.size
-      Effort.new(amount: total_effort, date: date, members: effort_members, tracking_notification_id: @tracking_notification.id)
-    end
-  end
-
-  def unknown_format?
-    !estimate? && !effort?
-  end
-
   def to_s
     "[#{date}] From #{notifier.username.color(:green)}\t on card '#{trello_card.name.color(:yellow)}': #{raw_text}"
   end
 
   private
 
-  def effort_members
-    @effort_members ||= users_involved_in_the_effort.map do |username|
-      Member.build_from(Trello::Member.find(username))
-    end
-
-    @effort_members
+  def tracking_notification
+    @tracking_notification
   end
 
-  def users_involved_in_the_effort
-    users_involved_in_the_effort = raw_tracking.scan(/@(\w+)/).flatten
-    users_involved_in_the_effort << notifier.username unless should_count_only_listed_members?
-
-    users_involved_in_the_effort
+  def trello_card
+    @trello_card ||= tracking_notification.card
   end
 
-  def should_count_only_listed_members?
-    raw_tracking =~ /\((@\w+\W*\s*)+\)/
+  def notification_date
+    Chronic.parse(tracking_notification.date).to_date
   end
 
   def raw_tracking
@@ -82,15 +46,7 @@ module Tracking
   end
 
   def raw_text
-    @tracking_notification.data['text']
-  end
-
-  def raw_estimate
-    extract_match_from_raw_tracking(/\[#{DURATION_REGEXP}\]/)
-  end
-
-  def raw_effort
-    extract_match_from_raw_tracking(/\+#{DURATION_REGEXP}/)
+    tracking_notification.data['text']
   end
 
   def convert_to_hours(duration_as_string)
@@ -109,7 +65,7 @@ module Tracking
     when /yesterday\s+\+#{DURATION_REGEXP}/, /\+#{DURATION_REGEXP}\s+yesterday/
         (notification_date - 1).to_s
     else
-      @tracking_notification.date
+      tracking_notification.date
     end
   end
 
@@ -120,14 +76,6 @@ module Tracking
     end
 
     extracted
-  end
-
-  def trello_card
-    @trello_card ||= @tracking_notification.card
-  end
-
-  def notification_date
-    Chronic.parse(@tracking_notification.date).to_date
   end
 
 end

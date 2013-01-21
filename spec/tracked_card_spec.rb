@@ -123,7 +123,7 @@ describe TrackedCard do
 
   describe "#add" do
     let(:card) { TrackedCard.new(name: "a name", trello_id: "123456789") }
-    let(:estimate_tracking) { Tracking.new(create_notification(data: { 'text' => "@trackinguser [1h]" })) }
+    let(:estimate_tracking) { EstimateTracking.new(create_notification(data: { 'text' => "@trackinguser [1h]" })) }
 
     it "adds an estimate from a tracking estimate notification" do
       card.add(estimate_tracking)
@@ -138,11 +138,9 @@ describe TrackedCard do
     end
 
     it "is done when has a DONE notification" do
-      card_done_notification = create_notification(data: { 'text' => "@trackinguser DONE" })
-
       card.should_not be_done
 
-      card.add(Tracking.new(card_done_notification))
+      card.add(CardDoneTracking.new(stub(:notification)))
       card.should be_done
     end
 
@@ -152,7 +150,7 @@ describe TrackedCard do
     let(:card) { TrackedCard.new(name: "a name", trello_id: "123456789", short_id: "123") }
 
     it "saves the tracked card after adding the tracking" do
-      any_tracking = Tracking.new(create_notification(data: { 'text' => "@trackinguser [1h]" }))
+      any_tracking = EstimateTracking.new(create_notification(data: { 'text' => "@trackinguser [1h]" }))
 
       card.add!(any_tracking)
       card.reload.should_not be_nil

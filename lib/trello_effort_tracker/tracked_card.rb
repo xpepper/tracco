@@ -38,20 +38,8 @@ class TrackedCard
     new(trello_card.attributes.merge(trello_id: trello_card_id))
   end
 
-  def add(tracking)
-    if tracking.estimate? && estimates.none? {|e| e.tracking_notification_id == tracking.estimate.tracking_notification_id}
-      estimates << tracking.estimate
-    elsif tracking.effort? && efforts.none? {|e| e.tracking_notification_id == tracking.effort.tracking_notification_id}
-      efforts << tracking.effort
-    elsif tracking.card_done?
-      self.done = true
-    else
-      Trello.logger.warn "Ignoring tracking notification: #{tracking}" if tracking.unknown_format?
-    end
-  end
-
   def add!(tracking)
-    add(tracking) && save!
+    tracking.add_to(self) && save!
   end
 
   def no_tracking?

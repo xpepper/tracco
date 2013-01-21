@@ -1,4 +1,4 @@
-class Tracking
+module Tracking
   extend Forwardable
   include TrelloConfiguration
 
@@ -107,7 +107,7 @@ class Tracking
       day, month, year = raw_tracking.scan(DATE_REGEXP).flatten
       "#{year}-#{month}-#{day}"
     when /yesterday\s+\+#{DURATION_REGEXP}/, /\+#{DURATION_REGEXP}\s+yesterday/
-      (notification_date - 1).to_s
+        (notification_date - 1).to_s
     else
       @tracking_notification.date
     end
@@ -131,4 +131,3 @@ class Tracking
   end
 
 end
-

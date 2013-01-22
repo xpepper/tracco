@@ -11,8 +11,8 @@ The Trello API is used in readonly mode in this code, so all you need to access 
 TrelloEffortTracker uses the [Trello API Ruby wrapper](https://github.com/jeremytregunna/ruby-trello) for this purpose.
 
 ## Requirements
-* [rvm](https://rvm.io/rvm/install/)
 * [mongoDB](http://www.mongodb.org/) - mac users with homebrew will just run 'brew install mongodb' to have mongoDB installed on their machine.
+* [rvm](https://rvm.io/rvm/install/) (optional)
 
 ## Setup
 Copy the config template

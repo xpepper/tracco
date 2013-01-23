@@ -45,18 +45,18 @@ At the end of this process, You'll be told to give some key to the app, this is 
 The best way is to use one of the rake task defined, e.g.
 
 ```ruby
-    rake 'run:today[test]' # will extract today's tracked data and store on the test db
+rake 'run:today[test]' # will extract today's tracked data and store on the test db
 
-    rake run:today  # will extract today's tracked data  and store on the default (that is development) db
+rake run:today  # will extract today's tracked data  and store on the default (that is development) db
 
-    rake 'run:from_day[2012-11-1, production]'  # will extract tracked data starting from November the 1st, 2012 and store them into the production db
+rake 'run:from_day[2012-11-1, production]'  # will extract tracked data starting from November the 1st, 2012 and store them into the production db
 ```
 
 Or you may just create a TrelloTracker instance and execute its track method.
 
 ```ruby
-    tracker = TrelloTracker.new
-    tracker.track
+tracker = TrelloTracker.new
+tracker.track
 ```
 You can set the Trello's auth params in three ways
 
@@ -65,18 +65,18 @@ You can set the Trello's auth params in three ways
 * passing into the constructor a hash containing the auth values, e.g.
 
 ```ruby
-        tracker = TrelloTracker.new(
-         "developer_public_key" => "487635b55e6fe9021902fa763b4d101a",
-         "access_token_key" => "33bed56f2a12a49c9ba1c2d6ad3e2002e11a34358c3f3fe260d7fba746a06203",
-         "developer_secret" => "ab999c4396493dba4c04ade055eabfdfabdffd0ffd7c281a23234350a993524d")
+tracker = TrelloTracker.new(
+ "developer_public_key" => "487635b55e6fe9021902fa763b4d101a",
+ "access_token_key" => "33bed56f2a12a49c9ba1c2d6ad3e2002e11a34358c3f3fe260d7fba746a06203",
+ "developer_secret" => "ab999c4396493dba4c04ade055eabfdfabdffd0ffd7c281a23234350a993524d")
 
-        tracker.track
+tracker.track
 ```
 ### Console
 You can open a irb console with the ruby-trello gem and this gem loaded, so that you can query the db or the Trello API and play with them
 
 ```ruby
-    rake console
+rake console
 ```
 
 ### Storage configuration
@@ -146,7 +146,7 @@ To reimport that db:
 To export all your tracked cards on a google docs named 'my_sheet' in the 'tracking' worksheet, run
 
 ```ruby
-    rake "export:google_docs[my_sheet, tracking, production]"
+rake "export:google_docs[my_sheet, tracking, production]"
 ```
 The default env is development.
 
@@ -156,7 +156,7 @@ If the spreadsheet name you provide does not exists, it will be created in you g
 So, running simply
 
 ```ruby
-    rake export:google_docs
+rake export:google_docs
 ```
 will create (or update) a spreadsheet named "trello effort tracking" using the development db env.
 

@@ -143,13 +143,13 @@ will mark the card as closed.
 To export the db you can execute something like:
 
 ```shell
-    mongoexport --db trello_effort_tracker_production --collection tracked_cards --out trello_effort_tracker_production.json
+mongoexport --db trello_effort_tracker_production --collection tracked_cards --out trello_effort_tracker_production.json
 ```
 
 To reimport that db:
 
 ```shell
-    mongoimport  --db trello_effort_tracker_production --collection tracked_cards --file trello_effort_tracker_production.json
+mongoimport  --db trello_effort_tracker_production --collection tracked_cards --file trello_effort_tracker_production.json
 ```
 
 ## Google Docs exporter

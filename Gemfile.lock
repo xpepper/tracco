@@ -80,6 +80,10 @@ GEM
       json
       oauth (~> 0.4.5)
       rest-client (~> 1.6.7)
+    simplecov (0.7.1)
+      multi_json (~> 1.0)
+      simplecov-html (~> 0.7.1)
+    simplecov-html (0.7.1)
     tzinfo (0.3.35)
 
 PLATFORMS
@@ -98,4 +102,5 @@ DEPENDENCIES
   rspec
   rspec-mocks
   ruby-trello
+  simplecov
   trello_effort_tracker!

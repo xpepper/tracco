@@ -1,5 +1,8 @@
 require 'rubygems'
 
+require 'simplecov'
+SimpleCov.start
+
 # Set up gems listed in the Gemfile.
 begin
   ENV['BUNDLE_GEMFILE'] = File.expand_path('../Gemfile', File.dirname(__FILE__))
@@ -11,7 +14,9 @@ rescue Bundler::GemNotFound => e
   exit!
 end
 
-Bundler.require
+Bundler.require(:spec)
+
+require 'trello_effort_tracker'
 
 RSpec.configure do |configuration|
   configuration.include Mongoid::Matchers

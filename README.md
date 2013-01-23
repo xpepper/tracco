@@ -17,19 +17,25 @@ TrelloEffortTracker uses the [Trello API Ruby wrapper](https://github.com/jeremy
 ## Setup
 Copy the config template
 
-    cp config/config.template.yaml config/config.yml
+```shell
+cp config/config.template.yaml config/config.yml
+```
 
 and then fill the correct values in the placeholders in config.yml (see _"Where do I get an API key and API secret?"_ section).
 
 Then copy the mongoid config template
 
-    cp config/mongoid.template.yaml config/mongoid.yml
+```shell
+cp config/mongoid.template.yaml config/mongoid.yml
+```
 
 and fill the correct values for the mongodb environments ([see here](http://mongoid.org/en/mongoid/docs/installation.html#configuration) to have more details).
 
 Then run bundle to get all the required gems:
 
-    bundle install
+```shell
+bundle install
+```
 
 ### Where do I get an API key and API secret?
 Log in as a Trello user and visit [this URL](https://trello.com/1/appKey/generate) to get your developer\_public\_key and the developer\_public\_key.
@@ -136,11 +142,15 @@ will mark the card as closed.
 ## Database import/export
 To export the db you can execute something like:
 
+```shell
     mongoexport --db trello_effort_tracker_production --collection tracked_cards --out trello_effort_tracker_production.json
+```
 
 To reimport that db:
 
+```shell
     mongoimport  --db trello_effort_tracker_production --collection tracked_cards --file trello_effort_tracker_production.json
+```
 
 ## Google Docs exporter
 To export all your tracked cards on a google docs named 'my_sheet' in the 'tracking' worksheet, run

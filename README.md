@@ -3,20 +3,12 @@
 
 # Trello Effort Tracker
 
-## Installation
-
-```
-# gem install trello_effort_tracker
-```
-
-Full Disclosure: This library is still work-in-progress, so if you find anything missing or not functioning as you expect it to, please [open an issue on github](https://github.com/xpepper/trello_effort_tracker/issues).
-
-## Summary
+## What is Trello Effort Tracker?
 The purpose of this tool is to extract and track estimates and actual efforts on Trello cards.
 You just have to notify all of your estimates and efforts tracked on your Trello cards using a conventional format.
 This tool will extract and store these estimates and actual efforts to let you extract useful key metrics (e.g. estimate errors, remaining efforts, pair programming frequencies, and so on).
 
-## Motivations
+## Why Trello Effort Tracker?
 Trello is a very good surrogate for a physical team board: it's simple and effective, and it can really help when you have a distributed team.
 That said, Trello does not (still) offer a way to track time estimated and actually spent on cards, though many people [ask for that feature](https://trello.com/card/time-tracking/4d5ea62fd76aa1136000000c/1054) on Trello's development board.
 
@@ -30,6 +22,14 @@ Moreover, you'll have to setup the library so that it has all the needed privile
 
 The Trello API is used to read data from the team board, so all you need to access is your developer key.
 Trello Effort Tracker uses the awesome [Trello API Ruby wrapper](https://github.com/jeremytregunna/ruby-trello) for this purpose.
+
+## Installation
+
+```
+# gem install trello_effort_tracker
+```
+
+Full Disclosure: This library is still work-in-progress, so if you find anything missing or not functioning as you expect it to, please [open an issue on github](https://github.com/xpepper/trello_effort_tracker/issues).
 
 ## Requirements
 * [mongoDB](http://www.mongodb.org/) - mac users with homebrew will just run 'brew install mongodb' to have mongoDB installed on their machine.

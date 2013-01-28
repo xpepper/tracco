@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'ostruct'
 
 describe TrelloTracker do
 
@@ -10,15 +11,17 @@ describe TrelloTracker do
     Trello.logger.level = @original_error_level
   end
 
-  it "tracks an estimate", :needs_valid_configuration => true do
+  let(:config) {
     # auth params for trackinguser_for_test/testinguser!
-    trackinguser_auth_params = { "developer_public_key" => "ef7c400e711057d7ba5e00be20139a33",
-                                 "access_token_key"     => "9047d8fdbfdc960d41910673e300516cc8630dd4967e9b418fc27e410516362e" }
+    OpenStruct.new(tracker_username:  "trackinguser_for_test",
+                   developer_key:     "ef7c400e711057d7ba5e00be20139a33",
+                   access_token:      "9047d8fdbfdc960d41910673e300516cc8630dd4967e9b418fc27e410516362e")
+  }
 
-    with_trackinguser("trackinguser_for_test") do
-      tracker = TrelloTracker.new(trackinguser_auth_params)
+  it "tracks an estimate", :needs_valid_configuration => true do
+    with_trackinguser(config.tracker_username) do
+      tracker = TrelloTracker.new("developer_public_key" => config.developer_key, "access_token_key" => config.access_token)
       tracker.track(DateTime.parse("2013-01-28"))
-
 
       tracked_card = TrackedCard.first
       tracked_card.estimates.should have(1).estimate

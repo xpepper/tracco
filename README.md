@@ -58,7 +58,7 @@ Then run bundle to get all the required gems:
 bundle install
 ```
 
-### Where do I get an API key and API secret?
+### Where do I get an API key?
 Log in as a Trello user and visit [https://trello.com/1/appKey/generate](https://trello.com/1/appKey/generate) to get your developer\_public\_key.
 
 ### Where do I get an API Access Token Key?

@@ -18,6 +18,10 @@ Bundler.require(:spec)
 
 require 'trello_effort_tracker'
 
+# Requires supporting ruby files with custom matchers and macros, etc,
+# in spec/support/ and its subdirectories.
+Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
+
 RSpec.configure do |configuration|
   configuration.include Mongoid::Matchers
 end
@@ -25,6 +29,7 @@ end
 # force test env for the mongodb configuration
 TrelloConfiguration::Database.load_env("test")
 
+## Spec Helper Methods ##
 def create_notification(custom_params)
   params = { data: { 'text' => "@trackinguser +2h" }, date: "2012-10-28T21:06:14.801Z", member_creator: stub(username: "pietrodibello") }
   params.merge!(custom_params)

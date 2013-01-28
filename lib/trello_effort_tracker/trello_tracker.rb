@@ -22,8 +22,8 @@ class TrelloTracker
         Trello.logger.info tracking
 
       rescue StandardError => e
-        Trello.logger.error "skipping tracking: #{e.message}".color(:magenta)
-        Trello.logger.error "#{e.backtrace}"
+        Trello.logger.warn "skipping tracking: #{e.message}".color(:magenta)
+        Trello.logger.debug "#{e.backtrace}"
       end
     end
     Trello.logger.info "Done tracking cards!".color(:green)

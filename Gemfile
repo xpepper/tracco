@@ -21,4 +21,5 @@ group :test, :spec do
   gem 'simplecov', :require => false, :platforms => [:mri, :mri_19]
   gem 'rspec-mocks'
   gem 'mongoid-rspec'
+  gem 'database_cleaner'
 end

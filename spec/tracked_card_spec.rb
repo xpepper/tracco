@@ -4,11 +4,6 @@ describe TrackedCard do
 
   before(:each) do
     Date.stub(:today).and_return(Date.parse("2012-11-05"))
-    TrackedCard.delete_all
-  end
-
-  after(:each) do
-    TrackedCard.delete_all
   end
 
   subject(:card) { TrackedCard.new(name: "any", short_id: 1234, trello_id: "123123") }

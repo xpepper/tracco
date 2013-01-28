@@ -1,0 +1,8 @@
+# read-only access to @trackinguser_for_test/testinguser! boards
+trello:
+  developer_public_key: ef7c400e711057d7ba5e00be20139a33
+  access_token_key: 9047d8fdbfdc960d41910673e300516cc8630dd4967e9b418fc27e410516362e
+  developer_secret: 12fe25d85fe1a09fdd30eb57178ff9f07f8dda147d2881e76a0db9eeffc8dfd3
+
+tracker_username: trackinguser_for_test
+google_docs_username: pietro.dibello@xpeppers.com

@@ -59,7 +59,7 @@ bundle install
 ```
 
 ### Where do I get an API key and API secret?
-Log in as a Trello user and visit [this URL](https://trello.com/1/appKey/generate) to get your developer\_public\_key and the developer\_public\_key.
+Log in as a Trello user and visit [https://trello.com/1/appKey/generate](https://trello.com/1/appKey/generate) to get your developer\_public\_key.
 
 ### Where do I get an API Access Token Key?
 You will need an access token to use ruby-trello, which trello tracker depends on. To get it, you'll need to go to this URL:
@@ -94,8 +94,7 @@ You can set the Trello's auth params in three ways
 ```ruby
 tracker = TrelloTracker.new(
  "developer_public_key" => "487635b55e6fe9021902fa763b4d101a",
- "access_token_key" => "33bed56f2a12a49c9ba1c2d6ad3e2002e11a34358c3f3fe260d7fba746a06203",
- "developer_secret" => "ab999c4396493dba4c04ade055eabfdfabdffd0ffd7c281a23234350a993524d")
+ "access_token_key" => "33bed56f2a12a49c9ba1c2d6ad3e2002e11a34358c3f3fe260d7fba746a06203")
 
 tracker.track
 ```

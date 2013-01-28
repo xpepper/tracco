@@ -6,12 +6,11 @@ describe TrelloConfiguration do
 
   describe "#authorization_params_from_config_file" do
     it "loads the default trello auth params from config yml" do
-      config_hash = {"trello" => { "developer_public_key" => "any_dpk", "access_token_key" => "any_atk", "developer_secret" => "any_ds"} }
+      config_hash = { "trello" => { "developer_public_key" => "any_dpk", "access_token_key" => "any_atk" } }
       YAML.should_receive(:load_file).with("config/config.yml").and_return(config_hash)
 
       authorization_params_from_config_file["developer_public_key"].should == "any_dpk"
       authorization_params_from_config_file["access_token_key"].should == "any_atk"
-      authorization_params_from_config_file["developer_secret"].should == "any_ds"
     end    
   end
   
@@ -30,6 +29,7 @@ describe TrelloConfiguration do
     
       tracker_username.should == "my_tracker"
     end
+
     it "searches for the trello tracker username in the config yml file if the env var is not set" do
       ENV["tracker_username"] = nil
       config_hash = {"tracker_username" => "my_trello_tracker" }

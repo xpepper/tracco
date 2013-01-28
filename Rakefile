@@ -59,7 +59,7 @@ namespace :export do
 end
 
 task :ensure_environment do
-  %w{developer_public_key developer_secret access_token_key}.each do |each_name|
+  %w{developer_public_key access_token_key}.each do |each_name|
     unless ENV[each_name] || authorization_params_from_config_file[each_name]
       puts "ERROR: Missing <#{each_name}> environment variable."
       exit 1

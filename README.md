@@ -5,22 +5,23 @@
 
 ## What is Trello Effort Tracker?
 The purpose of this tool is to extract and track estimates and actual efforts on Trello cards.
-You just have to notify all of your estimates and efforts tracked on your Trello cards using a conventional format.
-This tool will extract and store these estimates and actual efforts to let you extract useful key metrics (e.g. estimate errors, remaining efforts, pair programming frequencies, and so on).
+You simply notify all of your estimates and efforts tracked on your Trello cards using a conventional format.
+Trello Effort Tracker will extract and store these estimates and actual efforts to let you extract useful key metrics (e.g. estimate errors, remaining efforts, pair programming frequencies, and so on).
 
 ## Why Trello Effort Tracker?
 Trello is a very good surrogate for a physical team board: it's simple and effective, and it can really help when you have a distributed team.
 That said, Trello does not (still) offer a way to track time estimated and actually spent on cards, though many people [ask for that feature](https://trello.com/card/time-tracking/4d5ea62fd76aa1136000000c/1054) on Trello's development board.
 
 We had the need to add time tracking to Trello, so we define a simple convention to track estimates and efforts on cards: we use a predefined board member (let's call him 'tracking user') which we sent special notifications to (we call them 'tracking notifications').
-This 'tracking user' will then receives estimates and efforts notifications, and this library will collect them and save on a persistent storage, using a domain model which adds features related to time tracking (e.g. estimate errors).
-A web app is also available to have a proper presentations of card estimates and efforts.
+This 'tracking user' will then receives estimates and efforts notifications, and Trello Effort Tracker will collect them in a simple domain model, backed on a persistent storage.
+Moreover, a web app will be soon available to properly present card estimates and efforts. We're working on it.
 
 ## More details
-All you need to have to start using Trello Effort Tracker is a Trello account, a Trello board and a board member to use as 'tracking user'.
-Moreover, you'll have to setup the library so that it has all the needed privileges to fetch all the notifications of the 'tracking user'.
+All you need to have to start using Trello Effort Tracker is a Trello account, a Trello board and a board member to use as 'tracking user'. 
+You'll also need to know your Trello developer key and generate a proper auth token to have access to the trackinguser's notifications.
+To see how to have these two keys, see [the following section](#api_key).
 
-The Trello API is used to read data from the team board, so all you need to access is your developer key.
+The Trello API is used behind the scenes to read data from the team board.
 Trello Effort Tracker uses the awesome [Trello API Ruby wrapper](https://github.com/jeremytregunna/ruby-trello) for this purpose.
 
 ## Installation
@@ -58,15 +59,15 @@ Then run bundle to get all the required gems:
 bundle install
 ```
 
-### Where do I get an API key?
-Log in as a Trello user and visit [https://trello.com/1/appKey/generate](https://trello.com/1/appKey/generate) to get your developer\_public\_key.
+### <a id="api_key"></a>Where do I get an API key?
+Log in to Trello with your account and visit [https://trello.com/1/appKey/generate](https://trello.com/1/appKey/generate) to get your developer\_public\_key.
 
 ### Where do I get an API Access Token Key?
-You will need an access token to use ruby-trello, which trello tracker depends on. To get it, you'll need to go to this URL:
+To generate a proper access token key, log in to Trello with the 'tracking user' account. Then go to this URL:
 
     https://trello.com/1/connect?key=<YOUR_DEVELOPER_PUBLIC_KEY>&name=Trello+Effort+Tracker&response_type=token&scope=read,write&expiration=never
 
-At the end of this process, You'll be told to give some key to the app, this is what you want to put in the access\_token\_key yml prop file.
+At the end of this process, you'll receive a valid access\_token\_key, which is needed by Trello Effort Tracker to fetch all the tracking notifications sent to the 'tracking user'.
 
 ## Usage
 The best way is to use one of the rake task defined, e.g.
@@ -88,8 +89,8 @@ tracker.track
 You can set the Trello's auth params in three ways
 
 * setting the three auth params via environment variables (ENV object)
-* using the config.yml (which remains the default mode)
 * passing into the constructor a hash containing the auth values, e.g.
+* using the config.yml (which remains the default mode)
 
 ```ruby
 tracker = TrelloTracker.new(

@@ -15,7 +15,7 @@ class TrelloTracker
     Trello.logger.info "Processing #{notifications.size} tracking notifications (from #{oldest} to #{latest}) starting from #{starting_date}..."
 
     notifications.each do |notification|
-      tracking = Tracking.new(notification)
+      tracking = TrackingFactory.build_from(notification)
       begin
         tracked_card = TrackedCard.update_or_create_with(notification.card)
         tracked_card.add!(tracking)

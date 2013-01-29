@@ -1,0 +1,14 @@
+0.0.3
+  - When I send a tracking with "DONE" then the card is "closed" (aka "finished")
+  - Export all cards in a Google Docs spreadsheet
+  - When I card change its name, the tracked card should be updated too
+  - A card should tells its estimate error (3)
+
+0.0.2
+  - Very simple Rails app on a separate branch, still experimenting
+  - Should be able to open a Trello console with a rake task
+  - Avoid running the script if already run for that period
+  - Tracking data is now persisted in a mongo database
+  
+0.0.1
+  - Initial Release.

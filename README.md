@@ -207,11 +207,22 @@ LC_ALL=en_US.UTF-8
 We develop Trello Effort Tracker using [Trello itself](https://trello.com/board/trello-effort-tracker-roadmap/509c3228dcb1ac3f1c018791).
 
 ## Contributing
-
-Several ways you can contribute. Documentation, code, tests, feature requests, bug reports.
 To get started, [sign the Contributor License Agreement](http://www.clahub.com/agreements/xpepper/trello_effort_tracker).
 
+If you'd like to hack on Trello Effort Tracker, start by forking the repo on GitHub:
 
-Pull requests are welcome :)
+https://github.com/xpepper/trello_effort_tracker
+
+The best way to get your changes merged back into core is as follows:
+
+1. Clone down your fork
+1. Create a thoughtfully named topic branch to contain your change
+1. Hack away
+1. Add tests and make sure everything still passes by running `rake spec`
+1. If you are adding new functionality, document it in the README
+1. Do not change the version number, we will do that on our end
+1. If necessary, rebase your commits into logical chunks, without errors
+1. Push the branch up to GitHub
+1. Send a pull request for your branch
 
 [@pierodibello](http://twitter.com/pierodibello)

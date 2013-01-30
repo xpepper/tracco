@@ -13,6 +13,8 @@ test/tmp
 test/version_tmp
 tmp
 .tmtags
+.tags
+.tags_sorted_by_file
 
 # YARD artifacts
 .yardoc
@@ -20,6 +22,5 @@ _yardoc
 doc/
 
 config.yml
-config.yml.piero
 mongoid.yml
 .rvmrc

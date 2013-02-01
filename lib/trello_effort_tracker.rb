@@ -22,6 +22,7 @@ require 'trello_effort_tracker/trello_tracker'
 require 'trello_effort_tracker/google_docs_exporter'
 
 require 'patches/trello/member'
+require 'patches/trello/card'
 
 TrelloConfiguration::Database.load_env(ENV['MONGOID_ENV'] || "development")
 

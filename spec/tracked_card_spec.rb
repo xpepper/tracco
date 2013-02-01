@@ -43,6 +43,10 @@ describe TrackedCard do
   describe ".update_or_create_with" do
     let(:trello_card) { Trello::Card.new("id" => "ABC123", "name" => "a name", "idShort" => 1, "desc" => "any description") }
 
+    before(:each) do
+      Trello::Card.any_instance.stub(:in_done_column?)
+    end
+
     it "creates a tracked card on a given trello card" do
       tracked_card = TrackedCard.update_or_create_with(trello_card)
 
@@ -65,6 +69,22 @@ describe TrackedCard do
 
       TrackedCard.update_or_create_with(invalid_trello_card).should be_nil
       TrackedCard.all.should be_empty
+    end
+
+    it "tracks the card as done when the original trello card is moved in a DONE column" do
+      trello_card.stub(:in_done_column?).and_return(true)
+
+      tracked_card = TrackedCard.update_or_create_with(trello_card)
+
+      tracked_card.should be_done
+    end
+
+    it "tracks the card as NOT done when the original trello card is moved in a column different from DONE" do
+      trello_card.stub(:in_done_column?).and_return(false)
+
+      tracked_card = TrackedCard.update_or_create_with(trello_card)
+
+      tracked_card.should_not be_done
     end
 
   end

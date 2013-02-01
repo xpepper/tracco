@@ -6,9 +6,10 @@ describe TrelloTracker do
   # (see https://trello.com/board/testingboard/50ff225c7162123e3600074f)
   # The board has some cards in todo, one card in progress and one done
 
-  TODO_CARD_ID        = "51062b71df2bfec47b0039fb"
-  IN_PROGRESS_CARD_ID = "51062b99d81a343121004046"
-  DONE_CARD_ID        = "51062b936d2deed22100157e"
+  TODO_CARD_ID        =   "51062b71df2bfec47b0039fb"
+  IN_PROGRESS_CARD_ID =   "51062b99d81a343121004046"
+  DONE_CARD_ID        =  "51062b936d2deed22100157e"
+  ANOTHER_DONE_CARD_ID = "510c46d7c7bc9ac6020007ab"
 
   let(:config) {
     # auth params for trackinguser_for_test/testinguser!
@@ -43,6 +44,10 @@ describe TrelloTracker do
     done_card = TrackedCard.find_by_trello_id(DONE_CARD_ID)
     done_card.total_effort.should == 2
     done_card.should be_done
+
+    # another done card (this time for the DONE column)
+    another_done_card = TrackedCard.find_by_trello_id(ANOTHER_DONE_CARD_ID)
+    another_done_card.should be_done
   end
 
 
@@ -54,7 +59,7 @@ describe TrelloTracker do
 
     begin
       ENV["tracker_username"] = tracking_user
-      Trello.logger.level = Logger::FATAL
+      Trello.logger.level = Logger::WARN
       block.call unless block.nil?
     ensure
       ENV["tracker_username"] = original_tracker

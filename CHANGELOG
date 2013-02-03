@@ -1,3 +1,6 @@
+0.0.4
+  - A card moved into a DONE column is closed
+
 0.0.3
   - When I send a tracking with "DONE" then the card is "closed" (aka "finished")
   - Export all cards in a Google Docs spreadsheet

@@ -2,6 +2,13 @@ PATH
   remote: .
   specs:
     trello_effort_tracker (0.0.3)
+      bson_ext
+      chronic
+      google_drive
+      highline
+      mongoid
+      rainbow
+      ruby-trello
 
 GEM
   remote: http://rubygems.org/

@@ -13,14 +13,14 @@ describe TrelloTracker do
 
   let(:config) {
     # auth params for trackinguser_for_test/testinguser!
-    OpenStruct.new(tracker_username:  "trackinguser_for_test",
-                   developer_key:     "ef7c400e711057d7ba5e00be20139a33",
-                   access_token:      "9047d8fdbfdc960d41910673e300516cc8630dd4967e9b418fc27e410516362e")
+    OpenStruct.new(tracker:  "trackinguser_for_test",
+                   dev_key:  "ef7c400e711057d7ba5e00be20139a33",
+                   token:    "9047d8fdbfdc960d41910673e300516cc8630dd4967e9b418fc27e410516362e")
   }
 
   it "tracks some estimates and efforts", :needs_valid_configuration => true do
-    with_trackinguser(config.tracker_username) do
-      tracker = TrelloTracker.new(developer_public_key: config.developer_key, access_token_key: config.access_token)
+    without_logging do
+      tracker = TrelloTracker.new(tracker_username: config.tracker, developer_public_key: config.dev_key, access_token_key: config.token)
       tracker.track(DateTime.parse("2013-01-28"))
     end
 
@@ -53,16 +53,13 @@ describe TrelloTracker do
 
   private
 
-  def with_trackinguser(tracking_user, &block)
-    original_tracker = ENV["tracker_username"]
+  def without_logging(&block)
     original_error_level = Trello.logger.level
 
     begin
-      ENV["tracker_username"] = tracking_user
       Trello.logger.level = Logger::WARN
       block.call unless block.nil?
     ensure
-      ENV["tracker_username"] = original_tracker
       Trello.logger.level = original_error_level
     end
   end

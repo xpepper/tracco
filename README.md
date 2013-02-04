@@ -6,35 +6,34 @@
 ## What is Trello Effort Tracker?
 The purpose of this tool is to extract and track estimates and actual efforts on Trello cards.
 You simply notify all of your estimates and efforts tracked on your Trello cards using a conventional format.
-Trello Effort Tracker will extract and store these estimates and actual efforts to let you extract useful key metrics (e.g. estimate errors, remaining efforts, pair programming frequencies, and so on).
+Trello Effort Tracker will extract and store these estimates and actual efforts to let you mine useful key metrics (e.g. estimate errors, remaining efforts, pair programming frequencies, and so on).
 
 ## Why Trello Effort Tracker?
 Trello is a very good surrogate for a physical team board: it's simple and effective, and it can really help when you have a distributed team.
 That said, Trello does not (still) offer a way to track time estimated and actually spent on cards, though many people [ask for that feature](https://trello.com/card/time-tracking/4d5ea62fd76aa1136000000c/1054) on Trello's development board.
 
-We had the need to add time tracking to Trello, so we define a simple convention to track estimates and efforts on cards: we use a predefined board member (let's call him 'tracking user') which we sent special notifications to (we call them 'tracking notifications').
-This 'tracking user' will then receives estimates and efforts notifications, and Trello Effort Tracker will collect them in a simple domain model, backed on a persistent storage.
-Moreover, a web app will be soon available to properly present card estimates and efforts. We're working on it.
+Having that precise need, we defined a simple convention to track estimates and efforts on cards: we use a predefined board member (let's call him 'tracking user') which we sent special notifications to (we call them 'tracking notifications').
+This 'tracking user' will then receives estimates and efforts notifications, and Trello Effort Tracker will collect and store them.
+Moreover, a web app will be soon available to properly present card estimates and efforts (we're working on it).
 
 ## More details
 All you need to have to start using Trello Effort Tracker is a Trello account, a Trello board and a board member to use as 'tracking user'. 
 You'll also need to know your Trello developer key and generate a proper auth token to have access to the trackinguser's notifications.
 To see how to have these two keys, see [the following section](#api_key).
 
-The Trello API is used behind the scenes to read data from the team board.
-Trello Effort Tracker uses the awesome [Trello API Ruby wrapper](https://github.com/jeremytregunna/ruby-trello) for this purpose.
+The Trello API is used behind the scenes to read data from the team board. Trello Effort Tracker uses the awesome [Trello API Ruby wrapper](https://github.com/jeremytregunna/ruby-trello) for this purpose.
 
 ## Installation
 
-```
-# gem install trello_effort_tracker
+```shell
+gem install trello_effort_tracker
 ```
 
 Full Disclosure: This library is still work-in-progress, so if you find anything missing or not functioning as you expect it to, please [open an issue on github](https://github.com/xpepper/trello_effort_tracker/issues).
 
 ## Requirements
-* [mongoDB](http://www.mongodb.org/) - mac users with homebrew will just run 'brew install mongodb' to have mongoDB installed on their machine.
-* [rvm](https://rvm.io/rvm/install/) (optional)
+* [mongoDB](http://www.mongodb.org/) - macosx users with homebrew will just run 'brew install mongodb' to have mongoDB installed on their machine.
+* [rvm](https://rvm.io/rvm/install/) is useful (but optional) for development
 
 ## Setup
 Copy the config template
@@ -86,24 +85,42 @@ Or you may just create a TrelloTracker instance and execute its track method.
 tracker = TrelloTracker.new
 tracker.track
 ```
-You can set the Trello's auth params in three ways
 
-* setting the three auth params via environment variables (ENV object)
-* passing into the constructor a hash containing the auth values, e.g.
-* using the config.yml (which remains the default mode)
+### Configuration params
+You can set the Trello's configuration params in three ways
+
+1. through the following environment variables (ENV object)
+
+```
+  access_token_key
+  developer_public_key
+  tracker_username
+```
+
+2. passing into the constructor a hash containing the auth values
 
 ```ruby
 tracker = TrelloTracker.new(
- "developer_public_key" => "487635b55e6fe9021902fa763b4d101a",
- "access_token_key" => "33bed56f2a12a49c9ba1c2d6ad3e2002e11a34358c3f3fe260d7fba746a06203")
+ developer_public_key: "487635b55e6fe9021902fa763b4d101a",
+ access_token_key: "33bed56f2a12a49c9ba1c2d6ad3e2002e11a34358c3f3fe260d7fba746a06203",
+ tracker_username: "my_personal_tracker")
 
 tracker.track
 ```
+
+3. using the config.yml (which is the actual fallback mode, useful in development mode)
+
 ### Console
 You can open a irb console with the ruby-trello gem and this gem loaded, so that you can query the db or the Trello API and play with them
 
 ```ruby
 rake console
+```
+
+The default env is development. To load a console in the (e.g.) production db env, execute:
+
+```ruby
+rake "console[production]"
 ```
 
 ### Storage configuration

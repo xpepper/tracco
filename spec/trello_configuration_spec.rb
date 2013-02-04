@@ -11,22 +11,22 @@ describe TrelloConfiguration do
 
       authorization_params_from_config_file["developer_public_key"].should == "any_dpk"
       authorization_params_from_config_file["access_token_key"].should == "any_atk"
-    end    
+    end
   end
-  
+
   describe "#tracker_username" do
     before(:each) do
       @original = ENV["tracker_username"]
     end
-    
+
     after(:each) do
       ENV["tracker_username"] = @original
     end
-    
+
     it "searches for the trello tracker username first from an env var" do
       ENV["tracker_username"] = "my_tracker"
       YAML.should_receive(:load_file).never
-    
+
       tracker_username.should == "my_tracker"
     end
 
@@ -34,10 +34,10 @@ describe TrelloConfiguration do
       ENV["tracker_username"] = nil
       config_hash = {"tracker_username" => "my_trello_tracker" }
       YAML.should_receive(:load_file).with("config/config.yml").and_return(config_hash)
-      
+
       tracker_username.should == "my_trello_tracker"
     end
-    
+
   end
 
 end

@@ -19,7 +19,7 @@ describe TrelloAuthorize do
       ENV["developer_public_key"] = ENV["access_token_key"] = "anything"
       YAML.should_receive(:load_file).never
 
-      authorize_on_trello("developer_public_key" => "custom_dpk", "access_token_key" => "custom_atk")
+      authorize_on_trello(developer_public_key: "custom_dpk", access_token_key: "custom_atk")
 
       Trello.client.auth_policy.developer_public_key.should == "custom_dpk"
       Trello.client.auth_policy.member_token.should         == "custom_atk"
@@ -31,7 +31,7 @@ describe TrelloAuthorize do
 
       YAML.should_receive(:load_file).never
 
-      authorize_on_trello("any" => "thing")
+      authorize_on_trello(any: "thing")
 
       Trello.client.auth_policy.developer_public_key.should == "my_dpk"
       Trello.client.auth_policy.member_token.should         == "my_atk"
@@ -43,7 +43,7 @@ describe TrelloAuthorize do
       config_hash = {"trello" => { "developer_public_key" => "any_dpk", "access_token_key" => "any_atk"}}
       YAML.should_receive(:load_file).with("config/config.yml").and_return(config_hash)
 
-      authorize_on_trello("any" => "thing")
+      authorize_on_trello(any: "thing")
 
       Trello.client.auth_policy.developer_public_key.should == "any_dpk"
       Trello.client.auth_policy.member_token.should         == "any_atk"

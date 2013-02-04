@@ -20,7 +20,7 @@ describe TrelloTracker do
 
   it "tracks some estimates and efforts", :needs_valid_configuration => true do
     with_trackinguser(config.tracker_username) do
-      tracker = TrelloTracker.new("developer_public_key" => config.developer_key, "access_token_key" => config.access_token)
+      tracker = TrelloTracker.new(developer_public_key: config.developer_key, access_token_key: config.access_token)
       tracker.track(DateTime.parse("2013-01-28"))
     end
 

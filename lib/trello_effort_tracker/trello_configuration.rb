@@ -1,7 +1,7 @@
 module TrelloConfiguration
 
-  def tracker_username
-    @tracker_username ||= ENV["tracker_username"] || configuration["tracker_username"]
+  def tracker_username(forced_tracker_username=nil)
+    @tracker_username ||= forced_tracker_username || ENV["tracker_username"] || configuration["tracker_username"]
   end
 
   def authorization_params_from_config_file

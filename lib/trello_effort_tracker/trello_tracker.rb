@@ -4,8 +4,9 @@ class TrelloTracker
 
   trap("SIGINT") { exit! }
 
-  def initialize(custom_auth_params = {})
-    authorize_on_trello(custom_auth_params)
+  def initialize(custom_config_params = {})
+    authorize_on_trello(custom_config_params)
+    tracker_username(custom_config_params[:tracker_username])
   end
 
   def track(starting_date=Date.today)

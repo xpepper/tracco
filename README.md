@@ -87,9 +87,8 @@ tracker.track
 ```
 
 ### Configuration params
-You can set the Trello's configuration params in three ways
-
-1. through the following environment variables (ENV object)
+You can set the Trello's configuration params in three ways.
+Through the following environment variables (ENV object):
 
 ```
   access_token_key
@@ -97,7 +96,7 @@ You can set the Trello's configuration params in three ways
   tracker_username
 ```
 
-2. passing into the constructor a hash containing the auth values
+Passing into the constructor a hash containing the auth values:
 
 ```ruby
 tracker = TrelloTracker.new(
@@ -108,7 +107,7 @@ tracker = TrelloTracker.new(
 tracker.track
 ```
 
-3. using the config.yml (which is the actual fallback mode, useful in development mode)
+Or using the config.yml (which is the actual fallback mode, useful in development mode).
 
 ### Console
 You can open a irb console with the ruby-trello gem and this gem loaded, so that you can query the db or the Trello API and play with them
@@ -176,6 +175,8 @@ Sending a tracking notification with the word DONE
     @trackinguser DONE
 
 will mark the card as closed.
+
+Moreover, a card moved into a DONE column (the name of the Trello list contains the word "Done") is automatically marked as done.
 
 ## Database import/export
 To export the db you can execute something like:

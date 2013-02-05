@@ -4,6 +4,7 @@ require 'set'
 require 'yaml'
 require 'chronic'
 require 'mongoid'
+require 'forwardable'
 
 require 'trello_effort_tracker/mongoid_helper'
 require 'trello_effort_tracker/trello_configuration'

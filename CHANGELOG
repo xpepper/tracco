@@ -1,3 +1,7 @@
+0.0.5
+  - Improved docs
+  - Improved use of this tool as a gem
+
 0.0.4
   - A card moved into a DONE column is closed
 
@@ -12,6 +16,6 @@
   - Should be able to open a Trello console with a rake task
   - Avoid running the script if already run for that period
   - Tracking data is now persisted in a mongo database
-  
+
 0.0.1
   - Initial Release.

@@ -17,28 +17,31 @@ This 'tracking user' will then receives estimates and efforts notifications, and
 Moreover, a web app will be soon available to properly present card estimates and efforts (we're working on it).
 
 ## More details
-All you need to have to start using Trello Effort Tracker is a Trello account, a Trello board and a board member to use as 'tracking user'. 
+All you need to have to start using Trello Effort Tracker is a Trello account, a Trello board and a board member to use as 'tracking user'.
 You'll also need to know your Trello developer key and generate a proper auth token to have access to the trackinguser's notifications.
 To see how to have these two keys, see [the following section](#api_key).
 
 The Trello API is used behind the scenes to read data from the team board. Trello Effort Tracker uses the awesome [Trello API Ruby wrapper](https://github.com/jeremytregunna/ruby-trello) for this purpose.
 
-## Installation
+## Usage
+This tool can be used as a standalone gem or cloning this git repo.
+
+### Installation as a ruby gem
 
 ```shell
 gem install trello_effort_tracker
 ```
 
-Full Disclosure: This library is still work-in-progress, so if you find anything missing or not functioning as you expect it to, please [open an issue on github](https://github.com/xpepper/trello_effort_tracker/issues).
-
-## Requirements
-* [mongoDB](http://www.mongodb.org/) - macosx users with homebrew will just run 'brew install mongodb' to have mongoDB installed on their machine.
-* [rvm](https://rvm.io/rvm/install/) is useful (but optional) for development
-
-## Setup
-Copy the config template
+### Installation cloning the repo
 
 ```shell
+git clone git://github.com/xpepper/trello_effort_tracker.git
+```
+
+Then cd in the lib and copy the config template
+
+```shell
+cd trello_effort_tracker
 cp config/config.template.yaml config/config.yml
 ```
 
@@ -58,6 +61,15 @@ Then run bundle to get all the required gems:
 bundle install
 ```
 
+
+Full Disclosure: this library is still work-in-progress, so if you find anything missing or not functioning as you expect it to, please [open an issue on github](https://github.com/xpepper/trello_effort_tracker/issues).
+
+## Requirements
+* [mongoDB](http://www.mongodb.org/) - macosx users with homebrew will just run 'brew install mongodb' to have mongoDB installed on their machine.
+* (optional) [rvm](https://rvm.io/rvm/install/) is useful (but optional) for development
+
+
+
 ### <a id="api_key"></a>Where do I get an API key?
 Log in to Trello with your account and visit [https://trello.com/1/appKey/generate](https://trello.com/1/appKey/generate) to get your developer\_public\_key.
 
@@ -74,7 +86,7 @@ The best way is to use one of the rake task defined, e.g.
 ```ruby
 rake 'run:today[test]' # will extract today's tracked data and store on the test db
 
-rake run:today  # will extract today's tracked data  and store on the default (that is development) db
+rake run:today  # will extract today's tracked data and store on the default (that is development) db
 
 rake 'run:from_day[2012-11-1, production]'  # will extract tracked data starting from November the 1st, 2012 and store them into the production db
 ```
@@ -82,11 +94,48 @@ rake 'run:from_day[2012-11-1, production]'  # will extract tracked data starting
 Or you may just create a TrelloTracker instance and execute its track method.
 
 ```ruby
+require 'trello_effort_tracker'
+
 tracker = TrelloTracker.new
 tracker.track
 ```
 
 ### Configuration params
+### Mongo storage configuration
+Tracking data collected from Trello are stored in a MongoDB database.
+
+There are two env variables you can set to configure mongodb
+
+- `MONGOID_ENV` defines which mongodb env is actually used (development, test, production). Development is the default mongo environment.
+- `MONGOID_CONFIG_PATH` defines the path to the mongoid configuration file (default is `config/mongoid.yml`)
+
+A standard mongoid.yml is the following:
+
+```yml
+development:
+  sessions:
+    default:
+      database: trello_effort_tracker_dev
+      hosts:
+        - localhost:27017
+test:
+  sessions:
+    default:
+      database: trello_effort_tracker_test
+      hosts:
+        - localhost:27017
+production:
+  autocreate_indexes: true
+  persist_in_safe_mode: true
+
+  sessions:
+    default:
+      database: trello_effort_tracker_production
+      hosts:
+        - localhost:27017
+```
+
+#### Trello configuration params
 You can set the Trello's configuration params in three ways.
 Through the following environment variables (ENV object):
 
@@ -121,10 +170,6 @@ The default env is development. To load a console in the (e.g.) production db en
 ```ruby
 rake "console[production]"
 ```
-
-### Storage configuration
-Tracking data collected from Trello are stored in a MongoDB, as configured in config/mongoid.yml.
-To define which mongodb env is actually used, just set the MONGOID_ENV env variable. Development is the default mongo environment.
 
 ### Estimate format convention
 To set an estimate on a card, a Trello user should send a notification from that card to the tracker username, e.g.

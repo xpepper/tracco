@@ -9,9 +9,9 @@ module TrelloConfiguration
   end
 
   class Database
-    def self.load_env(db_env)
+    def self.load_env(db_env, mongoid_configuration_path=nil)
       ENV['MONGOID_ENV'] = db_env
-      Mongoid.load!("config/mongoid.yml", db_env)
+      Mongoid.load!(mongoid_configuration_path || "config/mongoid.yml", db_env)
       Trello.logger.info "Mongo db env: #{db_env.color(:green)}."
     end
   end

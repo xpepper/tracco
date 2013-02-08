@@ -22,14 +22,20 @@ Gem::Specification.new do |gem|
   gem.test_files        = `git ls-files -- {spec}/*`.split("\n")
   gem.extra_rdoc_files  = ["README.md"]
 
-  gem.rubygems_version  = %q{1.8.24}
   gem.required_rubygems_version = ">= 1.3.6"
 
-  gem.add_dependency 'ruby-trello'
-  gem.add_dependency 'mongoid'
-  gem.add_dependency 'bson_ext'
-  gem.add_dependency 'google_drive'
-  gem.add_dependency 'rainbow'
-  gem.add_dependency 'chronic'
-  gem.add_dependency 'highline'
+  gem.add_runtime_dependency 'ruby-trello'
+  gem.add_runtime_dependency 'mongoid'
+  gem.add_runtime_dependency 'bson_ext'
+  gem.add_runtime_dependency 'google_drive'
+  gem.add_runtime_dependency 'rainbow'
+  gem.add_runtime_dependency 'chronic'
+  gem.add_runtime_dependency 'highline'
+
+  gem.add_development_dependency 'rake'
+  gem.add_development_dependency 'rspec'
+  gem.add_development_dependency 'rspec-mocks'
+  gem.add_development_dependency 'mongoid-rspec'
+  gem.add_development_dependency 'database_cleaner'
+  gem.add_development_dependency 'debugger'
 end

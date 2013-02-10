@@ -13,6 +13,10 @@ class Effort
 
   validates_presence_of :amount, :date, :members
 
+  def amount_per_member
+    amount / members.size
+  end
+
   def ==(other)
     return true if other.equal?(self)
     return false unless other.kind_of?(self.class)

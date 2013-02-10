@@ -13,11 +13,18 @@ describe Effort do
     it { should validate_presence_of(:members) }
   end
 
-  describe "equality" do
-    %w{piero tommaso tom ugo}.each do |username|
-      let(username.to_sym) { Member.new(username: username) }
-    end
+  %w{piero tommaso tom ugo}.each do |username|
+    let(username.to_sym) { Member.new(username: username) }
+  end
 
+  describe "#amount_per_member" do
+    it "counts the amount spent per single member" do
+      effort = Effort.new(amount: 6, members: [piero, tommaso], date: Date.parse("2012-11-09"), )
+      effort.amount_per_member.should == 3
+    end
+  end
+
+  describe "equality" do
     it "is equal to another effort with same amount, date and members" do
       effort          = Effort.new(amount: 3, date: Date.parse("2012-11-09"), members: [piero, tommaso])
       same_effort     = Effort.new(amount: 3, date: Date.parse("2012-11-09"), members: [piero, tommaso])

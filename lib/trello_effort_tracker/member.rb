@@ -31,14 +31,7 @@ class Member
     cards = TrackedCard.where("efforts.members.username" => username)
     efforts = cards.map(&:efforts).compact.flatten
 
-    total_member_effort = 0
-    efforts.each do |e|
-      if e.members.map(&:username).include?(username)
-        total_member_effort += e.amount / e.members.size
-      end
-    end
-
-    total_member_effort
+    efforts.select { |e| e.members.map(&:username).include?(username) }.inject(0) { |total, e| total + e.amount_per_member }
   end
 
   def ==(other)

@@ -36,6 +36,33 @@ describe Member do
     end
   end
 
+  describe "#effort_spent" do
+    %w{piero tommaso}.each do |username|
+      let(username.to_sym) { Member.new(username: username) }
+    end
+
+    let(:card)         { TrackedCard.create(name: "any", short_id: 1234, trello_id: "123123") }
+    let(:another_card) { TrackedCard.create(name: "any_other", short_id: 1235, trello_id: "123125") }
+
+    it "is zero when the member did not spent effort at all" do
+      piero.effort_spent.should == 0
+    end
+
+    it "counts the effort spent on a card" do
+      card.efforts << Effort.new(amount: 4, date: Date.today, members: [piero, tommaso])
+      card.efforts << Effort.new(amount: 5, date: Date.today, members: [tommaso])
+
+      piero.effort_spent.should == 4 / 2
+    end
+
+    it "counts the effort spent on several cards" do
+      card.efforts << Effort.new(amount: 4, date: Date.today, members: [piero, tommaso])
+      another_card.efforts << Effort.new(amount: 5, date: Date.today, members: [piero])
+
+      piero.effort_spent.should == 2 + 5
+    end
+  end
+
   describe "#avatar_url" do
     it "points to the avatar thumbnail image" do
       member = Member.new(avatar_id: "123xyz")

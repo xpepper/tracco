@@ -27,6 +27,20 @@ class Member
     "https://trello-avatars.s3.amazonaws.com/#{avatar_id}/30.png"
   end
 
+  def effort_spent
+    cards = TrackedCard.where("efforts.members.username" => username)
+    efforts = cards.map(&:efforts).compact.flatten
+
+    total_member_effort = 0
+    efforts.each do |e|
+      if e.members.map(&:username).include?(username)
+        total_member_effort += e.amount / e.members.size
+      end
+    end
+
+    total_member_effort
+  end
+
   def ==(other)
     return true if other.equal?(self)
     return false unless other.kind_of?(self.class)

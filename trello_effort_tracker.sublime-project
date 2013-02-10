@@ -3,7 +3,8 @@
  [
    {
      "path": ".",
-     "folder_exclude_patterns": ["tmp", "log", "coverage"]
+     "folder_exclude_patterns": ["tmp", "log", "coverage"],
+     "file_exclude_patterns": ["trello_effort_tracker.sublime-workspace"]
    }
  ]
 }

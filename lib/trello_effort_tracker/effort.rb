@@ -17,6 +17,10 @@ class Effort
     amount / members.size
   end
 
+  def include?(member)
+    members.include?(member)
+  end
+
   def ==(other)
     return true if other.equal?(self)
     return false unless other.kind_of?(self.class)

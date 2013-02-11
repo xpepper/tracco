@@ -61,6 +61,7 @@ describe Member do
 
       piero.effort_spent.should == 2 + 5
     end
+
   end
 
   describe "#avatar_url" do

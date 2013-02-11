@@ -31,7 +31,7 @@ class Member
     cards = TrackedCard.where("efforts.members.username" => username)
     efforts = cards.map(&:efforts).compact.flatten
 
-    efforts.select { |e| e.members.map(&:username).include?(username) }.inject(0) { |total, e| total + e.amount_per_member }
+    efforts.select { |effort| effort.include?(self) }.inject(0) { |total, effort| total + effort.amount_per_member }
   end
 
   def ==(other)

@@ -24,7 +24,7 @@ class Member
   end
 
   def avatar_url
-    "https://trello-avatars.s3.amazonaws.com/#{avatar_id}/30.png"
+    trello_member.avatar_url(size: :small)
   end
 
   def effort_spent
@@ -48,6 +48,13 @@ class Member
 
   def hash
     username.hash
+  end
+
+  private
+
+  def trello_member
+    @trello_member ||= Trello::Member.new("id" => trello_id, "fullName" => full_name, "username" => username,
+                                           "avatarHash" => avatar_id, "bio" => bio, "url" => url)
   end
 
 end

@@ -62,6 +62,14 @@ describe Member do
       piero.effort_spent.should == 2 + 5
     end
 
+    it "counts the effort spent on a card from a given date" do
+      card.efforts << Effort.new(amount: 4, date: Date.yesterday, members: [piero])
+      card.efforts << Effort.new(amount: 5, date: Date.today, members: [piero])
+
+      piero.effort_spent(Date.today).should == 5
+      piero.effort_spent_since(Date.today).should == 5
+    end
+
   end
 
   describe "#avatar_url" do

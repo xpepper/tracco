@@ -27,12 +27,13 @@ class Member
     trello_member.avatar_url(size: :small)
   end
 
-  def effort_spent
+  def effort_spent(from_date=nil)
     cards = TrackedCard.where("efforts.members.username" => username)
     efforts = cards.map(&:efforts).compact.flatten
-
+    efforts = efforts.select {|e| e.date >= from_date} if from_date
     efforts.select { |effort| effort.include?(self) }.inject(0) { |total, effort| total + effort.amount_per_member }
   end
+  alias_method :effort_spent_since, :effort_spent
 
   def ==(other)
     return true if other.equal?(self)

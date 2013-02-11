@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    trello_effort_tracker (0.0.5)
+    trello_effort_tracker (0.0.6)
       bson_ext
       chronic
       google_drive

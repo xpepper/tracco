@@ -33,6 +33,16 @@ class TrackedCard
     return tracked_card if updated_successfully
   end
 
+  def status
+    if done?
+      :done
+    elsif efforts.empty?
+      :todo
+    else
+      :in_progress
+    end
+  end
+
   def self.build_from(trello_card)
     trello_card_id = trello_card.id
     trello_card.attributes.delete(:id)

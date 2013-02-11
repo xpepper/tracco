@@ -308,10 +308,28 @@ describe TrackedCard do
     it "describes the card as a string" do
       card = TrackedCard.new(name: "A Story Name")
       card.estimates << Estimate.new(amount: 5, date: Date.today)
-      card.efforts << Effort.new(amount: 3, date: Date.today, members: [Member.new(username: "piero"),   Member.new(username: "tommaso")])
-      card.efforts << Effort.new(amount: 6, date: Date.today, members: [Member.new(username: "piero"),   Member.new(username: "tommaso")])
+      card.efforts << Effort.new(amount: 3, date: Date.today, members: [Member.new(username: "piero"), Member.new(username: "tommaso")])
+      card.efforts << Effort.new(amount: 6, date: Date.today, members: [Member.new(username: "piero"), Member.new(username: "tommaso")])
 
       card.to_s.should == %Q{[A Story Name]. Total effort: 9.0h. Estimates ["[2012-11-05] estimated 5.0 hours"]. Efforts: ["[2012-11-05] spent 3.0 hours by @piero, @tommaso", "[2012-11-05] spent 6.0 hours by @piero, @tommaso"]}
+    end
+  end
+
+  describe "#status" do
+    it "is done when is done" do
+      done_card = TrackedCard.new(done:true)
+      done_card.status.should == :done
+
+      done_card.efforts << Effort.new(amount: 3, date: Date.today, members: [Member.new(username: "any")])
+      done_card.status.should == :done
+    end
+
+    it "is todo when no effort has been spent on the card" do
+      card = TrackedCard.new
+      card.status.should == :todo
+
+      card.efforts << Effort.new(amount: 3, date: Date.today, members: [Member.new(username: "any")])
+      card.status.should == :in_progress
     end
   end
 

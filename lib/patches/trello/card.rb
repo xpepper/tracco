@@ -1,7 +1,7 @@
 module Trello
 
   class Card
-    # Reopening the Trello::Card class to add a  method detecting a card moved in a DONE column
+    # Reopening the Trello::Card class to add a method detecting a card moved in a DONE column
     def in_done_column?
       list_name = ""
       begin

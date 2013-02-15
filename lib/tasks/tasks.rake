@@ -8,18 +8,6 @@ task :c, [:db_env] do |t, args|
   Rake::Task[:console].invoke(args.db_env)
 end
 
-namespace :spec do
-  desc "Run fast specs"
-  RSpec::Core::RakeTask.new(:fast) do |t|
-    t.rspec_opts = '--tag ~needs_valid_configuration'
-  end
-
-  desc "Run slow specs"
-  RSpec::Core::RakeTask.new(:slow) do |t|
-    t.rspec_opts = '--tag needs_valid_configuration'
-  end
-end
-
 namespace :run do
   include TrelloConfiguration
 

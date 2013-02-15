@@ -1,3 +1,12 @@
+config.yml
+mongoid.yml
+.rvmrc
+trello_effort_tracker.sublime-workspace
+
+.tmtags
+.tags
+.tags_sorted_by_file
+
 .DS_Store
 *.gem
 *.rbc
@@ -12,16 +21,8 @@ spec/reports
 test/tmp
 test/version_tmp
 tmp
-.tmtags
-.tags
-.tags_sorted_by_file
-trello_effort_tracker.sublime-workspace
 
 # YARD artifacts
 .yardoc
 _yardoc
 doc/
-
-config.yml
-mongoid.yml
-.rvmrc

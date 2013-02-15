@@ -1,3 +1,6 @@
+0.0.7
+  - Minor refactorings on the rake tasks
+
 0.0.6
   - Added TrackedCard#status to track card status: :todo if no effort has been spent, :done if the card is in a DONE column, :in_progress otherwise
   - Added a Members#effort_spent and #effort_spent_since to extract the overall effort tracked by a member since a given date

@@ -38,7 +38,7 @@ gem install trello_effort_tracker
 git clone git://github.com/xpepper/trello_effort_tracker.git
 ```
 
-Then cd in the lib and copy the config template
+Then cd in the cloned repo and copy the config template
 
 ```shell
 cd trello_effort_tracker
@@ -100,7 +100,7 @@ tracker = TrelloTracker.new
 tracker.track
 ```
 
-### Configuration params
+## Configuration params
 ### Mongo storage configuration
 Tracking data collected from Trello are stored in a MongoDB database.
 
@@ -259,7 +259,7 @@ You may install a crontab entry to run the trello tracker periodically, for exam
 
 ```shell
 SHELL=/Users/futur3/.rvm/bin/rvm-shell
-GEMSET="ruby-1.9.3-p194@spikes"
+GEMSET="ruby-1.9.3-p385@spikes"
 PROJECT_PATH="/Users/$USER/Documents/workspace/trello_effort_tracker"
 LC_ALL=en_US.UTF-8
 

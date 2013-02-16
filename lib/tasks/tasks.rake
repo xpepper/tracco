@@ -44,12 +44,12 @@ end
 task :ensure_environment do
   %w{developer_public_key access_token_key}.each do |each_name|
     unless ENV[each_name] || authorization_params_from_config_file[each_name]
-      puts "ERROR: Missing <#{each_name}> environment variable."
+      puts "ERROR: Missing <#{each_name}> configuration parameter: set it as environment variable or in the config/config.yml file."
       exit 1
     end
   end
   unless tracker_username
-    puts "ERROR: Missing <tracker_username> environment variable."
+    puts "ERROR: Missing <tracker_username> configuration parameter: set it as environment variable or in the config/config.yml file."
     exit 1
   end
 end

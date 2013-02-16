@@ -5,7 +5,13 @@ module TrelloConfiguration
   end
 
   def authorization_params_from_config_file
-    configuration["trello"]
+    begin
+      configuration["trello"]
+    rescue NoMethodError => e
+      Trello.logger.info "Invalid configuration file".color(:red)
+      {}
+    end
+
   end
 
   class Database

@@ -38,7 +38,7 @@ gem install trello_effort_tracker
 git clone git://github.com/xpepper/trello_effort_tracker.git
 ```
 
-Then cd in the lib and copy the config template
+Then cd in the cloned repo and copy the config template
 
 ```shell
 cd trello_effort_tracker

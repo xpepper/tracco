@@ -6,22 +6,22 @@
 ## What is Tracco?
 Tracco is a Trello effort tracker: the purpose of Tracco is to extract and track estimates and actual efforts out of the cards on your Trello boards.
 You simply notify all of your estimates and efforts tracked on your Trello cards using a conventional format.
-Trello Effort Tracker will extract and store these estimates and actual efforts to let you mine useful key metrics (e.g. estimate errors, remaining efforts, pair programming frequencies, and so on).
+Tracco will extract and store these estimates and actual efforts to let you mine useful key metrics (e.g. estimate errors, remaining efforts, pair programming frequencies, and so on).
 
-## Why Trello Effort Tracker?
+## Why Tracco?
 Trello is a very good surrogate for a physical team board: it's simple and effective, and it can really help when you have a distributed team.
 That said, Trello does not (still) offer a way to track time estimated and actually spent on cards, though many people [ask for that feature](https://trello.com/card/time-tracking/4d5ea62fd76aa1136000000c/1054) on Trello's development board.
 
 Having that precise need, we defined a simple convention to track estimates and efforts on cards: we use a predefined board member (let's call him 'tracking user') which we sent special notifications to (we call them 'tracking notifications').
-This 'tracking user' will then receives estimates and efforts notifications, and Trello Effort Tracker will collect and store them.
+This 'tracking user' will then receives estimates and efforts notifications, and Tracco will collect and store them.
 Moreover, a web app will be soon available to properly present card estimates and efforts (we're working on it).
 
 ## More details
-All you need to have to start using Trello Effort Tracker is a Trello account, a Trello board and a board member to use as 'tracking user'.
+All you need to have to start using Tracco is a Trello account, a Trello board and a board member to use as 'tracking user'.
 You'll also need to know your Trello developer key and generate a proper auth token to have access to the trackinguser's notifications.
 To see how to have these two keys, see [the following section](#api_key).
 
-The Trello API is used behind the scenes to read data from the team board. Trello Effort Tracker uses the awesome [Trello API Ruby wrapper](https://github.com/jeremytregunna/ruby-trello) for this purpose.
+The Trello API is used behind the scenes to read data from the team board. Tracco uses the awesome [Trello API Ruby wrapper](https://github.com/jeremytregunna/ruby-trello) for this purpose.
 
 ## Usage
 This tool can be used as a standalone gem or cloning this git repo.
@@ -78,7 +78,7 @@ To generate a proper access token key, log in to Trello with the 'tracking user'
 
     https://trello.com/1/connect?key=<YOUR_DEVELOPER_PUBLIC_KEY>&name=Trello+Effort+Tracker&response_type=token&scope=read,write&expiration=never
 
-At the end of this process, you'll receive a valid access\_token\_key, which is needed by Trello Effort Tracker to fetch all the tracking notifications sent to the 'tracking user'.
+At the end of this process, you'll receive a valid access\_token\_key, which is needed by Tracco to fetch all the tracking notifications sent to the 'tracking user'.
 
 ## Usage
 The best way is to use one of the rake task defined, e.g.
@@ -268,12 +268,12 @@ LC_ALL=en_US.UTF-8
 ```
 
 ## Roadmap and improvements
-We develop Trello Effort Tracker using [Trello itself](https://trello.com/board/trello-effort-tracker-roadmap/509c3228dcb1ac3f1c018791).
+We develop Tracco using [Trello itself](https://trello.com/board/trello-effort-tracker-roadmap/509c3228dcb1ac3f1c018791).
 
 ## Contributing
 To get started, [sign the Contributor License Agreement](http://www.clahub.com/agreements/xpepper/tracco).
 
-If you'd like to hack on Trello Effort Tracker, start by forking the repo on GitHub:
+If you'd like to hack on Tracco, start by forking the repo on GitHub:
 
 https://github.com/xpepper/tracco
 

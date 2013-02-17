@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.version           = TrelloEffortTracker::VERSION
   gem.platform          = Gem::Platform::RUBY
 
-  gem.description       = "A tool to extract estimates and efforts from Trello"
+  gem.description       = "Tracco is a Trello effort tracker: the purpose of Tracco is to extract and track estimates and actual efforts out of the cards on your Trello boards."
   gem.summary           = <<-DESC
     You notify all the estimates and efforts of your Trello cards.
     This tool will extract and store these estimates and actual efforts
@@ -14,7 +14,7 @@ Gem::Specification.new do |gem|
   DESC
   gem.authors           = ['Pietro Di Bello']
   gem.email             = 'pierodibello@gmail.com'
-  gem.homepage          = 'http://xplayer.wordpress.com'
+  gem.homepage          = 'http://xplayer.github.com'
   gem.date              = Time.now.strftime "%Y-%m-%d"
 
   gem.require_paths     = ["lib"]

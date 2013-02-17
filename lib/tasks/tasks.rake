@@ -1,7 +1,7 @@
 desc "Open an irb session preloaded with this library, e.g. rake 'console[production]' will open a irb session with the production db env"
 task :console, [:db_env] do |t, args|
   args.with_defaults(db_env: "development")
-  sh "export MONGOID_ENV=#{args.db_env}; irb -rubygems -I lib -r trello_effort_tracker.rb -r startup_trello.rb"
+  sh "export MONGOID_ENV=#{args.db_env}; irb -rubygems -I lib -r tracco.rb -r startup_trello.rb"
 end
 
 task :c, [:db_env] do |t, args|

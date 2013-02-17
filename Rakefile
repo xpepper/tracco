@@ -1,6 +1,6 @@
 # encoding: utf-8
 require 'bundler'
-require 'trello_effort_tracker'
+require 'tracco'
 
 Bundler::GemHelper.install_tasks
 

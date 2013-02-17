@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
-require File.expand_path('../lib/trello_effort_tracker/version', __FILE__)
+require File.expand_path('../lib/tracco/version', __FILE__)
 
 Gem::Specification.new do |gem|
-  gem.name              = "trello_effort_tracker"
+  gem.name              = "tracco"
   gem.version           = TrelloEffortTracker::VERSION
   gem.platform          = Gem::Platform::RUBY
 

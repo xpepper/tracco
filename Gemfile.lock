@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    trello_effort_tracker (0.0.7)
+    tracco (0.0.8)
       bson_ext
       chronic
       google_drive
@@ -107,4 +107,4 @@ DEPENDENCIES
   rspec
   rspec-mocks
   simplecov
-  trello_effort_tracker!
+  tracco!

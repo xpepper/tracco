@@ -1,10 +1,10 @@
-[![Build Status](https://secure.travis-ci.org/xpepper/trello_effort_tracker.png)](http://travis-ci.org/xpepper/trello_effort_tracker)
-[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/xpepper/trello_effort_tracker)
+[![Build Status](https://secure.travis-ci.org/xpepper/tracco.png)](http://travis-ci.org/xpepper/tracco)
+[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/xpepper/tracco)
 
-# Trello Effort Tracker
+# Tracco
 
-## What is Trello Effort Tracker?
-The purpose of this tool is to extract and track estimates and actual efforts on Trello cards.
+## What is Tracco?
+Tracco is a Trello effort tracker: the purpose of Tracco is to extract and track estimates and actual efforts out of the cards on your Trello boards.
 You simply notify all of your estimates and efforts tracked on your Trello cards using a conventional format.
 Trello Effort Tracker will extract and store these estimates and actual efforts to let you mine useful key metrics (e.g. estimate errors, remaining efforts, pair programming frequencies, and so on).
 
@@ -29,19 +29,19 @@ This tool can be used as a standalone gem or cloning this git repo.
 ### Installation as a ruby gem
 
 ```shell
-gem install trello_effort_tracker
+gem install tracco
 ```
 
 ### Installation cloning the repo
 
 ```shell
-git clone git://github.com/xpepper/trello_effort_tracker.git
+git clone git://github.com/xpepper/tracco.git
 ```
 
 Then cd in the cloned repo and copy the config template
 
 ```shell
-cd trello_effort_tracker
+cd tracco
 cp config/config.template.yaml config/config.yml
 ```
 
@@ -62,7 +62,7 @@ bundle install
 ```
 
 
-Full Disclosure: this library is still work-in-progress, so if you find anything missing or not functioning as you expect it to, please [open an issue on github](https://github.com/xpepper/trello_effort_tracker/issues).
+Full Disclosure: this library is still work-in-progress, so if you find anything missing or not functioning as you expect it to, please [open an issue on github](https://github.com/xpepper/tracco/issues).
 
 ## Requirements
 * [mongoDB](http://www.mongodb.org/) - macosx users with homebrew will just run 'brew install mongodb' to have mongoDB installed on their machine.
@@ -94,7 +94,7 @@ rake 'run:from_day[2012-11-1, production]'  # will extract tracked data starting
 Or you may just create a TrelloTracker instance and execute its track method.
 
 ```ruby
-require 'trello_effort_tracker'
+require 'tracco'
 
 tracker = TrelloTracker.new
 tracker.track
@@ -115,13 +115,13 @@ A standard mongoid.yml is the following:
 development:
   sessions:
     default:
-      database: trello_effort_tracker_dev
+      database: tracco_dev
       hosts:
         - localhost:27017
 test:
   sessions:
     default:
-      database: trello_effort_tracker_test
+      database: tracco_test
       hosts:
         - localhost:27017
 production:
@@ -130,7 +130,7 @@ production:
 
   sessions:
     default:
-      database: trello_effort_tracker_production
+      database: tracco_production
       hosts:
         - localhost:27017
 ```
@@ -227,13 +227,13 @@ Moreover, a card moved into a DONE column (the name of the Trello list contains 
 To export the db you can execute something like:
 
 ```shell
-mongoexport --db trello_effort_tracker_production --collection tracked_cards --out trello_effort_tracker_production.json
+mongoexport --db tracco_production --collection tracked_cards --out tracco_production.json
 ```
 
 To reimport that db:
 
 ```shell
-mongoimport  --db trello_effort_tracker_production --collection tracked_cards --file trello_effort_tracker_production.json
+mongoimport  --db tracco_production --collection tracked_cards --file tracco_production.json
 ```
 
 ## Google Docs exporter
@@ -260,7 +260,7 @@ You may install a crontab entry to run the trello tracker periodically, for exam
 ```shell
 SHELL=/Users/futur3/.rvm/bin/rvm-shell
 GEMSET="ruby-1.9.3-p385@spikes"
-PROJECT_PATH="/Users/$USER/Documents/workspace/trello_effort_tracker"
+PROJECT_PATH="/Users/$USER/Documents/workspace/tracco"
 LC_ALL=en_US.UTF-8
 
 # m h  dom mon dow   command
@@ -271,11 +271,11 @@ LC_ALL=en_US.UTF-8
 We develop Trello Effort Tracker using [Trello itself](https://trello.com/board/trello-effort-tracker-roadmap/509c3228dcb1ac3f1c018791).
 
 ## Contributing
-To get started, [sign the Contributor License Agreement](http://www.clahub.com/agreements/xpepper/trello_effort_tracker).
+To get started, [sign the Contributor License Agreement](http://www.clahub.com/agreements/xpepper/tracco).
 
 If you'd like to hack on Trello Effort Tracker, start by forking the repo on GitHub:
 
-https://github.com/xpepper/trello_effort_tracker
+https://github.com/xpepper/tracco
 
 The best way to get your changes merged back into core is as follows:
 

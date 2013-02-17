@@ -16,7 +16,7 @@ end
 
 Bundler.require(:spec)
 
-require 'trello_effort_tracker'
+require 'tracco'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.

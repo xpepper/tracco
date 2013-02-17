@@ -1,14 +1,14 @@
 development:
   sessions:
     default:
-      database: trello_effort_tracker_dev
+      database: tracco_dev
       hosts:
         - localhost:27017
 
 test:
   sessions:
     default:
-      database: trello_effort_tracker_test
+      database: tracco_test
       hosts:
         - localhost:27017
 
@@ -19,6 +19,6 @@ production:
 
   sessions:
     default:
-      database: trello_effort_tracker_production
+      database: tracco_production
       hosts:
         - localhost:27017

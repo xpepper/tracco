@@ -15,6 +15,6 @@ services:
 script: ./script/ci/run_build.sh
 
 before_script:
-  - mongo trello_effort_tracker_test --eval 'db.addUser("travis", "test");'
+  - mongo tracco_test --eval 'db.addUser("travis", "test");'
   - "./script/ci/before_script.sh"
 

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    tracco (0.0.9)
+    tracco (0.0.10)
       bson_ext
       chronic
       google_drive
@@ -48,7 +48,7 @@ GEM
     jwt (0.1.5)
       multi_json (>= 1.0)
     mime-types (1.21)
-    mongoid (3.1.0)
+    mongoid (3.1.1)
       activemodel (~> 3.2)
       moped (~> 1.4.2)
       origin (~> 1.0)
@@ -58,7 +58,7 @@ GEM
       rake
       rspec (>= 2.9)
     moped (1.4.2)
-    multi_json (1.6.0)
+    multi_json (1.6.1)
     multi_xml (0.5.3)
     multipart-post (1.1.5)
     nokogiri (1.5.6)

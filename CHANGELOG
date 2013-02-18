@@ -1,3 +1,6 @@
+0.0.10
+  - Including Mongoid::MultiParameterAttributes in Effort and Estimate to enable date params to be collected correctly by Rails app (e.g. using the Rails' date_select form helper)
+
 0.0.8 - 0.0.9
   - Gem rename :)
 

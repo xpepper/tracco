@@ -31,13 +31,73 @@ describe TrackedCard do
   end
 
   describe ".find_by_trello_id" do
-    it "find a card given its Trello id" do
+    it "finds a card given its Trello id" do
       card = TrackedCard.create(name: "any card", short_id: 1234, trello_id: "1")
       another_card = TrackedCard.create(name: "another card", short_id: 3456, trello_id: "2")
 
       TrackedCard.find_by_trello_id("1").should == card
       TrackedCard.find_by_trello_id("3").should == nil
     end
+  end
+
+  describe ".all_tracked_cards" do
+    it "finds all tracked cards with a valid tracking" do
+      card = TrackedCard.create(name: "any card", short_id: 1234, trello_id: "1")
+      card.estimates << Estimate.new(amount: 5, date: Date.today)
+      card.efforts << Effort.new(amount: 3, date: Date.today, members: [piero])
+
+      card_without_tracking = TrackedCard.create(name: "another card", short_id: 3456, trello_id: "2")
+
+
+      TrackedCard.all_tracked_cards.should == [card]
+    end
+
+    it "optionally sorts the cards using a given sorting method" do
+      # TODO introduce a factory (fabricator?)
+      card = TrackedCard.create(name: "AAA", short_id: 1234, trello_id: "1")
+      card.estimates << Estimate.new(amount: 5, date: Date.today)
+      card.efforts << Effort.new(amount: 3, date: Date.today, members: [piero])
+
+      another_card = TrackedCard.create(name: "ZZZ", short_id: 1235, trello_id: "2")
+      another_card.estimates << Estimate.new(amount: 5, date: Date.today)
+      another_card.efforts << Effort.new(amount: 3, date: Date.today, members: [piero])
+
+      card_without_tracking = TrackedCard.create(name: "another card", short_id: 3456, trello_id: "2")
+
+      TrackedCard.all_tracked_cards(:method => :name).should == [card, another_card]
+    end
+
+    it "applies an optional sorting order" do
+      # TODO introduce a factory (fabricator?)
+      card = TrackedCard.create(name: "AAA", short_id: 1234, trello_id: "1")
+      card.estimates << Estimate.new(amount: 5, date: Date.today)
+      card.efforts << Effort.new(amount: 3, date: Date.today, members: [piero])
+
+      another_card = TrackedCard.create(name: "ZZZ", short_id: 1235, trello_id: "2")
+      another_card.estimates << Estimate.new(amount: 5, date: Date.today)
+      another_card.efforts << Effort.new(amount: 3, date: Date.today, members: [piero])
+
+      card_without_tracking = TrackedCard.create(name: "another card", short_id: 3456, trello_id: "2")
+
+      TrackedCard.all_tracked_cards(:method => :name, :order => :desc).should == [another_card, card]
+    end
+
+    it "uses the ascending order as default sorting order option" do
+      # TODO introduce a factory (fabricator?)
+      card = TrackedCard.create(name: "AAA", short_id: 44, trello_id: "100")
+      card.estimates << Estimate.new(amount: 5, date: Date.today)
+      card.efforts << Effort.new(amount: 3, date: Date.today, members: [piero])
+
+      another_card = TrackedCard.create(name: "ZZZ", short_id: 12, trello_id: "200")
+      another_card.estimates << Estimate.new(amount: 5, date: Date.today)
+      another_card.efforts << Effort.new(amount: 3, date: Date.today, members: [piero])
+
+      card_without_tracking = TrackedCard.create(name: "another card", short_id: 3456, trello_id: "2")
+
+      TrackedCard.all_tracked_cards(:method => :short_id).should == [another_card, card]
+    end
+
+
   end
 
   describe ".update_or_create_with" do

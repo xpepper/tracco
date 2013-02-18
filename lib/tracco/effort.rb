@@ -1,6 +1,7 @@
 class Effort
   include Mongoid::Document
   include Mongoid::Timestamps
+  include Mongoid::MultiParameterAttributes
 
   field :amount,  type: BigDecimal
   field :date,    type: Date

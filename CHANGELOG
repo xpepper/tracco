@@ -1,3 +1,7 @@
+0.0.12
+  - Adding a TrackedCard#trello_notifications to fetch all the notifications belonging to the card
+  - Introducing FactoryGirl as a factory gem to simplify specs
+
 0.0.11
   - Adding a TrackedCard.all_tracked_cards method to fetch all cards with a valid tracking. Moreover, sorting_options can be passed to sort using a method e.g. TrackedCard.all_tracked_cards(:method => :name, :order => :desc)
 

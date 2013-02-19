@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    tracco (0.0.11)
+    tracco (0.0.12)
       bson_ext
       chronic
       google_drive

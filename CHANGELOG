@@ -1,3 +1,6 @@
+0.0.11
+  - Adding a TrackedCard.all_tracked_cards method to fetch all cards with a valid tracking. Moreover, sorting_options can be passed to sort using a method e.g. TrackedCard.all_tracked_cards(:method => :name, :order => :desc)
+
 0.0.10
   - Including Mongoid::MultiParameterAttributes in Effort and Estimate to enable date params to be collected correctly by Rails app (e.g. using the Rails' date_select form helper)
 

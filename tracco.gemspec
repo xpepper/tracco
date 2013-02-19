@@ -37,5 +37,6 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rspec-mocks'
   gem.add_development_dependency 'mongoid-rspec'
   gem.add_development_dependency 'database_cleaner'
+  gem.add_development_dependency 'factory_girl'
   gem.add_development_dependency 'debugger'
 end

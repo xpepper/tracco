@@ -18,12 +18,16 @@ Bundler.require(:spec)
 
 require 'tracco'
 
+require 'factory_girl'
+FactoryGirl.find_definitions
+
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 
 RSpec.configure do |configuration|
   configuration.include Mongoid::Matchers
+  configuration.include FactoryGirl::Syntax::Methods # Repeating "FactoryGirl" is too verbose for me...
 end
 
 # force test env for the mongodb configuration

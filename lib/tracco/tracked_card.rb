@@ -41,6 +41,12 @@ class TrackedCard
     sorting_options[:order] == :desc ? cards.reverse : cards
   end
 
+  def self.build_from(trello_card)
+    trello_card_id = trello_card.id
+    trello_card.attributes.delete(:id)
+    new(trello_card.attributes.merge(trello_id: trello_card_id))
+  end
+
   def status
     if done?
       :done
@@ -49,12 +55,6 @@ class TrackedCard
     else
       :in_progress
     end
-  end
-
-  def self.build_from(trello_card)
-    trello_card_id = trello_card.id
-    trello_card.attributes.delete(:id)
-    new(trello_card.attributes.merge(trello_id: trello_card_id))
   end
 
   def add(tracking)
@@ -114,6 +114,11 @@ class TrackedCard
     end
 
     estimate_errors
+  end
+
+  def trello_notifications
+    notification_ids = efforts.map(&:tracking_notification_id) | estimates.map(&:tracking_notification_id)
+    notification_ids.map { |each_id| Trello::Notification.find(each_id) }.sort_by(&:date)
   end
 
   def to_s

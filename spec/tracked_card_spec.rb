@@ -46,7 +46,7 @@ describe TrackedCard do
     let!(:card_without_tracking) { create(:tracked_card) }
 
     it "finds all tracked cards with a valid tracking" do
-      TrackedCard.all_tracked_cards.should == [card, another_card]
+      TrackedCard.all_tracked_cards.should =~ [card, another_card]
     end
 
     it "optionally sorts the cards using a given sorting method" do
@@ -160,14 +160,26 @@ describe TrackedCard do
     let(:first_notification)   { stub("notification1", date: Date.yesterday) }
     let(:second_notification)  { stub("notification1", date: Date.today)     }
 
-    it "fetch all the card notifications from trello" do
+    it "fetches all the card notifications from trello" do
       card.estimates << Estimate.new(tracking_notification_id: "xyz987", amount: 5, date: Date.yesterday)
       card.efforts << Effort.new(tracking_notification_id: "abc123", amount: 3, date: Date.today, members: [piero])
 
       Trello::Notification.should_receive(:find).with("xyz987").and_return(second_notification)
       Trello::Notification.should_receive(:find).with("abc123").and_return(first_notification)
+
       card.trello_notifications.should == [first_notification, second_notification]
     end
+
+    it "skips the notifications not found" do
+      card.estimates << build(:estimate, tracking_notification_id: "unexisting_id")
+      card.efforts << build(:effort, tracking_notification_id: "abc123")
+
+      Trello::Notification.should_receive(:find).with("unexisting_id").and_raise(Trello::Error)
+      Trello::Notification.should_receive(:find).with("abc123").and_return(first_notification)
+
+      card.trello_notifications.should == [first_notification]
+    end
+
   end
 
   describe "equality" do

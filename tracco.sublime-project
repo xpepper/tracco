@@ -3,7 +3,7 @@
  [
    {
      "path": ".",
-     "folder_exclude_patterns": ["tmp", "log", "coverage"],
+     "folder_exclude_patterns": ["pkg", "tmp", "log", "coverage"],
      "file_exclude_patterns": ["tracco.sublime-workspace"]
    }
  ]

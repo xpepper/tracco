@@ -41,38 +41,24 @@ describe TrackedCard do
   end
 
   describe ".all_tracked_cards" do
+    let!(:card)          { create(:tracked_card, name: "AAA", estimates: [build(:estimate)], efforts: [build(:effort)]) }
+    let!(:another_card)  { create(:tracked_card, name: "ZZZ", estimates: [build(:estimate)], efforts: [build(:effort)]) }
+    let!(:card_without_tracking) { create(:tracked_card) }
+
     it "finds all tracked cards with a valid tracking" do
-      # TODO introduce a factory on estimate and effort
-      card = create(:tracked_card, :estimates => [Estimate.new(amount: 5, date: Date.today)],
-                                   :efforts => [Effort.new(amount: 3, date: Date.today, members: [piero])])
-      card_without_tracking = create(:tracked_card)
-
-
-      TrackedCard.all_tracked_cards.should == [card]
+      TrackedCard.all_tracked_cards.should == [card, another_card]
     end
 
     it "optionally sorts the cards using a given sorting method" do
-      card = create(:tracked_card, name: "AAA")
-      card.estimates << Estimate.new(amount: 5, date: Date.today)
-      card.efforts << Effort.new(amount: 3, date: Date.today, members: [piero])
-
-      another_card = create(:tracked_card, name: "ZZZ")
-      another_card.estimates << Estimate.new(amount: 5, date: Date.today)
-      another_card.efforts << Effort.new(amount: 3, date: Date.today, members: [piero])
-
-      card_without_tracking = create(:tracked_card)
+      card.update_attributes(name: "AAA")
+      another_card.update_attributes(name: "ZZZ")
 
       TrackedCard.all_tracked_cards(:method => :name).should == [card, another_card]
     end
 
     it "applies an optional sorting order" do
-      card = create(:tracked_card, name: "AAA")
-      card.estimates << Estimate.new(amount: 5, date: Date.today)
-      card.efforts << Effort.new(amount: 3, date: Date.today, members: [piero])
-
-      another_card = create(:tracked_card, name: "ZZZ")
-      another_card.estimates << Estimate.new(amount: 5, date: Date.today)
-      another_card.efforts << Effort.new(amount: 3, date: Date.today, members: [piero])
+      card.update_attributes(name: "AAA")
+      another_card.update_attributes(name: "ZZZ")
 
       card_without_tracking = create(:tracked_card)
 
@@ -80,19 +66,12 @@ describe TrackedCard do
     end
 
     it "uses the ascending order as default sorting order option" do
-      card = create(:tracked_card, name: "AAA", short_id: 44)
-      card.estimates << Estimate.new(amount: 5, date: Date.today)
-      card.efforts << Effort.new(amount: 3, date: Date.today, members: [piero])
-
-      another_card = create(:tracked_card, name: "ZZZ", short_id: 12)
-      another_card.estimates << Estimate.new(amount: 5, date: Date.today)
-      another_card.efforts << Effort.new(amount: 3, date: Date.today, members: [piero])
-
-      card_without_tracking = create(:tracked_card, short_id: 3456)
+      card.update_attributes(name: "AAA", short_id: 44)
+      another_card.update_attributes(name: "ZZZ", short_id: 11)
+      card_without_tracking.update_attributes(short_id: 3456)
 
       TrackedCard.all_tracked_cards(:method => :short_id).should == [another_card, card]
     end
-
 
   end
 
@@ -168,16 +147,12 @@ describe TrackedCard do
   end
 
   it "is possible to add estimates" do
-    card.estimates << Estimate.new(amount: 5, date: Date.yesterday)
-    card.estimates << Estimate.new(amount: 12, date: Date.today)
-
+    card.estimates << build(:estimate) << build(:estimate)
     card.estimates.should have(2).estimates
   end
 
   it "is possible to add efforts" do
-    card.efforts << Effort.new(amount: 3, date: Date.today, members: [piero, tommaso])
-    card.efforts << Effort.new(amount: 5, date: Date.today, members: [tommaso])
-
+    card.efforts << build(:effort) << build(:effort)
     card.efforts.should have(2).efforts
   end
 
@@ -207,7 +182,7 @@ describe TrackedCard do
   end
 
   describe "#add" do
-    let(:card) { TrackedCard.new(name: "a name", trello_id: "123456789") }
+    let(:card) { build(:tracked_card) }
     let(:estimate_tracking) { Tracking::EstimateTracking.new(create_notification(data: { 'text' => "@trackinguser [1h]" })) }
 
     it "adds an estimate from a tracking estimate notification" do
@@ -232,7 +207,7 @@ describe TrackedCard do
   end
 
   describe "#add!" do
-    let(:card) { TrackedCard.new(name: "a name", trello_id: "123456789", short_id: "123") }
+    let(:card) { build(:tracked_card) }
 
     it "saves the tracked card after adding the tracking" do
       any_tracking = Tracking::EstimateTracking.new(create_notification(data: { 'text' => "@trackinguser [1h]" }))
@@ -248,8 +223,8 @@ describe TrackedCard do
     end
 
     it "computes the total effort on the card" do
-      card.efforts << Effort.new(amount: 3, date: Date.today, members: [piero, tommaso])
-      card.efforts << Effort.new(amount: 5, date: Date.today, members: [tommaso])
+      card.efforts << build(:effort, amount: 3)
+      card.efforts << build(:effort, amount: 5)
 
       card.total_effort.should == 3+5
     end
@@ -257,41 +232,41 @@ describe TrackedCard do
 
   describe "#last_estimate_error" do
     it "is nil when the card has no estimate" do
-      card.efforts << Effort.new(amount: 5, date: Date.today, members: [tommaso])
+      card.efforts << build(:effort, amount: 5)
 
       card.last_estimate_error.should be_nil
     end
 
     it "is nil when the card has no effort" do
-      card.efforts << Estimate.new(amount: 5, date: Date.today)
+      card.efforts << build(:estimate)
 
       card.last_estimate_error.should be_nil
     end
 
     it "is zero when actual effort is equal to estimate" do
-      card.estimates << Estimate.new(amount: 5, date: Date.today)
-      card.efforts << Effort.new(amount: 5, date: Date.today, members: [tommaso])
+      card.estimates << build(:estimate, amount: 5)
+      card.efforts << build(:effort, amount: 5)
 
       card.last_estimate_error.should == 0.0
     end
 
     it "is 100 when the actual effort is twice the given estimate" do
-      card.estimates << Estimate.new(amount: 5, date: Date.today)
-      card.efforts << Effort.new(amount: 10, date: Date.today, members: [tommaso])
+      card.estimates << build(:estimate, amount: 5)
+      card.efforts << build(:effort, amount: 10)
 
       card.last_estimate_error.should == 100.0
     end
 
     it "is -50 when the actual effort is half of the given estimate" do
-      card.estimates << Estimate.new(amount: 10, date: Date.today)
-      card.efforts << Effort.new(amount: 5, date: Date.today, members: [tommaso])
+      card.estimates << build(:estimate, amount: 10)
+      card.efforts << build(:effort, amount: 5)
 
       card.last_estimate_error.should == -50.0
     end
 
     it "is rounded with two decimal digits" do
-      card.estimates << Estimate.new(amount: 3, date: Date.today)
-      card.efforts << Effort.new(amount: 5, date: Date.today, members: [tommaso])
+      card.estimates << build(:estimate, amount: 3)
+      card.efforts << build(:effort, amount: 5)
 
       card.last_estimate_error.should == 66.67
     end
@@ -313,9 +288,9 @@ describe TrackedCard do
 
   describe "#members" do
     it "lists all the members which spent some effort on the card" do
-      card.efforts << Effort.new(amount: 3, date: Date.today, members: [piero, tommaso])
-      card.efforts << Effort.new(amount: 5, date: Date.today, members: [tommaso])
-      card.efforts << Effort.new(amount: 5, date: Date.today, members: [tommaso, michele])
+      card.efforts << build(:effort, members: [piero, tommaso])
+      card.efforts << build(:effort, members: [tommaso])
+      card.efforts << build(:effort, members: [tommaso, michele])
 
       card.members.should == [piero, tommaso, michele]
     end
@@ -324,9 +299,9 @@ describe TrackedCard do
   describe "#working_start_date" do
 
     it "is the date of the first effort spent on the card" do
-      card.efforts << Effort.new(amount: 5, date: Date.today, members: [tommaso])
-      card.efforts << Effort.new(amount: 3, date: Date.yesterday, members: [tommaso])
-      card.efforts << Effort.new(amount: 5, date: Date.tomorrow, members: [tommaso])
+      card.efforts << build(:effort, date: Date.today)
+      card.efforts << build(:effort, date: Date.yesterday)
+      card.efforts << build(:effort, date: Date.tomorrow)
 
       card.working_start_date.should == Date.yesterday
     end
@@ -334,12 +309,12 @@ describe TrackedCard do
 
   describe "#first_activity_date" do
     it "is the date of the first effort or estimate given on the card" do
-      card.estimates << Estimate.new(amount: 5, date: Date.yesterday)
-      card.estimates << Estimate.new(amount: 12, date: Date.yesterday.prev_day)
-      card.estimates << Estimate.new(amount: 12, date: Date.tomorrow)
+      card.estimates << build(:estimate, date: Date.yesterday)
+      card.estimates << build(:estimate, date: Date.yesterday.prev_day)
+      card.estimates << build(:estimate, date: Date.tomorrow)
 
-      card.efforts << Effort.new(amount: 3, date: Date.yesterday, members: [tommaso])
-      card.efforts << Effort.new(amount: 5, date: Date.today, members: [tommaso])
+      card.efforts << build(:effort, date: Date.yesterday)
+      card.efforts << build(:effort, date: Date.today)
 
       card.first_activity_date.should == Date.yesterday.prev_day
     end
@@ -347,9 +322,9 @@ describe TrackedCard do
 
   describe "#first_estimate_date" do
     it "is the date of the first estimate given on the card" do
-      card.estimates << Estimate.new(amount: 5, date: Date.tomorrow)
-      card.estimates << Estimate.new(amount: 12, date: Date.yesterday.prev_day)
-      card.estimates << Estimate.new(amount: 12, date: Date.today)
+      card.estimates << build(:estimate, date: Date.tomorrow)
+      card.estimates << build(:estimate, date: Date.yesterday.prev_day)
+      card.estimates << build(:estimate, date: Date.today)
 
       card.first_estimate_date.should == Date.yesterday.prev_day
     end
@@ -357,9 +332,9 @@ describe TrackedCard do
 
   describe "#last_estimate_date" do
     it "is the date of the last estimate given on the card" do
-      card.estimates << Estimate.new(amount: 5, date: Date.yesterday)
-      card.estimates << Estimate.new(amount: 12, date: Date.tomorrow)
-      card.estimates << Estimate.new(amount: 12, date: Date.today)
+      card.estimates << build(:estimate, date: Date.yesterday)
+      card.estimates << build(:estimate, date: Date.tomorrow)
+      card.estimates << build(:estimate, date: Date.today)
 
       card.last_estimate_date.should == Date.tomorrow
     end
@@ -369,7 +344,7 @@ describe TrackedCard do
     it "is false when there's no effort or estimate tracked on the card" do
       card.no_tracking?.should be_true
 
-      card.estimates << Estimate.new(amount: 5, date: Date.yesterday)
+      card.estimates << build(:estimate, date: Date.yesterday)
       card.no_tracking?.should be_false
     end
   end
@@ -387,10 +362,10 @@ describe TrackedCard do
 
   describe "#status" do
     it "is done when is done" do
-      done_card = TrackedCard.new(done:true)
+      done_card = TrackedCard.new(done: true)
       done_card.status.should == :done
 
-      done_card.efforts << Effort.new(amount: 3, date: Date.today, members: [Member.new(username: "any")])
+      done_card.efforts << build(:effort)
       done_card.status.should == :done
     end
 
@@ -398,7 +373,7 @@ describe TrackedCard do
       card = TrackedCard.new
       card.status.should == :todo
 
-      card.efforts << Effort.new(amount: 3, date: Date.today, members: [Member.new(username: "any")])
+      card.efforts << build(:effort)
       card.status.should == :in_progress
     end
   end

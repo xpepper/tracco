@@ -10,7 +10,7 @@ class TrelloTracker
   end
 
   def track(starting_date=Date.today)
-    notifications = tracker.notifications_from(starting_date)
+    notifications = tracker.notifications_since(starting_date)
 
     oldest, latest = boundary_dates_in(notifications)
     Trello.logger.info "Processing #{notifications.size} tracking notifications (from #{oldest} to #{latest}) starting from #{starting_date}..."

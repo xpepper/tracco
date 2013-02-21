@@ -18,7 +18,7 @@ require 'tracco/tracking/estimate_tracking'
 require 'tracco/tracking/effort_tracking'
 require 'tracco/tracking/card_done_tracking'
 require 'tracco/tracking/invalid_tracking'
-require 'tracco/tracking_factory'
+require 'tracco/tracking/factory'
 require 'tracco/trello_tracker'
 require 'tracco/google_docs_exporter'
 

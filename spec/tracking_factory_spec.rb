@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe TrackingFactory do
+describe Tracking::Factory do
 
   TIME_MEASUREMENTS = {
     hours:    'h',
@@ -11,7 +11,7 @@ describe TrackingFactory do
 
   context "unknown tracking format" do
     it "builds an invalid tracking instance" do
-      TrackingFactory.build_from(unrecognized_notification).class.should == Tracking::InvalidTracking
+      Tracking::Factory.build_from(unrecognized_notification).class.should == Tracking::InvalidTracking
 
       with_message("@trackinguser +30m") { |tracking| tracking.class.should == Tracking::InvalidTracking }
     end
@@ -21,13 +21,13 @@ describe TrackingFactory do
 
     context "estimate tracking notification in #{time_measurement}" do
       it "builds an estimate tracking instance" do
-        TrackingFactory.build_from(create_estimate(time_measurement)).class.should == Tracking::EstimateTracking
+        Tracking::Factory.build_from(create_estimate(time_measurement)).class.should == Tracking::EstimateTracking
       end
     end
 
     context "effort tracking notification in #{time_measurement}" do
       it "builds an effort tracking instance" do
-        TrackingFactory.build_from(create_effort(time_measurement)).class.should == Tracking::EffortTracking
+        Tracking::Factory.build_from(create_effort(time_measurement)).class.should == Tracking::EffortTracking
       end
     end
 

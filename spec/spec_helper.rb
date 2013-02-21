@@ -53,7 +53,7 @@ def create_effort(time_measurement)
 end
 
 def with(notification)
-  tracking = TrackingFactory.build_from(notification)
+  tracking = Tracking::Factory.build_from(notification)
   yield(tracking)
 end
 

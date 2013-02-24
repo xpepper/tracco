@@ -28,7 +28,7 @@ class Member
   end
 
   def effort_spent(from_date=nil)
-    cards = TrackedCard.where("efforts.members.username" => username)
+    cards = TrackedCard.with_effort_spent_by(username)
     efforts = cards.map(&:efforts).compact.flatten
     efforts = efforts.select {|e| e.date >= from_date} if from_date
     efforts.select { |effort| effort.include?(self) }.inject(0) { |total, effort| total + effort.amount_per_member }

@@ -19,6 +19,8 @@ class TrackedCard
   validates_presence_of :name, :short_id, :trello_id
   validates_numericality_of :short_id
 
+  scope :with_effort_spent_by, ->(username){ where("efforts.members.username" => username) }
+
   def self.find_by_trello_id(trello_id)
     without_mongo_raising_errors do
       find_by(trello_id: trello_id)

@@ -35,9 +35,7 @@ class TrackedCard
 
   def self.all_tracked_cards(sorting_options = {})
     cards = all.reject(&:no_tracking?)
-
     cards = cards.sort_by(&sorting_options[:method].to_sym) if sorting_options[:method]
-
     sorting_options[:order] == :desc ? cards.reverse : cards
   end
 

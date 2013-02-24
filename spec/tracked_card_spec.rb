@@ -53,7 +53,7 @@ describe TrackedCard do
       card.update_attributes(name: "AAA")
       another_card.update_attributes(name: "ZZZ")
 
-      TrackedCard.all_tracked_cards(:method => :name).should == [card, another_card]
+      TrackedCard.all_tracked_cards(:sort_by => :name).should == [card, another_card]
     end
 
     it "applies an optional sorting order" do
@@ -62,7 +62,7 @@ describe TrackedCard do
 
       card_without_tracking = create(:tracked_card)
 
-      TrackedCard.all_tracked_cards(:method => :name, :order => :desc).should == [another_card, card]
+      TrackedCard.all_tracked_cards(:sort_by => :name, :order => :desc).should == [another_card, card]
     end
 
     it "uses the ascending order as default sorting order option" do
@@ -70,7 +70,7 @@ describe TrackedCard do
       another_card.update_attributes(name: "ZZZ", short_id: 11)
       card_without_tracking.update_attributes(short_id: 3456)
 
-      TrackedCard.all_tracked_cards(:method => :short_id).should == [another_card, card]
+      TrackedCard.all_tracked_cards(:sort_by => :short_id).should == [another_card, card]
     end
 
   end

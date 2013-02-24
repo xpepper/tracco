@@ -18,7 +18,7 @@ class GoogleDocsExporter
     create_header(worksheet)
     index = 2 # skip the header
 
-    cards = TrackedCard.all.reject(&:no_tracking?).sort_by(&:first_activity_date).reverse
+    cards = TrackedCard.all_tracked_cards(:method => :first_activity_date, :order => :desc)
     cards.each do |card|
       print ".".color(:green)
       worksheet[index, columns[:user_story_id]] = card.short_id

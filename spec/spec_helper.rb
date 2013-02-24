@@ -14,8 +14,6 @@ rescue Bundler::GemNotFound => e
   exit!
 end
 
-Bundler.require(:spec)
-
 require 'tracco'
 
 require 'factory_girl'

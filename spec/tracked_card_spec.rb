@@ -172,10 +172,10 @@ describe TrackedCard do
 
     it "skips the notifications not found" do
       card.estimates << build(:estimate, tracking_notification_id: "unexisting_id")
-      card.efforts << build(:effort, tracking_notification_id: "abc123")
+      card.efforts << build(:effort, tracking_notification_id: "first_notification_id")
 
       Trello::Notification.should_receive(:find).with("unexisting_id").and_raise(Trello::Error)
-      Trello::Notification.should_receive(:find).with("abc123").and_return(first_notification)
+      Trello::Notification.should_receive(:find).with("first_notification_id").and_return(first_notification)
 
       card.trello_notifications.should == [first_notification]
     end

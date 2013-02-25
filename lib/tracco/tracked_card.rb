@@ -119,14 +119,7 @@ class TrackedCard
 
   def trello_notifications
     notification_ids = efforts.map(&:tracking_notification_id) | estimates.map(&:tracking_notification_id)
-    notification_ids.map { |each_id|
-      begin
-        Trello::Notification.find(each_id)
-      rescue Trello::Error => e
-        Trello.logger.warn("Cannot find notification with id #{each_id}")
-        nil
-      end
-    }.compact.sort_by(&:date)
+    notification_ids.map { |id| Trello::Notification.find(id) rescue nil }.compact.sort_by(&:date)
   end
 
   def to_s

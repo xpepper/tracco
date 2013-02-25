@@ -40,6 +40,17 @@ describe TrackedCard do
     end
   end
 
+  describe ".with_effort_spent_by" do
+    it "finds all the cards worked by a given member" do
+      card = create(:tracked_card, efforts: [build(:effort, members: [piero, tommaso])])
+      another_card = create(:tracked_card, efforts: [build(:effort, members: [piero, michele])])
+
+      TrackedCard.with_effort_spent_by("piero").should =~ [card, another_card]
+      TrackedCard.with_effort_spent_by("tommaso").should == [card]
+      TrackedCard.with_effort_spent_by("michele").should == [another_card]
+    end
+  end
+
   describe ".all_tracked_cards" do
     let!(:card)          { create(:tracked_card, name: "AAA", estimates: [build(:estimate)], efforts: [build(:effort)]) }
     let!(:another_card)  { create(:tracked_card, name: "ZZZ", estimates: [build(:estimate)], efforts: [build(:effort)]) }

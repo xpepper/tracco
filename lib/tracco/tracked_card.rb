@@ -37,8 +37,9 @@ class TrackedCard
 
   def self.all_tracked_cards(sorting_options = {})
     cards = all.reject(&:no_tracking?)
-    cards = cards.sort_by(&sorting_options[:sort_by].to_sym) if sorting_options[:sort_by]
-    sorting_options[:order] == :desc ? cards.reverse : cards
+    cards.sort_by!(&sorting_options[:sort_by].to_sym) if sorting_options[:sort_by]
+    cards.reverse! if sorting_options[:order] == :desc
+    return cards
   end
 
   def self.build_from(trello_card)

@@ -48,6 +48,15 @@ class TrackedCard
     new(trello_card.attributes.merge(trello_id: trello_card_id))
   end
 
+  def self.efforts_between(search_options)
+    condition = {}
+    {'$gte' => :from_date, '$lte' => :to_date}.each do |selection, option_key|
+      condition[selection] = search_options[option_key] if search_options[option_key]
+    end
+
+    where("efforts.date" => condition)
+  end
+
   def status
     if done?
       :done

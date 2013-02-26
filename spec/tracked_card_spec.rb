@@ -51,6 +51,23 @@ describe TrackedCard do
     end
   end
 
+  describe ".efforts_between" do
+    it "finds all the cards worked in a given date range" do
+      a_card          = create(:tracked_card, efforts: [build(:effort, date: Date.parse("2013-01-02"))])
+      another_card    = create(:tracked_card, efforts: [build(:effort, date: Date.parse("2013-11-03"))])
+      a_very_old_card = create(:tracked_card, efforts: [build(:effort, date: Date.parse("2009-11-03"))])
+
+      TrackedCard.efforts_between(from_date: Date.parse("2012-01-01")).should =~ [a_card, another_card]
+      TrackedCard.efforts_between(from_date: Date.parse("2013-01-01")).should =~ [a_card, another_card]
+      TrackedCard.efforts_between(from_date: Date.parse("2013-01-22")).should == [another_card]
+      TrackedCard.efforts_between(from_date: Date.parse("2014-01-22")).should == []
+
+      TrackedCard.efforts_between(from_date: Date.parse("2012-01-01"), to_date: Date.parse("2012-11-01")).should == []
+      TrackedCard.efforts_between(from_date: Date.parse("2012-01-01"), to_date: Date.parse("2013-02-02")).should == [a_card]
+      TrackedCard.efforts_between(from_date: Date.parse("2012-01-01"), to_date: Date.parse("2014-02-02")).should =~ [a_card, another_card]
+    end
+  end
+
   describe ".all_tracked_cards" do
     let!(:card)          { create(:tracked_card, name: "AAA", estimates: [build(:estimate)], efforts: [build(:effort)]) }
     let!(:another_card)  { create(:tracked_card, name: "ZZZ", estimates: [build(:estimate)], efforts: [build(:effort)]) }

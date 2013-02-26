@@ -3,7 +3,7 @@ require 'mongoid-rspec'
 
 describe Effort do
 
-  it { should have_fields(:amount, :date) }
+  it { should have_fields(:amount, :date, :muted, :tracking_notification_id) }
   it { should be_embedded_in(:tracked_card) }
   it { should embed_many(:members) }
 

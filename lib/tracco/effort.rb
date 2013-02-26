@@ -6,11 +6,12 @@ class Effort
   field :amount,  type: BigDecimal
   field :date,    type: Date
   field :tracking_notification_id
+  field :muted,   type: Boolean, default: false
 
   embeds_many :members
   embedded_in :tracked_card
 
-  default_scope asc(:date)
+  default_scope where(muted: false).asc(:date)
 
   validates_presence_of :amount, :date, :members
 

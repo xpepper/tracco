@@ -8,6 +8,11 @@ describe TrackedCard do
 
   subject(:card) { build(:tracked_card) }
 
+  before(:each) do
+    # adding a muted effort to check that won't be counted
+    card.efforts << build(:effort, amount: 1000, muted: true)
+  end
+
   %w{piero tommaso michele}.each do |username|
     let(username.to_sym) { Member.new(username: username) }
   end
@@ -169,6 +174,27 @@ describe TrackedCard do
 
   end
 
+  describe "card with muted effort" do
+    it "fetches only non-muted efforts" do
+      card =  create(:tracked_card, efforts: [build(:effort, muted: false)])
+      card_with_muted_effort = create(:tracked_card, efforts: [build(:effort, muted: true)])
+
+      TrackedCard.should have(2).cards
+
+      card.efforts.should have(1).effort
+
+      card_with_muted_effort.efforts.should be_empty
+      card_with_muted_effort.efforts.unscoped.should have(1).effort
+    end
+
+    it "skips muted effort when computing the total effort on the card" do
+      card.efforts << build(:effort, amount: 3, muted: true)
+      card.efforts << build(:effort, amount: 5, muted: false)
+
+      card.total_effort.should == 5
+    end
+  end
+
   it "has no estimates and efforts initially" do
     card.estimates.should be_empty
     card.efforts.should be_empty
@@ -271,6 +297,7 @@ describe TrackedCard do
   end
 
   describe "#last_estimate_error" do
+
     it "is nil when the card has no estimate" do
       card.efforts << build(:effort, amount: 5)
 

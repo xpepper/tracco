@@ -76,7 +76,7 @@ class TrackedCard
   end
 
   def contains_effort?(effort)
-    efforts.any? { |e| e.tracking_notification_id == effort.tracking_notification_id }
+    efforts.unscoped.any? { |e| e.tracking_notification_id == effort.tracking_notification_id }
   end
 
   def contains_estimate?(estimate)
@@ -127,6 +127,7 @@ class TrackedCard
   end
 
   def trello_notifications
+    # TODO select all efforts, even the muted ones?
     notification_ids = efforts.map(&:tracking_notification_id) | estimates.map(&:tracking_notification_id)
     notification_ids.map { |id| Trello::Notification.find(id) rescue nil }.compact.sort_by(&:date)
   end

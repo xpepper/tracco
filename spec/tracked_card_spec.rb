@@ -416,6 +416,23 @@ describe TrackedCard do
     end
   end
 
+  describe "#contains_effort?" do
+    it "counts regular efforts" do
+      effort = build(:effort, amount: 1, muted: false)
+      card.efforts << effort
+
+      card.contains_effort?(effort).should be_true
+    end
+
+    it "counts even muted efforts" do
+      muted_effort = build(:effort, amount: 1, muted: true)
+      card.efforts << muted_effort
+
+      card.contains_effort?(muted_effort).should be_true
+    end
+
+  end
+
   describe "#to_s" do
     it "describes the card as a string" do
       card = TrackedCard.new(name: "A Story Name")

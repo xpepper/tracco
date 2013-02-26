@@ -1,42 +1,59 @@
+0.0.13 / 2013-02-27
+==================
+  * adding muted status on Effort to be able to 'turn off' a card's specific effort
+  * adding a TrackedCard.efforts_between method to fetch all the cards with an effort spent in a given date range
+  * improving TrackedCard#trello_notifications
+
 0.0.12
+======
   - Adding a TrackedCard#trello_notifications to fetch all the notifications belonging to the card
   - Introducing FactoryGirl as a factory gem to simplify specs
 
 0.0.11
+======
   - Adding a TrackedCard.all_tracked_cards method to fetch all cards with a valid tracking. Moreover, sorting_options can be passed to sort using a method e.g. TrackedCard.all_tracked_cards(:method => :name, :order => :desc)
 
 0.0.10
+======
   - Including Mongoid::MultiParameterAttributes in Effort and Estimate to enable date params to be collected correctly by Rails app (e.g. using the Rails' date_select form helper)
 
 0.0.8 - 0.0.9
+=============
   - Gem rename :)
 
 0.0.7
+=====
   - Minor refactorings on the rake tasks
 
 0.0.6
+=====
   - Added TrackedCard#status to track card status: :todo if no effort has been spent, :done if the card is in a DONE column, :in_progress otherwise
   - Added a Members#effort_spent and #effort_spent_since to extract the overall effort tracked by a member since a given date
   - Re-merged in the trello_effort_app branch to bring on the Rails app
 
 0.0.5
+=====
   - Improved docs
   - Improved use of this tool as a gem
 
 0.0.4
+=====
   - A card moved into a DONE column is closed
 
 0.0.3
+=====
   - When I send a tracking with "DONE" then the card is "closed" (aka "finished")
   - Export all cards in a Google Docs spreadsheet
   - When I card change its name, the tracked card should be updated too
   - A card should tells its estimate error (3)
 
 0.0.2
+=====
   - Very simple Rails app on a separate branch, still experimenting
   - Should be able to open a Trello console with a rake task
   - Avoid running the script if already run for that period
   - Tracking data is now persisted in a mongo database
 
 0.0.1
+=====
   - Initial Release.

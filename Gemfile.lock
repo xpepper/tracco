@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    tracco (0.0.12)
+    tracco (0.0.13)
       bson_ext
       chronic
       google_drive
@@ -19,7 +19,7 @@ GEM
     activesupport (3.2.12)
       i18n (~> 0.6)
       multi_json (~> 1.0)
-    addressable (2.3.2)
+    addressable (2.3.3)
     bson (1.8.2)
     bson_ext (1.8.2)
       bson (~> 1.8.2)

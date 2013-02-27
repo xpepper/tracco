@@ -19,8 +19,8 @@ module Tracking
     end
 
     match /\[#{DURATION_REGEXP}\]/ => Tracking::EstimateTracking
-             match /\+#{DURATION_REGEXP}/   => Tracking::EffortTracking
-             match /DONE/ => Tracking::CardDoneTracking
+    match /\+#{DURATION_REGEXP}/   => Tracking::EffortTracking
+    match /DONE/ => Tracking::CardDoneTracking
 
   end
 end

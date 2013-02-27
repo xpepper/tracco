@@ -13,7 +13,7 @@ class TrelloTracker
     notifications = tracker.notifications_since(starting_date)
 
     oldest, latest = boundary_dates_in(notifications)
-    Trello.logger.info "Processing #{notifications.size} tracking notifications (from #{oldest} to #{latest}) starting from #{starting_date}..."
+    Trello.logger.info "Processing #{notifications.size} tracking events (from #{oldest} to #{latest}) starting from #{starting_date}..."
 
     notifications.each do |notification|
       tracking = Tracking::Factory.build_from(notification)

@@ -10,15 +10,15 @@ class TrelloTracker
   end
 
   def track(starting_date=Date.today)
-    tracking_events = tracker.tracking_events_since(starting_date)
+    tracking_notifications = tracker.tracking_notifications_since(starting_date)
 
-    oldest, latest = boundary_dates_in(tracking_events)
-    Trello.logger.info "Processing #{tracking_events.size} tracking events (from #{oldest} to #{latest}) starting from #{starting_date}..."
+    oldest, latest = boundary_dates_in(tracking_notifications)
+    Trello.logger.info "Processing #{tracking_notifications.size} tracking events (from #{oldest} to #{latest}) starting from #{starting_date}..."
 
-    tracking_events.each do |tracking_event|
-      tracking = Tracking::Factory.build_from(tracking_event)
+    tracking_notifications.each do |tracking_notification|
+      tracking = Tracking::Factory.build_from(tracking_notification)
       begin
-        tracked_card = TrackedCard.update_or_create_with(tracking_event.card)
+        tracked_card = TrackedCard.update_or_create_with(tracking_notification.card)
         tracked_card.add!(tracking)
         Trello.logger.info tracking
 
@@ -36,8 +36,8 @@ class TrelloTracker
     @tracker ||= Member.find(tracker_username)
   end
 
-  def boundary_dates_in(tracking_events)
-    dates = tracking_events.map { |each_tracking_event| Chronic.parse(each_tracking_event.date) }
+  def boundary_dates_in(tracking_notifications)
+    dates = tracking_notifications.map { |each_tracking_notification| Chronic.parse(each_tracking_notification.date) }
     [dates.min, dates.max]
   end
 

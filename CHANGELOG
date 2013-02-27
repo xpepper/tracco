@@ -1,3 +1,8 @@
+0.0.14 / 2013-02-27
+==================
+  * TrackedCard#contains_effort? is considering all the card's efforts, even the muted ones, so that a muted effort won't be re-added from Trello to Tracco
+  * updating dependencies gems
+
 0.0.13 / 2013-02-27
 ==================
   * adding muted status on Effort to be able to 'turn off' a card's specific effort

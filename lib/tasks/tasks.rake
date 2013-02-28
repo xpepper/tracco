@@ -16,7 +16,7 @@ namespace :run do
     args.with_defaults(starting_date: Date.today.to_s, db_env: "development")
     TrelloConfiguration::Database.load_env(args.db_env)
 
-    tracker = TrelloTracker.new
+    tracker = Tracco::TrelloTracker.new
     tracker.track(Date.parse(args.starting_date))
   end
 
@@ -33,7 +33,7 @@ namespace :export do
     args.with_defaults(db_env: "development")
     TrelloConfiguration::Database.load_env(args.db_env)
 
-    exporter = GoogleDocsExporter.new(args.spreadsheet, args.worksheet)
+    exporter = Tracco::GoogleDocsExporter.new(args.spreadsheet, args.worksheet)
     spreadsheet_url = exporter.export
 
     puts "[DONE]".color(:green)

@@ -96,7 +96,7 @@ Or you may just create a TrelloTracker instance and execute its track method.
 ```ruby
 require 'tracco'
 
-tracker = TrelloTracker.new
+tracker = Tracco::TrelloTracker.new
 tracker.track
 ```
 
@@ -148,7 +148,7 @@ Through the following environment variables (ENV object):
 Passing into the constructor a hash containing the auth values:
 
 ```ruby
-tracker = TrelloTracker.new(
+tracker = Tracco::TrelloTracker.new(
  developer_public_key: "487635b55e6fe9021902fa763b4d101a",
  access_token_key: "33bed56f2a12a49c9ba1c2d6ad3e2002e11a34358c3f3fe260d7fba746a06203",
  tracker_username: "my_personal_tracker")

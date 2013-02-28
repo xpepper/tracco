@@ -1,3 +1,9 @@
+TIME_MEASUREMENTS = {
+  hours:    'h',
+  days:     'd',
+  giorni:   'g',
+  pomodori: 'p'
+}
 
 def unrecognized_notification
   create_notification(data: { 'text' => '@trackinguser hi there!' })
@@ -16,7 +22,7 @@ def create_effort(time_measurement)
 end
 
 def with(notification)
-  tracking = Tracking::Factory.build_from(notification)
+  tracking = Tracco::Tracking::Factory.build_from(notification)
   yield(tracking)
 end
 

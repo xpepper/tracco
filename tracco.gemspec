@@ -3,7 +3,7 @@ require File.expand_path('../lib/tracco/version', __FILE__)
 
 Gem::Specification.new do |gem|
   gem.name              = "tracco"
-  gem.version           = TrelloEffortTracker::VERSION
+  gem.version           = Tracco::VERSION
   gem.platform          = Gem::Platform::RUBY
 
   gem.description       = "Tracco is a Trello effort tracker: the purpose of Tracco is to extract and track estimates and actual efforts out of the cards on your Trello boards."

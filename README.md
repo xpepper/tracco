@@ -4,8 +4,8 @@
 # Tracco
 
 ## What is Tracco?
-Tracco is a Trello effort tracker: the purpose of Tracco is to extract and track estimates and actual efforts out of the cards on your Trello boards.
-You simply notify all of your estimates and efforts tracked on your Trello cards using a conventional format.
+Tracco is an effort tracker for Trello: the purpose of Tracco is to extract and track estimates and actual efforts out of the cards on your Trello boards.
+All you have to do is notify all of your estimates and efforts tracked on your Trello cards using a simple conventional format.
 Tracco will extract and store these estimates and actual efforts to let you mine useful key metrics (e.g. estimate errors, remaining efforts, pair programming frequencies, and so on).
 
 ## Why Tracco?

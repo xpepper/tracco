@@ -1,3 +1,19 @@
+
+0.0.15 / 2013-03-01
+==================
+  * Introducing the Tracco namespace to avoid name collisions. All mongo collections will need to be copied from tracked_cards to tracco_tracked_cards
+
+  All existing collections will need to be renamed from tracked_cards to tracco_tracked cards.
+  > mongo trello_effort_tracker_dev
+  > db.tracked_cards.copyTo("tracco_tracked_cards");
+
+  * Update README.md
+  * Renaming the 'tracking event' into 'tracking notification'
+  * Renaming the 'tracking notification' into 'tracking event'
+  * Moving a spec in the proper folder
+  * Moving the models specs in a proper spec subfolder
+  * Moving all the models (tracked_cards, estimates, efforts and members) in a proper 'models' folder
+
 0.0.14 / 2013-02-27
 ==================
   * TrackedCard#contains_effort? is considering all the card's efforts, even the muted ones, so that a muted effort won't be re-added from Trello to Tracco

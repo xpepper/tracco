@@ -1,8 +1,8 @@
 require "google_drive"
 require 'highline/import'
 
-module Tracco
-  class GoogleDocsExporter
+module Tracco::Exporters
+  class GoogleDocs
     include TrelloConfiguration
 
     def initialize(spreadsheet_name, worksheet_name)
@@ -19,7 +19,7 @@ module Tracco
       create_header(worksheet)
       index = 2 # skip the header
 
-      cards = TrackedCard.all_tracked_cards(:method => :first_activity_date, :order => :desc)
+      cards = Tracco::TrackedCard.all_tracked_cards(:method => :first_activity_date, :order => :desc)
       cards.each do |card|
         print ".".color(:green)
         worksheet[index, columns[:user_story_id]] = card.short_id
@@ -66,5 +66,4 @@ module Tracco
     end
 
   end
-
 end

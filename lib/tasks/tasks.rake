@@ -47,7 +47,7 @@ namespace :export do
     args.with_defaults(db_env: "development")
     TrelloConfiguration::Database.load_env(args.db_env)
 
-    exporter = Tracco::GoogleDocsExporter.new(args.spreadsheet, args.worksheet)
+    exporter = Tracco::Exporters::GoogleDocs.new(args.spreadsheet, args.worksheet)
     spreadsheet_url = exporter.export
 
     puts "[DONE]".color(:green)

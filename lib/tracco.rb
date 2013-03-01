@@ -20,7 +20,7 @@ require 'tracco/tracking/card_done_tracking'
 require 'tracco/tracking/invalid_tracking'
 require 'tracco/tracking/factory'
 require 'tracco/trello_tracker'
-require 'tracco/google_docs_exporter'
+require 'tracco/exporters/google_docs'
 
 require 'patches/trello/member'
 require 'patches/trello/card'

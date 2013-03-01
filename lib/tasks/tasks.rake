@@ -8,6 +8,19 @@ task :c, [:db_env] do |t, args|
   Rake::Task[:console].invoke(args.db_env)
 end
 
+namespace :prepare do
+  desc "Copy template config files."
+  Dir.glob("config/*.template.yml").each do |file|
+    template_file = File.basename(file)
+    target_file = template_file.sub('.template', '')
+    if File.exists?(File.join('config', target_file))
+      puts "skipping #{target_file.color(:yellow)}, already exists."
+    else
+      cp File.join('config', template_file), File.join('config', target_file)
+    end
+  end
+end
+
 namespace :run do
   include TrelloConfiguration
 

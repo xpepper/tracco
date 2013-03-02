@@ -2,7 +2,6 @@ module Tracco
   module Tracking
     module Base
       extend Forwardable
-      include TrelloConfiguration
 
       TIME_CONVERTERS = {
         'h' => lambda { |estimate| estimate },
@@ -26,7 +25,7 @@ module Tracco
       end
 
       def to_s
-        "[#{date}] From #{notifier.username.color(:green)}\t on card '#{trello_card.name.color(:yellow)}': #{raw_text}"
+        "[#{date}] From #{notifier.username.color(:green)}\t on card '#{trello_card.name.color(:yellow)}': #{tracking_message}"
       end
 
       private
@@ -44,10 +43,14 @@ module Tracco
       end
 
       def raw_tracking
-        raw_text.gsub("@#{tracker_username}", "")
+        @raw_tracking ||= remove_tracker_from(tracking_message)
       end
 
-      def raw_text
+      def remove_tracker_from(tracking_message)
+        tracking_message.sub(/^\s*@\w+\s/, "")
+      end
+
+      def tracking_message
         tracking_notification.data['text']
       end
 

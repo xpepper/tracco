@@ -11,14 +11,7 @@ module Tracco
         end
 
         before(:each) do
-          Trello::Member.stub(:find).and_return(Member.new(username: "any"))
-
-          @original_tracker = ENV["tracker_username"]
-          ENV["tracker_username"] = "test_tracker"
-        end
-
-        after(:each) do
-          ENV["tracker_username"] = @original_tracker
+          Trello::Member.stub(:find).and_return(Member.new(username: "any_member"))
         end
 
         it "is nil when the notification does not contain an estimate" do
@@ -29,6 +22,10 @@ module Tracco
           with_message("@test_tracker +30m") { |tracking| tracking.effort.should be_nil }
         end
 
+        it "does not count the tracker as a member of the effort" do
+          with_message("@test_tracker +3p") { |tracking| tracking.effort.members.map(&:username).should == ["any_member"] }
+        end
+
         it "is the hour-based effort when the notification contains an effort in hours" do
           Trello::Member.should_receive(:find).with("michelepangrazzi").and_return(michelepangrazzi)
 
@@ -36,7 +33,8 @@ module Tracco
                                          date: "2012-10-28T21:06:14.801Z",
                                          member_creator: stub(username: "michelepangrazzi"))
 
-          Tracking::Factory.build_from(raw_data).effort.should == Effort.new(amount: 2.0, date: Date.parse('2012-10-28'), members: [michelepangrazzi])
+          expected_effort = Effort.new(amount: 2.0, date: Date.parse('2012-10-28'), members: [michelepangrazzi])
+          Tracking::Factory.build_from(raw_data).effort.should == expected_effort
         end
 
         it "converts the effort in hours when the notification contains an effort in days" do

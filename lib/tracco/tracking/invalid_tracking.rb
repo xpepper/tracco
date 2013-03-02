@@ -5,7 +5,7 @@ module Tracco
 
       def add_to(card)
         # do nothing
-        Trello.logger.warn "Ignoring tracking notification: '#{raw_text}'"
+        Trello.logger.warn "Ignoring tracking notification: '#{tracking_message}'"
       end
 
       def estimate

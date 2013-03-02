@@ -25,6 +25,11 @@ require 'tracco/exporters/google_docs'
 require 'patches/trello/member'
 require 'patches/trello/card'
 
-TrelloConfiguration::Database.load_env(ENV['MONGOID_ENV'] || "development", ENV['MONGOID_CONFIG_PATH'])
+begin
+  TrelloConfiguration::Database.load_env(ENV['MONGOID_ENV'] || "development", ENV['MONGOID_CONFIG_PATH'])
+rescue Errno::ENOENT => e
+  puts e.message
+  puts "try running 'rake prepare'"
+end
 
 Trello.logger.level = Logger::DEBUG

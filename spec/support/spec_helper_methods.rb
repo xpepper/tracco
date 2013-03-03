@@ -5,6 +5,13 @@ TIME_MEASUREMENTS = {
   pomodori: 'p'
 }
 
+def trello_testing_board_auth_params
+  # auth params for trackinguser_for_test/testinguser!
+  OpenStruct.new(tracker:  "trackinguser_for_test",
+                 dev_key:  "ef7c400e711057d7ba5e00be20139a33",
+                 token:    "9047d8fdbfdc960d41910673e300516cc8630dd4967e9b418fc27e410516362e")
+end
+
 def unrecognized_notification
   create_notification(data: { 'text' => '@any_tracker hi there!' })
 end

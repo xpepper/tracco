@@ -20,6 +20,7 @@ GEM
       i18n (~> 0.6)
       multi_json (~> 1.0)
     addressable (2.3.3)
+    awesome_print (1.1.0)
     bson (1.8.2)
     bson_ext (1.8.2)
       bson (~> 1.8.2)
@@ -45,7 +46,7 @@ GEM
       oauth2 (>= 0.5.0)
     highline (1.6.15)
     httpauth (0.2.0)
-    i18n (0.6.2)
+    i18n (0.6.4)
     json (1.7.7)
     jwt (0.1.5)
       multi_json (>= 1.0)
@@ -55,11 +56,11 @@ GEM
       moped (~> 1.4.2)
       origin (~> 1.0)
       tzinfo (~> 0.3.22)
-    mongoid-rspec (1.6.0)
+    mongoid-rspec (1.7.0)
       mongoid (>= 3.0.1)
       rake
       rspec (>= 2.9)
-    moped (1.4.2)
+    moped (1.4.3)
     multi_json (1.6.1)
     multi_xml (0.5.3)
     multipart-post (1.2.0)
@@ -96,12 +97,13 @@ GEM
       multi_json (~> 1.0)
       simplecov-html (~> 0.7.1)
     simplecov-html (0.7.1)
-    tzinfo (0.3.35)
+    tzinfo (0.3.36)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  awesome_print
   database_cleaner
   debugger
   factory_girl

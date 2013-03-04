@@ -5,7 +5,7 @@
 
 ## What is Tracco?
 Tracco is an effort tracker for Trello: the purpose of Tracco is to extract and track estimates and actual efforts out of the cards on your Trello boards.
-All you have to do is notify all of your estimates and efforts tracked on your Trello cards using a simple conventional format.
+All you have to do is notify estimates and efforts tracked on your Trello cards using a simple conventional format.
 Tracco will extract and store these estimates and actual efforts to let you mine useful key metrics (e.g. estimate errors, remaining efforts, pair programming frequencies, and so on).
 
 ## Why Tracco?
@@ -14,7 +14,7 @@ That said, Trello does not (still) offer a way to track time estimated and actua
 
 Having that precise need, we defined a simple convention to track estimates and efforts on cards: we use a predefined board member (let's call him 'tracking user') which we sent special notifications to (we call them 'tracking notifications').
 This 'tracking user' will then receives estimates and efforts notifications, and Tracco will collect and store them.
-Moreover, a web app will be soon available to properly present card estimates and efforts (we're working on it).
+Moreover, a web app is available to properly present card estimates and efforts: [Trello Effort App](https://github.com/xpepper/trello_effort_app)
 
 ## More details
 All you need to have to start using Tracco is a Trello account, a Trello board and a board member to use as 'tracking user'.

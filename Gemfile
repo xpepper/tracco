@@ -6,4 +6,5 @@ gemspec
 
 group :test do
   gem 'simplecov', :require => false, :platforms => [:mri, :mri_19]
+  gem 'rake' # see http://about.travis-ci.org/docs/user/languages/ruby/#Default-Test-Script
 end

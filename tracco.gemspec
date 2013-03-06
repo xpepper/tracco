@@ -32,7 +32,6 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency 'chronic'
   gem.add_runtime_dependency 'highline'
 
-  gem.add_development_dependency 'rake'
   gem.add_development_dependency 'rspec'
   gem.add_development_dependency 'rspec-mocks'
   gem.add_development_dependency 'mongoid-rspec'

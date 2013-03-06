@@ -5,7 +5,7 @@
 
 ## What is Tracco?
 Tracco is an effort tracker for Trello: the purpose of Tracco is to extract and track estimates and actual efforts out of the cards on your Trello boards.
-All you have to do is notify all of your estimates and efforts tracked on your Trello cards using a simple conventional format.
+All you have to do is notify estimates and efforts tracked on your Trello cards using a simple conventional format.
 Tracco will extract and store these estimates and actual efforts to let you mine useful key metrics (e.g. estimate errors, remaining efforts, pair programming frequencies, and so on).
 
 ## Why Tracco?
@@ -14,10 +14,10 @@ That said, Trello does not (still) offer a way to track time estimated and actua
 
 Having that precise need, we defined a simple convention to track estimates and efforts on cards: we use a predefined board member (let's call him 'tracking user') which we sent special notifications to (we call them 'tracking notifications').
 This 'tracking user' will then receives estimates and efforts notifications, and Tracco will collect and store them.
-Moreover, a web app will be soon available to properly present card estimates and efforts (we're working on it).
+Moreover, a web app is available to properly present card estimates and efforts: [Trello Effort App](https://github.com/xpepper/trello_effort_app).
 
 ## More details
-All you need to have to start using Tracco is a Trello account, a Trello board and a board member to use as 'tracking user'.
+To start using Tracco you should have a Trello account, a Trello board and a board member to use as 'tracking user'.
 You'll also need to know your Trello developer key and generate a proper auth token to have access to the trackinguser's notifications.
 To see how to have these two keys, see [the following section](#api_key).
 
@@ -38,16 +38,21 @@ gem install tracco
 git clone git://github.com/xpepper/tracco.git
 ```
 
-Then cd in the cloned repo and copy the config template
+Then cd in the cloned repo and install all the dependencies with Bundler
 
 ```shell
 cd tracco
+bundle install
+```
+
+Then copy the config template
+```shell
 cp config/config.template.yaml config/config.yml
 ```
 
-and then fill the correct values in the placeholders in config.yml (see _"Where do I get an API key and API secret?"_ section).
+and fill the correct values in the placeholders (see _"Where do I get an API key and API secret?"_ section).
 
-Then copy the mongoid config template
+And finally copy the mongoid config template
 
 ```shell
 cp config/mongoid.template.yaml config/mongoid.yml
@@ -55,11 +60,6 @@ cp config/mongoid.template.yaml config/mongoid.yml
 
 and fill the correct values for the mongodb environments ([see here](http://mongoid.org/en/mongoid/docs/installation.html#configuration) to have more details).
 
-Then run bundle to get all the required gems:
-
-```shell
-bundle install
-```
 
 
 Full Disclosure: this library is still work-in-progress, so if you find anything missing or not functioning as you expect it to, please [open an issue on github](https://github.com/xpepper/tracco/issues).

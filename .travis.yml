@@ -1,5 +1,4 @@
 language: ruby
-bundler_args: --without development
 rvm:
   - 1.9.3
   - 2.0.0
@@ -18,4 +17,3 @@ script: ./script/ci/run_build.sh
 before_script:
   - mongo tracco_test --eval 'db.addUser("travis", "test");'
   - "./script/ci/before_script.sh"
-

@@ -22,7 +22,7 @@ module Tracco
         begin
           tracked_card = TrackedCard.update_or_create_with(tracking_notification.card)
           tracked_card.add!(tracking)
-          Trello.logger.info tracking
+          Trello.logger.info tracking.to_s
 
         rescue StandardError => e
           Trello.logger.warn "skipping tracking: #{e.message}".color(:magenta)

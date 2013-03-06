@@ -32,11 +32,6 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency 'chronic'
   gem.add_runtime_dependency 'highline'
 
-  gem.add_development_dependency 'rspec'
-  gem.add_development_dependency 'rspec-mocks'
-  gem.add_development_dependency 'mongoid-rspec'
-  gem.add_development_dependency 'database_cleaner'
-  gem.add_development_dependency 'factory_girl'
   gem.add_development_dependency 'awesome_print'
   gem.add_development_dependency 'debugger'
 end

@@ -1,4 +1,4 @@
-![Tracco Logo](http://i.minus.com/iSz6iMDLYztjR.png)
+![Tracco Logo](http://i.minus.com/iL2Qiihdb6BYJ.png)
 
 [![Gem Version](https://fury-badge.herokuapp.com/rb/tracco.png)](http://badge.fury.io/rb/tracco)
 [![Build Status](https://secure.travis-ci.org/xpepper/tracco.png?branch=master)](http://travis-ci.org/xpepper/tracco)

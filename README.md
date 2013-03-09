@@ -28,7 +28,8 @@ To see how to have these two keys, see [the following section](#api_key).
 The Trello API is used behind the scenes to read data from the team board. Tracco uses the awesome [Trello API Ruby wrapper](https://github.com/jeremytregunna/ruby-trello) for this purpose.
 
 ## Usage
-This tool can be used as a standalone gem or cloning this git repo.
+Tracco is not provided with a built-in viewer for the collected data, so the recommended way to use Tracco is by using [Trello Effort App](https://github.com/xpepper/trello_effort_app) or including the gem in your own viewer app.
+By the way, this tool can be used as a standalone gem or cloning this git repo.
 
 ### Installation as a ruby gem
 
@@ -65,13 +66,11 @@ cp config/mongoid.template.yaml config/mongoid.yml
 and fill the correct values for the mongodb environments ([see here](http://mongoid.org/en/mongoid/docs/installation.html#configuration) to have more details).
 
 
-
 Full Disclosure: this library is still work-in-progress, so if you find anything missing or not functioning as you expect it to, please [open an issue on github](https://github.com/xpepper/tracco/issues).
 
 ## Requirements
 * [mongoDB](http://www.mongodb.org/) - macosx users with homebrew will just run 'brew install mongodb' to have mongoDB installed on their machine.
 * (optional) [rvm](https://rvm.io/rvm/install/) is useful (but optional) for development
-
 
 
 ### <a id="api_key"></a>Where do I get an API key?

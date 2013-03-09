@@ -6,14 +6,14 @@
 
 ## What is Tracco?
 Tracco is an effort tracker for Trello: the purpose of Tracco is to extract and track estimates and actual efforts out of the cards on your Trello boards.
-All you have to do is notify estimates and efforts tracked on your Trello cards using a simple conventional format.
+All you have to do is add estimates and efforts as comments added on your Trello cards, using a simple conventional format.
 Tracco will extract and store these estimates and actual efforts to let you mine useful key metrics (e.g. estimate errors, remaining efforts, pair programming frequencies, and so on).
 
 ## Why Tracco?
-Trello is a very good surrogate for a physical team board: it's simple and effective, and it can really help when you have a distributed team.
-That said, Trello does not (still) offer a way to track time estimated and actually spent on cards, though many people [ask for that feature](https://trello.com/card/time-tracking/4d5ea62fd76aa1136000000c/1054) on Trello's development board.
+[Trello](https://trello.com) is a very good surrogate for a physical team board: it's simple and effective, and it can really help when you have a distributed team.
+That said, Trello (still) doesn't offer a way to track time estimated and actually spent on cards, though many people are [asking for that feature](https://trello.com/card/time-tracking/4d5ea62fd76aa1136000000c/1054) on Trello's development board.
 
-Having that precise need, we defined a simple convention to track estimates and efforts on cards: we use a predefined board member (let's call him 'tracking user') which we sent special notifications to (we call them 'tracking notifications').
+Having that precise need, we defined a simple convention to track estimates and efforts on cards: we use a predefined board member (let's call him 'tracking user') which we sent comments to (we call them 'tracking notifications'), using the comment form available on the card panel.
 This 'tracking user' will then receives estimates and efforts notifications, and Tracco will collect and store them.
 Moreover, a web app is available to properly present card estimates and efforts: [Trello Effort App](https://github.com/xpepper/trello_effort_app).
 

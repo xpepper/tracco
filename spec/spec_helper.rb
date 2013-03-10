@@ -14,6 +14,7 @@ rescue Bundler::GemNotFound => e
   exit!
 end
 
+ENV['TRACCO_ENV'] = "test"
 require 'tracco'
 
 require 'factory_girl'
@@ -27,6 +28,3 @@ RSpec.configure do |configuration|
   configuration.include Mongoid::Matchers
   configuration.include FactoryGirl::Syntax::Methods # Repeating "FactoryGirl" is too verbose for me...
 end
-
-# force test env for the mongodb configuration
-TrelloConfiguration::Database.load_env("test")

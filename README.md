@@ -79,9 +79,9 @@ Log in to Trello with your account and visit [https://trello.com/1/appKey/genera
 ### Where do I get an API Access Token Key?
 To generate a proper access token key, log in to Trello with the 'tracking user' account. Then go to this URL:
 
-    https://trello.com/1/connect?key=<YOUR_DEVELOPER_PUBLIC_KEY>&name=Trello+Effort+Tracker&response_type=token&scope=read,write&expiration=never
+    https://trello.com/1/connect?key=<YOUR_DEVELOPER_PUBLIC_KEY>&name=Tracco&response_type=token&scope=read&expiration=never
 
-At the end of this process, you'll receive a valid access\_token\_key, which is needed by Tracco to fetch all the tracking notifications sent to the 'tracking user'.
+At the end of this process, you'll receive a valid access\_token\_key, which is needed by Tracco to have the proper rights to fetch all the tracking notifications sent as comments to the 'tracking user'.
 
 ## Usage
 The best way is to use one of the rake task defined, e.g.
@@ -109,7 +109,7 @@ Tracking data collected from Trello are stored in a MongoDB database.
 
 There are two env variables you can set to configure mongodb
 
-- `MONGOID_ENV` defines which mongodb env is actually used (development, test, production). Development is the default mongo environment.
+- `TRACCO_ENV` defines which mongodb env is actually used (development, test, production). Development is the default mongo environment.
 - `MONGOID_CONFIG_PATH` defines the path to the mongoid configuration file (default is `config/mongoid.yml`)
 
 A standard mongoid.yml is the following:

@@ -7,6 +7,7 @@ require 'mongoid'
 require 'forwardable'
 
 require 'tracco/mongoid_helper'
+require 'tracco/environment'
 require 'tracco/trello_configuration'
 require 'tracco/trello_authorize'
 require 'tracco/models/tracked_card'
@@ -26,7 +27,7 @@ require 'patches/trello/member'
 require 'patches/trello/card'
 
 begin
-  TrelloConfiguration::Database.load_env(ENV['MONGOID_ENV'] || "development", ENV['MONGOID_CONFIG_PATH'])
+  TrelloConfiguration::Database.load_env(Tracco::Environment.name || "development", ENV['MONGOID_CONFIG_PATH'])
 rescue Errno::ENOENT => e
   puts e.message
   puts "try running 'rake prepare'"

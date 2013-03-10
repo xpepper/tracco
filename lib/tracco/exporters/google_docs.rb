@@ -11,7 +11,7 @@ module Tracco::Exporters
     end
 
     def export
-      Trello.logger.info "Running exporter from db env '#{db_environment}' to google docs '#{@spreadsheet_name.color(:green)}##{@worksheet_name.color(:green)}'..."
+      Trello.logger.info "Running exporter from db env '#{Tracco::Environment.name}' to google docs '#{@spreadsheet_name.color(:green)}##{@worksheet_name.color(:green)}'..."
 
       spreadsheet = google_docs_session.spreadsheet_by_title(@spreadsheet_name) || google_docs_session.create_spreadsheet(@spreadsheet_name)
       worksheet = spreadsheet.worksheet_by_title(@worksheet_name) || spreadsheet.add_worksheet(@worksheet_name)

@@ -1,8 +1,10 @@
 language: ruby
 bundler_args: --without development
 rvm:
+  - 1.9.2
   - 1.9.3
   - 2.0.0
+  - ruby-head
 env:
   global:
     - developer_public_key: e/zPNGKOwapoxFWZs/CBTAhaoqrDTkqqz+InOmCUvGBcZBpUxH398nPLv8Hi\nNQSvWuspzqanyNbbQrTA/2XhsWF1gIFX+gNexYM7S+MxtRwUD3cpVT8DzVOS\nMuckdMTEAADVsm92vIX/bUs5igxD4+zfXlhzXUNDrzRlZnsUF2M=

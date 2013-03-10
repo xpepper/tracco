@@ -8,7 +8,7 @@ module Trello
       begin
         list_name = list.name.strip
       rescue Trello::Error => e
-        Trello::Logger.error("Cannot find column for card #{name}")
+        Trello.logger.error("Cannot find column for card #{name}")
       end
 
       !!(list_name =~ /^DONE/i)

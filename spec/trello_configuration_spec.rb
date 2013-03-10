@@ -12,6 +12,15 @@ describe TrelloConfiguration do
       authorization_params_from_config_file["developer_public_key"].should == "any_dpk"
       authorization_params_from_config_file["access_token_key"].should == "any_atk"
     end
+
+    it "returns an empty hash when the configuration file is invalid" do
+      YAML.should_receive(:load_file).with("config/config.yml").and_raise(NoMethodError)
+
+      without_logging do
+        authorization_params_from_config_file.should == {}
+      end
+    end
+
   end
 
   describe "#tracker_username" do

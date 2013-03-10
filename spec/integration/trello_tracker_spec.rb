@@ -49,18 +49,5 @@ module Tracco
       another_done_card.should be_done
     end
 
-
-    private
-
-    def without_logging(&block)
-      original_error_level = Trello.logger.level
-
-      begin
-        Trello.logger.level = Logger::WARN
-        block.call unless block.nil?
-      ensure
-        Trello.logger.level = original_error_level
-      end
-    end
   end
 end

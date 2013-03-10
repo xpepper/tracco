@@ -43,3 +43,14 @@ def create_notification(custom_params)
 
   stub(data: params[:data], date: params[:date], member_creator: params[:member_creator]).as_null_object
 end
+
+def without_logging(&block)
+  original_error_level = Trello.logger.level
+
+  begin
+    Trello.logger.level = Logger::WARN
+    block.call unless block.nil?
+  ensure
+    Trello.logger.level = original_error_level
+  end
+end

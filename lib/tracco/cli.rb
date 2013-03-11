@@ -28,7 +28,7 @@ module Tracco
       starting_date = Date.today.to_s if starting_date == "today"
       error("invalid date: #{starting_date}") unless is_valid_date?(starting_date)
 
-      TrelloConfiguration::Database.load_env(environment, options[:mongoid_config_path])
+      Tracco::Database.load_env(environment, options[:mongoid_config_path])
 
       puts "collecting tracking data starting from #{starting_date} in the #{environment} env."
       tracker = Tracco::TrelloTracker.new

@@ -25,20 +25,10 @@ require 'tracco/tracking/card_done_tracking'
 require 'tracco/tracking/invalid_tracking'
 require 'tracco/tracking/factory'
 require 'tracco/trello_tracker'
+require 'tracco/configuration'
 require 'tracco/exporters/google_docs'
 
 require 'patches/trello/member'
 require 'patches/trello/card'
-
-module Tracco
-  def self.environment
-    ENV['TRACCO_ENV']
-  end
-
-  def self.environment=(env_name)
-    ENV['TRACCO_ENV'] = env_name.to_s
-  end
-end
-
 
 Tracco::CLI.start(ARGV)

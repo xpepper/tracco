@@ -19,6 +19,7 @@ Gem::Specification.new do |gem|
 
   gem.require_paths     = ["lib"]
   gem.files             = `git ls-files`.split("\n")
+  gem.executables       = %w(tracco)
   gem.test_files        = `git ls-files -- {spec}/*`.split("\n")
   gem.extra_rdoc_files  = ["README.md"]
 

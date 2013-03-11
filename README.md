@@ -69,6 +69,7 @@ and fill the correct values for the mongodb environments ([see here](http://mong
 Full Disclosure: this library is still work-in-progress, so if you find anything missing or not functioning as you expect it to, please [open an issue on github](https://github.com/xpepper/tracco/issues).
 
 ## Requirements
+* MRI version 1.9.3+
 * [mongoDB](http://www.mongodb.org/) - macosx users with homebrew will just run 'brew install mongodb' to have mongoDB installed on their machine.
 * (optional) [rvm](https://rvm.io/rvm/install/) is useful (but optional) for development
 
@@ -83,8 +84,8 @@ To generate a proper access token key, log in to Trello with the 'tracking user'
 
 At the end of this process, you'll receive a valid access\_token\_key, which is needed by Tracco to have the proper rights to fetch all the tracking notifications sent as comments to the 'tracking user'.
 
-## Usage
-The best way is to use one of the rake task defined, e.g.
+## Collecting data from Trello
+To collect and store tracking data from your Trello board, you can use one of the provided rake tasks, e.g.
 
 ```ruby
 rake 'run:today[test]' # will extract today's tracked data and store on the test db
@@ -109,7 +110,7 @@ Tracking data collected from Trello are stored in a MongoDB database.
 
 There are two env variables you can set to configure mongodb
 
-- `TRACCO_ENV` defines which mongodb env is actually used (development, test, production). Development is the default mongo environment.
+- `TRACCO_ENV` defines which mongodb environment is actually used ("development", "test", "production"). Development is the default environment.
 - `MONGOID_CONFIG_PATH` defines the path to the mongoid configuration file (default is `config/mongoid.yml`)
 
 A standard mongoid.yml is the following:
@@ -174,7 +175,7 @@ The default env is development. To load a console in the (e.g.) production db en
 rake "console[production]"
 ```
 
-### Estimate format convention
+## Estimate format convention
 To set an estimate on a card, a Trello user should send a notification from that card to the tracker username, e.g.
 
     @trackinguser [15p]
@@ -187,7 +188,7 @@ estimates can be given in hours (h), days (d/g) or pomodori (p).
 
 will add the estimate (4 hours) in date 22.11.2012.
 
-### Effort format convention
+## Effort format convention
 To set an effort in the current day on a card, a Trello user should send a notification from that card to the tracker username, e.g.
 
     @trackinguser +6p

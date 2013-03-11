@@ -19,7 +19,8 @@ module Tracco
 
 
     desc "collect STARTING_FROM", "Run tracking data fetching on the cards tracked starting from a given date"
-    method_option :environment, :aliases => "-e", :desc => "the env to use", :default => "development"
+    method_option :environment,         :aliases => "-e", :desc => "the env to use", :default => "development"
+    method_option :mongoid_config_path, :aliases => "-m", :desc => "the mongoid config file to use"
     def collect(starting_date=Date.today.to_s)
       environment = options[:environment]
       error("invalid environment specified: #{environment}") unless is_valid_env?(environment)
@@ -27,7 +28,7 @@ module Tracco
       starting_date = Date.today.to_s if starting_date == "today"
       error("invalid date: #{starting_date}") unless is_valid_date?(starting_date)
 
-      TrelloConfiguration::Database.load_env(environment)
+      TrelloConfiguration::Database.load_env(environment, options[:mongoid_config_path])
 
       puts "collecting tracking data starting from #{starting_date} in the #{environment} env."
       tracker = Tracco::TrelloTracker.new

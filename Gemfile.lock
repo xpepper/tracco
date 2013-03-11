@@ -9,6 +9,7 @@ PATH
       mongoid
       rainbow
       ruby-trello
+      thor
 
 GEM
   remote: https://rubygems.org/
@@ -97,6 +98,7 @@ GEM
       multi_json (~> 1.0)
       simplecov-html (~> 0.7.1)
     simplecov-html (0.7.1)
+    thor (0.17.0)
     tzinfo (0.3.36)
 
 PLATFORMS

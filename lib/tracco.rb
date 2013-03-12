@@ -28,5 +28,5 @@ require 'tracco/exporters/google_docs'
 require 'patches/trello/member'
 require 'patches/trello/card'
 
-Trello.logger.level = Logger::INFO
+Trello.logger.level = Logger::WARN
 Tracco.load_env!

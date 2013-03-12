@@ -4,6 +4,7 @@ require 'thor/actions'
 module Tracco
   class CLI < Thor
     include Thor::Actions
+
     desc "console ENVIRONMENT", "Open an irb session preloaded with this library"
     long_desc <<-LONGDESC
       Open an irb session preloaded with this library.

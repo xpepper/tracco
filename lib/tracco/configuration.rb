@@ -11,8 +11,8 @@ module Tracco
     begin
       Database.load_env(environment || "development", ENV['MONGOID_CONFIG_PATH'])
     rescue Errno::ENOENT => e
-      puts e.message
-      puts "try running 'rake prepare'"
+      Trello.logger.warn e.message
+      Trello.logger.warn "try running 'rake prepare'"
     end
   end
 

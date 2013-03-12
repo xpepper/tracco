@@ -20,7 +20,7 @@ module Tracco
     def self.load_env(tracco_env, mongoid_configuration_path=nil)
       Tracco.environment = tracco_env
       Mongoid.load!(mongoid_configuration_path || "config/mongoid.yml", tracco_env)
-      Trello.logger.info "Mongo db env: #{tracco_env.color(:green)}."
+      Trello.logger.debug "Mongo db env: #{tracco_env.color(:green)}."
     end
   end
 

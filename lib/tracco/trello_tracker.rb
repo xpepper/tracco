@@ -22,7 +22,7 @@ module Tracco
         begin
           tracked_card = TrackedCard.update_or_create_with(tracking_notification.card)
           tracked_card.add!(tracking)
-          Trello.logger.info tracking.to_s
+          log(tracking)
 
         rescue StandardError => e
           Trello.logger.warn "skipping tracking: #{e.message}".color(:magenta)
@@ -41,6 +41,10 @@ module Tracco
     def boundary_dates_in(tracking_notifications)
       dates = tracking_notifications.map { |each_tracking_notification| Chronic.parse(each_tracking_notification.date) }
       [dates.min, dates.max]
+    end
+
+    def log(tracking)
+      Trello.logger.level > Logger::INFO ? print(".".color(:green)) : puts(tracking.to_s)
     end
 
   end

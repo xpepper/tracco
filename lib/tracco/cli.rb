@@ -4,7 +4,6 @@ require 'thor/actions'
 module Tracco
   class CLI < Thor
     include Thor::Actions
-
     desc "console ENVIRONMENT", "Open an irb session preloaded with this library"
     long_desc <<-LONGDESC
       Open an irb session preloaded with this library.
@@ -21,7 +20,9 @@ module Tracco
     desc "collect STARTING_FROM", "Run tracking data fetching on the cards tracked starting from a given date"
     method_option :environment,         :aliases => "-e", :desc => "the env to use", :default => "development"
     method_option :mongoid_config_path, :aliases => "-m", :desc => "the mongoid config file to use"
+    method_option :verbose, :type => :boolean, :aliases => "-v", :default => false
     def collect(starting_date=Date.today.to_s)
+      Trello.logger.level = options[:verbose] ? Logger::DEBUG : Logger::WARN
       environment = options[:environment]
       error("invalid environment specified: #{environment}") unless is_valid_env?(environment)
 

@@ -1,14 +1,14 @@
 0.0.16 / 2013-03-12
 ==================
-slowly migrating from rake tasks to bin commands
-improving readme
-dropping ruby 1.9.2 support due to Mongoid issues (http://mongoid.org/en/mongoid/docs/tips.html#ruby)
-updating depending gems
-improving Tracco load env, avoiding double env loading when running the specs, renaming MONGOID_ENV to a more generic TRACCO_ENV
-adding a logo for Tracco!
-adding Ruby 2.0.0 compatibility
-adding awesome_print gem to the console task
-adding an helper task to copy the configuration template files
+  * Slowly migrating from rake tasks to bin commands (using Thor gem).
+  * Improving README
+  * Dropping ruby 1.9.2 support due to some Mongoid issues (http://mongoid.org/en/mongoid/docs/tips.html#ruby)
+  * Updating depending gems
+  * Improving Tracco load env, avoiding double env loading when running the specs, renaming MONGOID_ENV to a more generic TRACCO_ENV
+  * Adding a logo for Tracco!
+  * Adding Ruby 2.0.0 compatibility
+  * Adding awesome_print gem to the console task
+  * Adding an helper task to copy the configuration template files
 
 0.0.15 / 2013-03-01
 ==================

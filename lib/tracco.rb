@@ -6,24 +6,34 @@ require 'chronic'
 require 'mongoid'
 require 'forwardable'
 
-require 'tracco/cli'
-require 'tracco/version'
-require 'tracco/mongoid_helper'
-require 'tracco/trello_configuration'
-require 'tracco/trello_authorize'
-require 'tracco/models/tracked_card'
-require 'tracco/models/member'
-require 'tracco/models/estimate'
-require 'tracco/models/effort'
-require 'tracco/tracking/base'
-require 'tracco/tracking/estimate_tracking'
-require 'tracco/tracking/effort_tracking'
-require 'tracco/tracking/card_done_tracking'
-require 'tracco/tracking/invalid_tracking'
-require 'tracco/tracking/factory'
-require 'tracco/trello_tracker'
 require 'tracco/configuration'
-require 'tracco/exporters/google_docs'
+
+autoload :MongoidHelper,        'tracco/mongoid_helper'
+autoload :TrelloConfiguration,  'tracco/trello_configuration'
+autoload :TrelloAuthorize,      'tracco/trello_authorize'
+
+module Tracco
+  autoload :Database,      'tracco/configuration'
+  autoload :TrackedCard,   'tracco/models/tracked_card'
+  autoload :Member,        'tracco/models/member'
+  autoload :Estimate,      'tracco/models/estimate'
+  autoload :Effort,        'tracco/models/effort'
+  autoload :TrelloTracker, 'tracco/trello_tracker'
+  autoload :CLI,           'tracco/cli'
+
+  module Exporters
+    autoload :GoogleDocs, 'tracco/exporters/google_docs'
+  end
+
+  module Tracking
+    autoload :Base, 'tracco/tracking/base'
+    autoload :EstimateTracking, 'tracco/tracking/estimate_tracking'
+    autoload :EffortTracking, 'tracco/tracking/effort_tracking'
+    autoload :CardDoneTracking, 'tracco/tracking/card_done_tracking'
+    autoload :InvalidTracking, 'tracco/tracking/invalid_tracking'
+    autoload :Factory, 'tracco/tracking/factory'
+  end
+end
 
 require 'patches/trello/member'
 require 'patches/trello/card'

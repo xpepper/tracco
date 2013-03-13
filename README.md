@@ -85,14 +85,12 @@ To generate a proper access token key, log in to Trello with the 'tracking user'
 At the end of this process, you'll receive a valid access\_token\_key, which is needed by Tracco to have the proper rights to fetch all the tracking notifications sent as comments to the 'tracking user'.
 
 ## Collecting data from Trello
-To collect and store tracking data from your Trello board, you can use one of the provided rake tasks, e.g.
+```shell
+tracco collect today --environment test # will extract today's tracked data and store on the test db
 
-```ruby
-rake 'run:today[test]' # will extract today's tracked data and store on the test db
+tracco collect today  # will extract today's tracked data and store on the default (that is development) db
 
-rake run:today  # will extract today's tracked data and store on the default (that is development) db
-
-rake 'run:from_day[2012-11-1, production]'  # will extract tracked data starting from November the 1st, 2012 and store them into the production db
+tracco collect 2012-11-1 --environment production  # will extract tracked data starting from November the 1st, 2012 and store them into the production db
 ```
 
 Or you may just create a TrelloTracker instance and execute its track method.
@@ -165,14 +163,14 @@ Or using the config.yml (which is the actual fallback mode, useful in developmen
 ### Console
 You can open a irb console with the ruby-trello gem and this gem loaded, so that you can query the db or the Trello API and play with them
 
-```ruby
-rake console
+```shell
+tracco console
 ```
 
 The default env is development. To load a console in the (e.g.) production db env, execute:
 
-```ruby
-rake "console[production]"
+```shell
+tracco console -e production
 ```
 
 ## Estimate format convention
@@ -243,8 +241,8 @@ mongoimport  --db tracco_production --collection tracked_cards --file tracco_pro
 ## Google Docs exporter
 To export all your tracked cards on a google docs named 'my_sheet' in the 'tracking' worksheet, run
 
-```ruby
-rake "export:google_docs[my_sheet, tracking, production]"
+```shell
+tracco export_google_docs my_sheet tracking -e production
 ```
 The default env is development.
 
@@ -254,7 +252,7 @@ If the spreadsheet name you provide does not exists, it will be created in you g
 So, running simply
 
 ```ruby
-rake export:google_docs
+tracco export_google_docs
 ```
 will create (or update) a spreadsheet named "trello effort tracking" using the development db env.
 
@@ -268,7 +266,7 @@ PROJECT_PATH="/Users/$USER/Documents/workspace/tracco"
 LC_ALL=en_US.UTF-8
 
 # m h  dom mon dow   command
-*/10 * * * *  rvm-shell $GEMSET -c "cd $PROJECT_PATH;  bundle exec rake run:today[production]" >> /tmp/crontab.out 2>&1
+*/10 * * * *  rvm-shell $GEMSET -c "cd $PROJECT_PATH;  bundle exec tracco collect today -e production" >> /tmp/crontab.out 2>&1
 ```
 
 ## Roadmap and improvements

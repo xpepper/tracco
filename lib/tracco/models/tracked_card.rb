@@ -1,3 +1,5 @@
+require 'tracco/mongoid_helper'
+
 module Tracco
   class TrackedCard
     include Mongoid::Document

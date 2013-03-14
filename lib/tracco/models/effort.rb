@@ -1,3 +1,5 @@
+require 'set'
+
 module Tracco
   class Effort
     include Mongoid::Document

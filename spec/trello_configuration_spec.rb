@@ -1,8 +1,8 @@
 require 'spec_helper'
 require 'trello'
 
-describe TrelloConfiguration do
-  include TrelloConfiguration
+describe Tracco::TrelloConfiguration do
+  include Tracco::TrelloConfiguration
 
   describe "#authorization_params_from_config_file" do
     it "loads the default trello auth params from config yml" do

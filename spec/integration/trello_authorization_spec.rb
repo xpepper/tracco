@@ -1,8 +1,8 @@
 require 'spec_helper'
 require 'trello'
 
-describe "TrelloAuthorization" do
-  include TrelloAuthorize
+describe "Trello Authorization" do
+  include Tracco::TrelloAuthorize
 
   let(:config) {
     # auth params for trackinguser_for_test/testinguser!

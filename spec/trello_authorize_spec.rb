@@ -1,9 +1,9 @@
 require 'spec_helper'
 require 'trello'
 
-describe TrelloAuthorize do
+describe Tracco::TrelloAuthorize do
   include Trello::Authorization
-  include TrelloAuthorize
+  include Tracco::TrelloAuthorize
 
   before(:each) do
     keep_original_auth_envs

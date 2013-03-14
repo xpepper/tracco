@@ -6,6 +6,8 @@ module Tracco
     class GoogleDocs
       include TrelloConfiguration
 
+      trap("SIGINT") { exit! }
+
       def initialize(spreadsheet_name, worksheet_name)
         @spreadsheet_name = spreadsheet_name || "trello effort tracking"
         @worksheet_name   = worksheet_name || "tracking"

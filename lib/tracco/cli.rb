@@ -1,6 +1,5 @@
 require 'thor'
 require 'thor/actions'
-require 'tracco/trello_configuration'
 
 module Tracco
   class CLI < Thor

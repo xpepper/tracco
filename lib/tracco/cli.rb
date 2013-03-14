@@ -52,7 +52,7 @@ module Tracco
 
     desc "initialize", "Copy template configuration files"
     def init
-      Dir.glob("config/*.template.yml").each do |file|
+      template_files.each do |file|
         template_file = File.basename(file)
         target_file = template_file.sub('.template', '')
 
@@ -142,6 +142,27 @@ module Tracco
 
     def error_invalid_environment(environment)
       error("Invalid environment specified: #{environment}")
+    end
+
+    def template_files
+      templates = Dir.glob("config/*.template.yml")
+      if templates.empty?
+        templates_from_gem
+      else
+        templates
+      end
+    end
+
+    def templates_from_gem
+      Dir.glob("#{tracco_gem.full_gem_path}/config/*.template.yml")
+    end
+
+    def tracco_gem
+      if Gem::Specification.respond_to?(:find_by_name)
+        Gem::Specification.find_by_name('tracco')
+      else
+        Gem.searcher.find('tracco')
+      end
     end
   end
 end

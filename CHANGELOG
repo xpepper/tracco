@@ -1,4 +1,4 @@
-0.0.18 / 2013-03-17
+0.0.18 - 0.0.19 / 2013-03-17
 ==================
   * improving tracco initialize command
   * rewriting Tracco::CLI to be able to fetch templates from the gem

@@ -54,11 +54,12 @@ module Tracco
     def init
       template_files.each do |template_file|
         target_file = File.basename(template_file).sub('.template', '')
-
-        if File.exists?(File.join('config', target_file))
+        target_path = File.join('config', target_file)
+        if File.exists?(target_path)
           say "skipping #{target_file.color(:yellow)}, already exists."
         else
-          run "cp -f #{template_file} #{File.join(CLI.source_root, target_file)}"
+          run "mkdir -p config"
+          run "cp -f #{template_file} #{target_path}"
           say "please edit the #{target_file} to have all the proper configurations"
         end
       end

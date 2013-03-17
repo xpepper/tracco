@@ -1,3 +1,9 @@
+0.0.18 / 2013-03-17
+==================
+  * improving tracco initialize command
+  * rewriting Tracco::CLI to be able to fetch templates from the gem
+  * updating gems
+
 0.0.17 / 2013-03-15
 ==================
   * migrating all the rake tasks to bin executables. Still leaving the rake task, marking them as DEPRECATED though

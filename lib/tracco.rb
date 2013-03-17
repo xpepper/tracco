@@ -2,7 +2,6 @@ require 'trello'
 require 'rainbow'
 require 'chronic'
 require 'mongoid'
-require 'forwardable'
 
 require 'tracco/configuration'
 

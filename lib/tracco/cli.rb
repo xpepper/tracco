@@ -52,14 +52,13 @@ module Tracco
 
     desc "initialize", "Copy template configuration files"
     def init
-      template_files.each do |file|
-        template_file = File.basename(file)
-        target_file = template_file.sub('.template', '')
+      template_files.each do |template_file|
+        target_file = File.basename(template_file).sub('.template', '')
 
         if File.exists?(File.join('config', target_file))
           say "skipping #{target_file.color(:yellow)}, already exists."
         else
-          copy_file File.join(CLI.source_root, template_file), File.join(CLI.source_root, target_file)
+          run "cp -f #{template_file} #{File.join(CLI.source_root, target_file)}"
           say "please edit the #{target_file} to have all the proper configurations"
         end
       end
@@ -145,11 +144,11 @@ module Tracco
     end
 
     def template_files
-      templates = Dir.glob("config/*.template.yml")
-      if templates.empty?
+      local_templates = Dir.glob("config/*.template.yml")
+      if local_templates.empty?
         templates_from_gem
       else
-        templates
+        local_templates
       end
     end
 

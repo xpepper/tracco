@@ -1,3 +1,5 @@
+require 'forwardable'
+
 module Tracco
   module Tracking
     module Base

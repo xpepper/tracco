@@ -1,2 +1,2 @@
-rvm 1.9.3-p385@spikes --create
-rvm wrapper 1.9.3-p385@spikes textmate
+rvm 1.9.3-p392@spikes --create
+rvm wrapper 1.9.3-p392@spikes textmate

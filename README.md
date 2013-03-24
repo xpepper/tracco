@@ -3,6 +3,7 @@
 [![Gem Version](https://fury-badge.herokuapp.com/rb/tracco.png)](http://badge.fury.io/rb/tracco)
 [![Build Status](https://secure.travis-ci.org/xpepper/tracco.png?branch=master)](http://travis-ci.org/xpepper/tracco)
 [![Code Climate](https://codeclimate.com/github/xpepper/tracco.png)](https://codeclimate.com/github/xpepper/tracco)
+[![Coverage Status](https://coveralls.io/repos/xpepper/tracco/badge.png?branch=master)](https://coveralls.io/r/xpepper/tracco)
 
 ## What is Tracco?
 Tracco is an effort tracker for Trello: the purpose of Tracco is to extract and track estimates and actual efforts out of the cards on your Trello boards.

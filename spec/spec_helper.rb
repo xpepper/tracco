@@ -1,7 +1,7 @@
 require 'rubygems'
 
-require 'simplecov'
-SimpleCov.start
+require 'coveralls'
+Coveralls.wear!
 
 # Set up gems listed in the Gemfile.
 begin

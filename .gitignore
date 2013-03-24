@@ -13,6 +13,7 @@ tracco.sublime-workspace
 .bundle
 .config
 coverage
+.coveralls.yml
 InstalledFiles
 lib/bundler/man
 pkg

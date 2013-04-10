@@ -1,6 +1,8 @@
 config.yml
 mongoid.yml
 .rvmrc
+.ruby-gemset
+.ruby-version
 tracco.sublime-workspace
 
 .tmtags

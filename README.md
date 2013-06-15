@@ -274,7 +274,7 @@ LC_ALL=en_US.UTF-8
 We develop Tracco using [Trello itself](https://trello.com/board/trello-effort-tracker-roadmap/509c3228dcb1ac3f1c018791).
 
 ## Contributing
-To get started, [sign the Contributor License Agreement](http://www.clahub.com/agreements/xpepper/tracco).
+[![Pair program with me!](http://pairprogramwith.me/badge.png)](mailto:pierodibello@gmail.com)
 
 If you'd like to hack on Tracco, start by forking the repo on GitHub:
 

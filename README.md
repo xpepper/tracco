@@ -276,6 +276,8 @@ We develop Tracco using [Trello itself](https://trello.com/board/trello-effort-t
 ## Contributing
 [![Pair program with me!](http://pairprogramwith.me/badge.png)](mailto:pierodibello@gmail.com)
 
+I'd like to pair with anyone wishing to contribute on Tracco. Contact me!
+
 If you'd like to hack on Tracco, start by forking the repo on GitHub:
 
 https://github.com/xpepper/tracco

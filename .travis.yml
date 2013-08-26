@@ -11,6 +11,10 @@ env:
     - tracker_username=trackinguser
     - TRACCO_ENV=test
 
+matrix:
+  allow_failures:
+    - ruby-head
+
 services:
   - mongodb
 

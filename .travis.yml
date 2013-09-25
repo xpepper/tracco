@@ -4,16 +4,16 @@ rvm:
   - 1.9.3
   - 2.0.0
   - ruby-head
+matrix:
+  allow_failures:
+    - rvm: ruby-head
+
 env:
   global:
     - developer_public_key: e/zPNGKOwapoxFWZs/CBTAhaoqrDTkqqz+InOmCUvGBcZBpUxH398nPLv8Hi\nNQSvWuspzqanyNbbQrTA/2XhsWF1gIFX+gNexYM7S+MxtRwUD3cpVT8DzVOS\nMuckdMTEAADVsm92vIX/bUs5igxD4+zfXlhzXUNDrzRlZnsUF2M=
     - access_token_key: GG1Q8oq7GkaXjP0lbMgvQLLEi+LXOZlwmELqjPk39Exfy8114QUs2ki8nr9n\ndGO+tgOSZsCd/bt9IHxS3WWWU0INSYOTgp/prfsDDgosg7/Elk/b6w1OW0At\nX3VAjMeI0yAGloT6XB58LCFyrj6S2b4vCQqyaHR3tlTHai/5bMQ=
     - tracker_username=trackinguser
     - TRACCO_ENV=test
-
-matrix:
-  allow_failures:
-    - ruby-head
 
 services:
   - mongodb

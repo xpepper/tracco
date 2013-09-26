@@ -1,3 +1,16 @@
+0.0.20 / 2013-09-27
+==================
+ * Adding an alias TrackedCard#desc for #description to handle the renamed 'description' method name on the original RubyTrello Card model
+ * Upgrading rspec use of 'double' in specs.
+ * Fixing travis.yml to allow failures on ruby-head
+ * Updating the ruby version in the RVM templates to 1.9.3-p448
+ * Merge pull request #3 from gcapizzi/remove_duplicated_specs
+ * Updating gem dependencies
+ * Adding rvm-compliant .ruby-version template file
+ * Adding coveralls badge to README
+ * Replacing simplecov with coveralls
+ * Changing .rvmrc.template to use a more recent ruby version
+
 0.0.18 - 0.0.19 / 2013-03-17
 ==================
   * improving tracco initialize command

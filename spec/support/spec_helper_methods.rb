@@ -38,10 +38,10 @@ def with_message(notification_message, &block)
 end
 
 def create_notification(custom_params)
-  params = { data: { 'text' => "@any_tracker +2h" }, date: "2012-10-28T21:06:14.801Z", member_creator: stub(username: "pietrodibello") }
+  params = { data: { 'text' => "@any_tracker +2h" }, date: "2012-10-28T21:06:14.801Z", member_creator: double(username: "pietrodibello") }
   params.merge!(custom_params)
 
-  stub(data: params[:data], date: params[:date], member_creator: params[:member_creator]).as_null_object
+  double(data: params[:data], date: params[:date], member_creator: params[:member_creator]).as_null_object
 end
 
 def without_logging(&block)

@@ -31,7 +31,7 @@ module Tracco
 
           raw_data = create_notification(data: { 'text' => "@test_tracker +2h" },
                                          date: "2012-10-28T21:06:14.801Z",
-                                         member_creator: stub(username: "michelepangrazzi"))
+                                         member_creator: double(username: "michelepangrazzi"))
 
           expected_effort = Effort.new(amount: 2.0, date: Date.parse('2012-10-28'), members: [michelepangrazzi])
           Tracking::Factory.build_from(raw_data).effort.should == expected_effort
@@ -70,7 +70,7 @@ module Tracco
           end
 
           notification = create_notification(data: { 'text' => "@test_tracker +2h assieme a @michelepangrazzi e @alessandrodescovi" },
-                                             member_creator: stub(username: "pietrodibello"))
+                                             member_creator: double(username: "pietrodibello"))
           with notification do |tracking|
             tracking.effort.members.should == [michelepangrazzi, alessandrodescovi, pietrodibello]
           end
@@ -82,7 +82,7 @@ module Tracco
           end
 
           notification = create_notification(data: { 'text' => "@test_tracker +3p (@alessandrodescovi @michelevincenzi)" },
-                                             member_creator: stub(username: "pietrodibello"))
+                                             member_creator: double(username: "pietrodibello"))
 
           with notification do |tracking|
             tracking.effort.members.should == [alessandrodescovi, michelevincenzi]

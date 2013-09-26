@@ -212,8 +212,8 @@ module Tracco
     end
 
     describe "#trello_notifications" do
-      let(:first_notification)   { stub("notification1", date: Date.yesterday) }
-      let(:second_notification)  { stub("notification1", date: Date.today)     }
+      let(:first_notification)   { double("notification1", date: Date.yesterday) }
+      let(:second_notification)  { double("notification1", date: Date.today)     }
 
       it "fetches all the card notifications from trello" do
         card.estimates << Estimate.new(tracking_notification_id: "xyz987", amount: 5, date: Date.yesterday)
@@ -267,7 +267,7 @@ module Tracco
       it "is done when has a DONE notification" do
         card.should_not be_done
 
-        card.add(Tracking::CardDoneTracking.new(stub(:notification)))
+        card.add(Tracking::CardDoneTracking.new(double(:notification)))
         card.should be_done
       end
 

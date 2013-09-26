@@ -25,7 +25,7 @@ Gem::Specification.new do |gem|
 
   gem.required_rubygems_version = ">= 1.3.6"
 
-  gem.add_runtime_dependency 'ruby-trello', '=1.0.1'
+  gem.add_runtime_dependency 'ruby-trello'
   gem.add_runtime_dependency 'mongoid'
   gem.add_runtime_dependency 'bson_ext'
   gem.add_runtime_dependency 'google_drive'

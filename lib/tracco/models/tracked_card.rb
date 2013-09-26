@@ -7,7 +7,7 @@ module Tracco
     extend MongoidHelper
 
     field :name
-    field :description
+    field :description, as: :desc
     field :short_id,    type: Integer
     field :trello_id
     field :done,        type: Boolean

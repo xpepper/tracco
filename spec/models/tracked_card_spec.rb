@@ -122,6 +122,9 @@ module Tracco
         tracked_card.name.should == "a name"
         tracked_card.trello_id == "ABC123"
         tracked_card.short_id == 1
+
+        tracked_card.desc.should == "any description"
+        tracked_card.description.should == "any description"
       end
 
       it "updates an existing tracked card on a given trello card" do
@@ -163,6 +166,8 @@ module Tracco
         tracked_card = TrackedCard.build_from(Trello::Card.new("name" => "a name", "desc" => "any description"))
 
         tracked_card.name.should == "a name"
+
+        tracked_card.desc.should == "any description"
         tracked_card.description.should == "any description"
       end
 

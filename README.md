@@ -81,7 +81,7 @@ Log in to Trello with your account and visit [https://trello.com/1/appKey/genera
 ### Where do I get an API Access Token Key?
 To generate a proper access token key, log in to Trello with the 'tracking user' account. Then go to this URL:
 
-    https://trello.com/1/connect?key=<YOUR_DEVELOPER_PUBLIC_KEY>&name=Tracco&response_type=token&scope=read&expiration=never
+    https://trello.com/1/authorize?key=<YOUR_DEVELOPER_PUBLIC_KEY>&name=Tracco&response_type=token&scope=read&expiration=never
 
 At the end of this process, you'll receive a valid access\_token\_key, which is needed by Tracco to have the proper rights to fetch all the tracking notifications sent as comments to the 'tracking user'.
 

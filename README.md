@@ -23,7 +23,7 @@ Moreover, a web app is available to properly present card estimates and efforts:
 
 ## More details
 To start using Tracco you should have a Trello account, a Trello board and a board member to use as 'tracking user'.
-You'll also need to know your Trello developer key and generate a proper auth token to have access to the trackinguser's notifications.
+You'll also need to know your Trello developer key and generate a proper auth token to have access to the tracking user's notifications.
 To see how to have these two keys, see [the following section](#api_key).
 
 The Trello API is used behind the scenes to read data from the team board. Tracco uses the awesome [Trello API Ruby wrapper](https://github.com/jeremytregunna/ruby-trello) for this purpose.

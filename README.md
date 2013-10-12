@@ -8,7 +8,7 @@
 ## What is Tracco?
 Tracco is an effort tracker for Trello: the purpose of Tracco is to extract and track estimates and actual efforts out of the cards on your Trello boards.
 All you have to do is add estimates and efforts as comments added on your Trello cards, using a simple conventional format.
-Tracco will extract and store these estimates and actual efforts to let you mine useful key metrics (e.g. estimate errors, remaining efforts, pair programming frequencies, and so on).
+Tracco will extract, store and aggregate these estimates and efforts to let you mine useful key metrics (e.g. estimate errors, remaining efforts, pair programming frequencies, and so on).
 
 ## Why Tracco?
 [Trello](https://trello.com) is a very good surrogate for a physical team board: it's simple and effective, and it can really help when you have a distributed team.
@@ -23,8 +23,8 @@ Moreover, a web app is available to properly present card estimates and efforts:
 
 ## More details
 To start using Tracco you should have a Trello account, a Trello board and a board member to use as 'tracking user'.
-You'll also need to know your Trello developer key and generate a proper auth token to have access to the trackinguser's notifications.
-To see how to have these two keys, see [the following section](#api_key).
+You'll also need to know your Trello developer key and generate a proper auth token to have access to the tracking user's notifications.
+To see how to have these two keys, see [the following section](#where-do-i-get-an-api-key).
 
 The Trello API is used behind the scenes to read data from the team board. Tracco uses the awesome [Trello API Ruby wrapper](https://github.com/jeremytregunna/ruby-trello) for this purpose.
 
@@ -81,7 +81,7 @@ Log in to Trello with your account and visit [https://trello.com/1/appKey/genera
 ### Where do I get an API Access Token Key?
 To generate a proper access token key, log in to Trello with the 'tracking user' account. Then go to this URL:
 
-    https://trello.com/1/connect?key=<YOUR_DEVELOPER_PUBLIC_KEY>&name=Tracco&response_type=token&scope=read&expiration=never
+    https://trello.com/1/authorize?key=<YOUR_DEVELOPER_PUBLIC_KEY>&name=Tracco&response_type=token&scope=read&expiration=never
 
 At the end of this process, you'll receive a valid access\_token\_key, which is needed by Tracco to have the proper rights to fetch all the tracking notifications sent as comments to the 'tracking user'.
 

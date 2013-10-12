@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     tracco (0.0.20)
+      awesome_print
       bson_ext
       chronic
       google_drive
@@ -115,7 +116,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  awesome_print
   coveralls
   database_cleaner
   debugger

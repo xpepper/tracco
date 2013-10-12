@@ -34,7 +34,7 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency 'chronic'
   gem.add_runtime_dependency 'highline'
   gem.add_runtime_dependency 'thor'
+  gem.add_runtime_dependency 'awesome_print'
 
-  gem.add_development_dependency 'awesome_print'
   gem.add_development_dependency 'debugger'
 end

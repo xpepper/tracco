@@ -17,7 +17,7 @@ module Tracco
       trello_testing_board_auth_params
     }
 
-    xit "tracks some estimates and efforts", :needs_valid_configuration => true do
+    it "tracks some estimates and efforts", :needs_valid_configuration => true do
       without_logging do
         tracker = TrelloTracker.new(tracker_username: config.tracker, developer_public_key: config.dev_key, access_token_key: config.token)
         tracker.track(DateTime.parse("2013-01-28"))

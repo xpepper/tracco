@@ -36,5 +36,5 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency 'thor'
   gem.add_runtime_dependency 'awesome_print'
 
-  gem.add_development_dependency 'debugger'
+  gem.add_development_dependency 'byebug'
 end

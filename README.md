@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/xpepper/tracco.png?label=ready)](https://waffle.io/xpepper/tracco)  
 ![Tracco Logo](https://raw.github.com/xpepper/tracco/master/images/tracco.logo.png)
 
 [![Gem Version](https://fury-badge.herokuapp.com/rb/tracco.png)](http://badge.fury.io/rb/tracco)
